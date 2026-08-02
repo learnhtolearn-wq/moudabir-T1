@@ -43,8 +43,32 @@
       "transfer": "Virement"
     }
   },
-  "goals": { "placeholder": "Objectifs d'épargne — à venir" },
-  "reports": { "placeholder": "Rapports — à venir" },
+  "goals": {
+    "title": "Objectifs",
+    "empty": "Aucun objectif pour l'instant. Appuyez sur + pour en ajouter un.",
+    "error": "Impossible de charger les objectifs.",
+    "add_title": "Ajouter un objectif",
+    "edit_title": "Modifier l'objectif",
+    "name": "Nom",
+    "target_amount": "Montant cible",
+    "amount_positive": "Le montant doit être supérieur à zéro",
+    "deadline": "Échéance",
+    "no_deadline": "Aucune échéance définie",
+    "linked_account": "Compte lié",
+    "no_linked_account": "Aucun",
+    "contribute_title": "Ajouter à l'épargne",
+    "contribute_amount": "Montant à ajouter",
+    "archive_title": "Supprimer l'objectif",
+    "archive_confirm": "Cet objectif sera retiré de votre liste."
+  },
+  "reports": {
+    "category_breakdown_title": "Dépenses par catégorie (ce mois-ci)",
+    "trend_title": "Revenus vs dépenses (6 derniers mois)",
+    "no_expenses": "Aucune dépense enregistrée ce mois-ci.",
+    "error": "Impossible de charger les données du rapport.",
+    "income": "Revenus",
+    "expense": "Dépenses"
+  },
   "settings": {
     "language": "Langue",
     "manage_accounts": "Gérer les comptes",
@@ -93,6 +117,16 @@
       "expense": "Dépense",
       "debt": "Dette",
       "loan": "Prêt"
+    },
+    "seed": {
+      "food": "Alimentation",
+      "transport": "Transport",
+      "housing": "Logement",
+      "health": "Santé",
+      "leisure": "Loisirs",
+      "salary": "Salaire",
+      "freelance": "Freelance",
+      "other_income": "Autre revenu"
     }
   },
   "auth": {

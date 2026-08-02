@@ -43,8 +43,32 @@
       "transfer": "Transfer"
     }
   },
-  "goals": { "placeholder": "Savings goals — coming soon" },
-  "reports": { "placeholder": "Reports — coming soon" },
+  "goals": {
+    "title": "Goals",
+    "empty": "No savings goals yet. Tap + to add one.",
+    "error": "Could not load goals.",
+    "add_title": "Add goal",
+    "edit_title": "Edit goal",
+    "name": "Name",
+    "target_amount": "Target amount",
+    "amount_positive": "Amount must be greater than zero",
+    "deadline": "Deadline",
+    "no_deadline": "No deadline set",
+    "linked_account": "Linked account",
+    "no_linked_account": "None",
+    "contribute_title": "Add to savings",
+    "contribute_amount": "Amount to add",
+    "archive_title": "Delete goal",
+    "archive_confirm": "This goal will be removed from your list."
+  },
+  "reports": {
+    "category_breakdown_title": "Expenses by category (this month)",
+    "trend_title": "Income vs expenses (last 6 months)",
+    "no_expenses": "No expenses recorded this month.",
+    "error": "Could not load report data.",
+    "income": "Income",
+    "expense": "Expenses"
+  },
   "settings": {
     "language": "Language",
     "manage_accounts": "Manage accounts",
@@ -93,6 +117,16 @@
       "expense": "Expense",
       "debt": "Debt",
       "loan": "Loan"
+    },
+    "seed": {
+      "food": "Food",
+      "transport": "Transport",
+      "housing": "Housing",
+      "health": "Health",
+      "leisure": "Leisure",
+      "salary": "Salary",
+      "freelance": "Freelance",
+      "other_income": "Other income"
     }
   },
   "auth": {

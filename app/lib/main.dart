@@ -10,7 +10,12 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('fr'), Locale('en'), Locale('ar')],
+      supportedLocales: const [
+        Locale('fr'),
+        Locale('en'),
+        Locale('ar'),
+        Locale('ar', 'MA'),
+      ],
       path: 'assets/translations',
       fallbackLocale: const Locale('fr'),
       startLocale: const Locale('fr'),
@@ -27,6 +32,11 @@ class MoudabbirApp extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
+      // Forces the router (and every StatefulShellRoute branch it caches)
+      // to fully remount on locale change — without this key, go_router's
+      // per-tab page caching leaves `.tr()` strings stuck on the locale
+      // that was active when each tab was first built.
+      key: ValueKey(context.locale),
       title: 'app_name'.tr(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,

@@ -43,8 +43,32 @@
       "transfer": "تحويل"
     }
   },
-  "goals": { "placeholder": "أهداف الادخار — قريباً" },
-  "reports": { "placeholder": "التقارير — قريباً" },
+  "goals": {
+    "title": "الأهداف",
+    "empty": "لا توجد أهداف ادخار بعد. اضغط + لإضافة هدف.",
+    "error": "تعذر تحميل الأهداف.",
+    "add_title": "إضافة هدف",
+    "edit_title": "تعديل الهدف",
+    "name": "الاسم",
+    "target_amount": "المبلغ المستهدف",
+    "amount_positive": "يجب أن يكون المبلغ أكبر من صفر",
+    "deadline": "الموعد النهائي",
+    "no_deadline": "لا يوجد موعد نهائي",
+    "linked_account": "الحساب المرتبط",
+    "no_linked_account": "بدون",
+    "contribute_title": "إضافة إلى الادخار",
+    "contribute_amount": "المبلغ المضاف",
+    "archive_title": "حذف الهدف",
+    "archive_confirm": "سيتم إزالة هذا الهدف من قائمتك."
+  },
+  "reports": {
+    "category_breakdown_title": "المصاريف حسب الفئة (هذا الشهر)",
+    "trend_title": "الدخل مقابل المصاريف (آخر 6 أشهر)",
+    "no_expenses": "لا توجد مصاريف مسجلة هذا الشهر.",
+    "error": "تعذر تحميل بيانات التقرير.",
+    "income": "الدخل",
+    "expense": "المصاريف"
+  },
   "settings": {
     "language": "اللغة",
     "manage_accounts": "إدارة الحسابات",
@@ -93,6 +117,16 @@
       "expense": "مصروف",
       "debt": "دين",
       "loan": "قرض"
+    },
+    "seed": {
+      "food": "الغذاء",
+      "transport": "النقل",
+      "housing": "السكن",
+      "health": "الصحة",
+      "leisure": "الترفيه",
+      "salary": "الراتب",
+      "freelance": "العمل الحر",
+      "other_income": "دخل آخر"
     }
   },
   "auth": {

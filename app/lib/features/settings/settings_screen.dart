@@ -40,6 +40,13 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  static const _localeLabels = {
+    'fr': 'Français',
+    'en': 'English',
+    'ar': 'العربية',
+    'ar_MA': 'الدارجة',
+  };
+
   void _showLanguagePicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -48,7 +55,7 @@ class SettingsScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: context.supportedLocales.map((locale) {
             return ListTile(
-              title: Text(locale.languageCode.toUpperCase()),
+              title: Text(_localeLabels[locale.toString()] ?? locale.toString()),
               onTap: () {
                 context.setLocale(locale);
                 Navigator.pop(ctx);

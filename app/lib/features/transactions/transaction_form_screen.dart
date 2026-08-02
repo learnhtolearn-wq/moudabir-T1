@@ -226,7 +226,7 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
                     decoration:
                         InputDecoration(labelText: 'transactions.category'.tr()),
                     items: filtered
-                        .map((c) => DropdownMenuItem(value: c.id, child: Text(c.name)))
+                        .map((c) => DropdownMenuItem(value: c.id, child: Text(c.name.tr())))
                         .toList(),
                     onChanged: (v) => setState(() => _categoryId = v),
                     validator: (v) => v == null ? 'common.required'.tr() : null,

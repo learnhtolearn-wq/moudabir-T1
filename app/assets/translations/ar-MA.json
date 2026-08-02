@@ -1,0 +1,145 @@
+{
+  "app_name": "مدبر",
+  "nav": {
+    "dashboard": "الرئيسية",
+    "transactions": "العمليات",
+    "goals": "الأهداف",
+    "reports": "التقارير",
+    "settings": "الإعدادات"
+  },
+  "dashboard": {
+    "total_balance": "الرصيد الكامل",
+    "month_income": "الدخل ديال هاد الشهر",
+    "month_expense": "المصاريف ديال هاد الشهر"
+  },
+  "transactions": {
+    "title": "العمليات",
+    "empty": "مازال ما كاينة حتى عملية. دوز على + باش تزيد وحدة.",
+    "error": "ما قدرناش نحملو العمليات.",
+    "add_title": "زيد عملية",
+    "edit_title": "بدل العملية",
+    "account": "الحساب",
+    "from_account": "من الحساب",
+    "to_account": "للحساب",
+    "category": "الفئة",
+    "amount": "المبلغ",
+    "amount_positive": "خاص المبلغ يكون كبر من صفر",
+    "date": "التاريخ",
+    "note": "ملاحظة",
+    "transfer_same_account": "خاص حساب البداية يكون مختلف على حساب الوصول",
+    "archive_title": "حيد العملية",
+    "archive_confirm": "هاد العملية غادي تتحيد من السجل والأرصدة.",
+    "search_hint": "قلب على الحساب، الفئة، ولا الملاحظة",
+    "filter_all": "الكل",
+    "filter_income": "دخل",
+    "filter_expense": "مصروف",
+    "filter_transfer": "تحويل",
+    "filter_date_range": "المدة الزمنية",
+    "filter_clear": "مسح",
+    "no_matches": "ما كاين حتى عملية كتوافق الفلاتر ديالك.",
+    "type": {
+      "income": "دخل",
+      "expense": "مصروف",
+      "transfer": "تحويل"
+    }
+  },
+  "goals": {
+    "title": "الأهداف",
+    "empty": "مازال ما كاين حتى هدف. دوز على + باش تزيد وحد.",
+    "error": "ما قدرناش نحملو الأهداف.",
+    "add_title": "زيد هدف",
+    "edit_title": "بدل الهدف",
+    "name": "السمية",
+    "target_amount": "المبلغ المستهدف",
+    "amount_positive": "خاص المبلغ يكون كبر من صفر",
+    "deadline": "آخر أجل",
+    "no_deadline": "ما كاين حتى أجل",
+    "linked_account": "الحساب المرتبط",
+    "no_linked_account": "والو",
+    "contribute_title": "زيد فلوس للادخار",
+    "contribute_amount": "المبلغ اللي غادي تزيد",
+    "archive_title": "حيد الهدف",
+    "archive_confirm": "هاد الهدف غادي يتحيد من اللائحة ديالك."
+  },
+  "reports": {
+    "category_breakdown_title": "المصاريف حسب الفئة (هاد الشهر)",
+    "trend_title": "الدخل مقابل المصاريف (آخر 6 شهور)",
+    "no_expenses": "ما كاين حتى مصروف مسجل هاد الشهر.",
+    "error": "ما قدرناش نحملو معطيات التقرير.",
+    "income": "الدخل",
+    "expense": "المصاريف"
+  },
+  "settings": {
+    "language": "اللغة",
+    "manage_accounts": "دبر الحسابات",
+    "manage_categories": "دبر الفئات"
+  },
+  "common": {
+    "save": "سجل",
+    "cancel": "إلغي",
+    "delete": "حيد",
+    "required": "هاد الخانة خاصها تعمر",
+    "invalid_number": "دخل رقم صحيح"
+  },
+  "accounts": {
+    "title": "الحسابات",
+    "empty": "مازال ما كاين حتى حساب. دوز على + باش تزيد وحد.",
+    "error": "ما قدرناش نحملو الحسابات.",
+    "add_title": "زيد حساب",
+    "edit_title": "بدل الحساب",
+    "name": "السمية",
+    "type_label": "النوع",
+    "currency": "العملة",
+    "initial_balance": "الرصيد ديال البداية",
+    "archive_title": "أرشيف الحساب",
+    "archive_confirm": "هاد الحساب غادي يتخبى ولكن العمليات ديالو غادي يبقاو.",
+    "type": {
+      "cash": "الكاش",
+      "bank": "حساب بنكي",
+      "savings": "الادخار",
+      "credit_card": "كارط الائتمان",
+      "loan": "قرض / دين"
+    }
+  },
+  "categories": {
+    "title": "الفئات",
+    "empty": "مازال ما كاين حتى فئة. دوز على + باش تزيد وحدة.",
+    "error": "ما قدرناش نحملو الفئات.",
+    "add_title": "زيد فئة",
+    "edit_title": "بدل الفئة",
+    "name": "السمية",
+    "kind_label": "النوع",
+    "system": "أصلية",
+    "archive_title": "أرشيف الفئة",
+    "archive_confirm": "هاد الفئة غادي تتخبى ولكن العمليات ديالها غادي يبقاو.",
+    "kind": {
+      "income": "دخل",
+      "expense": "مصروف",
+      "debt": "دين",
+      "loan": "قرض"
+    },
+    "seed": {
+      "food": "الماكلة",
+      "transport": "الطرانسبور",
+      "housing": "السكنى",
+      "health": "الصحة",
+      "leisure": "الترفيه",
+      "salary": "الصالير",
+      "freelance": "الخدمة الحرة",
+      "other_income": "دخل آخر"
+    }
+  },
+  "auth": {
+    "setup_pin_title": "دير رمز PIN ديالك",
+    "unlock_title": "حل مدبر",
+    "pin": "رمز PIN",
+    "confirm_pin": "أكد رمز PIN",
+    "save_pin": "سجل",
+    "unlock": "حل",
+    "use_biometric": "استعمل البصمة",
+    "pin_too_short": "خاص رمز PIN يكون 4 أرقام على الأقل",
+    "pin_mismatch": "رمز PIN ما تطابقوش",
+    "wrong_pin": "رمز PIN غالط",
+    "biometric_reason": "صادق باش تدخل لمدبر"
+  }
+}

@@ -16,7 +16,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -27,6 +27,12 @@ class AppDatabase extends _$AppDatabase {
         onUpgrade: (m, from, to) async {
           if (from < 2) {
             await m.addColumn(transactions, transactions.archived);
+          }
+          if (from < 3) {
+            await m.addColumn(goals, goals.archived);
+          }
+          if (from < 4) {
+            await _migrateSeedCategoryNamesToKeys(this);
           }
         },
       );
@@ -61,18 +67,23 @@ bool _hasCipher(Database database) {
   return result.isNotEmpty;
 }
 
+/// Names are i18n translation keys (`categories.seed.*`), not display text —
+/// resolved via `.tr()` at every display site so system categories follow
+/// the active locale. User-created categories store free text instead;
+/// `.tr()` on a key it doesn't recognize just returns the text unchanged.
+const _seedCategoryDefaults = <(String, String)>[
+  ('categories.seed.food', 'expense'),
+  ('categories.seed.transport', 'expense'),
+  ('categories.seed.housing', 'expense'),
+  ('categories.seed.health', 'expense'),
+  ('categories.seed.leisure', 'expense'),
+  ('categories.seed.salary', 'income'),
+  ('categories.seed.freelance', 'income'),
+  ('categories.seed.other_income', 'income'),
+];
+
 Future<void> _seedDefaultCategories(AppDatabase db) async {
-  const defaults = <(String, String)>[
-    ('Alimentation', 'expense'),
-    ('Transport', 'expense'),
-    ('Logement', 'expense'),
-    ('Santé', 'expense'),
-    ('Loisirs', 'expense'),
-    ('Salaire', 'income'),
-    ('Freelance', 'income'),
-    ('Autre revenu', 'income'),
-  ];
-  for (final (name, kind) in defaults) {
+  for (final (name, kind) in _seedCategoryDefaults) {
     await db.into(db.categories).insert(
           CategoriesCompanion.insert(
             name: name,
@@ -80,5 +91,27 @@ Future<void> _seedDefaultCategories(AppDatabase db) async {
             isSystem: const Value(true),
           ),
         );
+  }
+}
+
+/// Existing installs (schema v1-v3) seeded system categories with hardcoded
+/// French display text instead of translation keys — rename those rows to
+/// match the new `categories.seed.*` key scheme.
+const _seedCategoryNameMigration = <String, String>{
+  'Alimentation': 'categories.seed.food',
+  'Transport': 'categories.seed.transport',
+  'Logement': 'categories.seed.housing',
+  'Santé': 'categories.seed.health',
+  'Loisirs': 'categories.seed.leisure',
+  'Salaire': 'categories.seed.salary',
+  'Freelance': 'categories.seed.freelance',
+  'Autre revenu': 'categories.seed.other_income',
+};
+
+Future<void> _migrateSeedCategoryNamesToKeys(AppDatabase db) async {
+  for (final entry in _seedCategoryNameMigration.entries) {
+    await (db.update(db.categories)
+          ..where((c) => c.name.equals(entry.key) & c.isSystem.equals(true)))
+        .write(CategoriesCompanion(name: Value(entry.value)));
   }
 }

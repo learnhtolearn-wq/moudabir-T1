@@ -56,5 +56,6 @@ class Goals extends Table {
   IntColumn get linkedAccountId =>
       integer().nullable().references(Accounts, #id)();
   BoolColumn get achieved => boolean().withDefault(const Constant(false))();
+  BoolColumn get archived => boolean().withDefault(const Constant(false))();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }

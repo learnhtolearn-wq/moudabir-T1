@@ -29,7 +29,7 @@ class CategoriesScreen extends ConsumerWidget {
               final category = categories[index];
               return ListTile(
                 leading: const Icon(Icons.label_outline),
-                title: Text(category.name),
+                title: Text(category.name.tr()),
                 subtitle: Text('categories.kind.${category.kind}'.tr()),
                 trailing: category.isSystem
                     ? Chip(label: Text('categories.system'.tr()))

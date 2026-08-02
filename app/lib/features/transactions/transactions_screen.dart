@@ -148,7 +148,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                     final subtitle = isTransfer
                         ? '${row.account.name} → ${row.toAccount?.name ?? ''}'
                         : '${row.account.name}'
-                            '${row.category != null ? ' · ${row.category!.name}' : ''}';
+                            '${row.category != null ? ' · ${row.category!.name.tr()}' : ''}';
 
                     return ListTile(
                       leading: CircleAvatar(
