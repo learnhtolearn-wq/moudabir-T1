@@ -11,7 +11,56 @@
   "transactions": { "placeholder": "Historique des transactions — à venir" },
   "goals": { "placeholder": "Objectifs d'épargne — à venir" },
   "reports": { "placeholder": "Rapports — à venir" },
-  "settings": { "language": "Langue" },
+  "settings": {
+    "language": "Langue",
+    "manage_accounts": "Gérer les comptes",
+    "manage_categories": "Gérer les catégories"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "required": "Champ requis",
+    "invalid_number": "Entrez un nombre valide"
+  },
+  "accounts": {
+    "title": "Comptes",
+    "empty": "Aucun compte pour l'instant. Appuyez sur + pour en ajouter un.",
+    "error": "Impossible de charger les comptes.",
+    "add_title": "Ajouter un compte",
+    "edit_title": "Modifier le compte",
+    "name": "Nom",
+    "type_label": "Type",
+    "currency": "Devise",
+    "initial_balance": "Solde initial",
+    "archive_title": "Archiver le compte",
+    "archive_confirm": "Ce compte sera masqué mais les transactions existantes sont conservées.",
+    "type": {
+      "cash": "Espèces",
+      "bank": "Compte bancaire",
+      "savings": "Épargne",
+      "credit_card": "Carte de crédit",
+      "loan": "Prêt / dette"
+    }
+  },
+  "categories": {
+    "title": "Catégories",
+    "empty": "Aucune catégorie pour l'instant. Appuyez sur + pour en ajouter une.",
+    "error": "Impossible de charger les catégories.",
+    "add_title": "Ajouter une catégorie",
+    "edit_title": "Modifier la catégorie",
+    "name": "Nom",
+    "kind_label": "Type",
+    "system": "Intégrée",
+    "archive_title": "Archiver la catégorie",
+    "archive_confirm": "Cette catégorie sera masquée mais les transactions existantes sont conservées.",
+    "kind": {
+      "income": "Revenu",
+      "expense": "Dépense",
+      "debt": "Dette",
+      "loan": "Prêt"
+    }
+  },
   "auth": {
     "setup_pin_title": "Créer votre code PIN",
     "unlock_title": "Déverrouiller Moudabbir",

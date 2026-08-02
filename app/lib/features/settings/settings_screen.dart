@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../accounts/accounts_screen.dart';
+import '../categories/categories_screen.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -10,6 +13,23 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(title: Text('nav.settings'.tr())),
       body: ListView(
         children: [
+          ListTile(
+            leading: const Icon(Icons.account_balance_wallet_outlined),
+            title: Text('settings.manage_accounts'.tr()),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const AccountsScreen()),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.category_outlined),
+            title: Text('settings.manage_categories'.tr()),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+            ),
+          ),
+          const Divider(),
           ListTile(
             title: Text('settings.language'.tr()),
             subtitle: Text(context.locale.toString()),

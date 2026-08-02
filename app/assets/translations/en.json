@@ -11,7 +11,56 @@
   "transactions": { "placeholder": "Transaction history — coming soon" },
   "goals": { "placeholder": "Savings goals — coming soon" },
   "reports": { "placeholder": "Reports — coming soon" },
-  "settings": { "language": "Language" },
+  "settings": {
+    "language": "Language",
+    "manage_accounts": "Manage accounts",
+    "manage_categories": "Manage categories"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "required": "Required",
+    "invalid_number": "Enter a valid number"
+  },
+  "accounts": {
+    "title": "Accounts",
+    "empty": "No accounts yet. Tap + to add one.",
+    "error": "Could not load accounts.",
+    "add_title": "Add account",
+    "edit_title": "Edit account",
+    "name": "Name",
+    "type_label": "Type",
+    "currency": "Currency",
+    "initial_balance": "Initial balance",
+    "archive_title": "Archive account",
+    "archive_confirm": "This account will be hidden but existing transactions are kept.",
+    "type": {
+      "cash": "Cash",
+      "bank": "Bank account",
+      "savings": "Savings",
+      "credit_card": "Credit card",
+      "loan": "Loan / debt"
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "empty": "No categories yet. Tap + to add one.",
+    "error": "Could not load categories.",
+    "add_title": "Add category",
+    "edit_title": "Edit category",
+    "name": "Name",
+    "kind_label": "Kind",
+    "system": "Built-in",
+    "archive_title": "Archive category",
+    "archive_confirm": "This category will be hidden but existing transactions are kept.",
+    "kind": {
+      "income": "Income",
+      "expense": "Expense",
+      "debt": "Debt",
+      "loan": "Loan"
+    }
+  },
   "auth": {
     "setup_pin_title": "Create your PIN",
     "unlock_title": "Unlock Moudabbir",

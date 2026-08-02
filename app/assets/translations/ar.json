@@ -11,7 +11,56 @@
   "transactions": { "placeholder": "سجل المعاملات — قريباً" },
   "goals": { "placeholder": "أهداف الادخار — قريباً" },
   "reports": { "placeholder": "التقارير — قريباً" },
-  "settings": { "language": "اللغة" },
+  "settings": {
+    "language": "اللغة",
+    "manage_accounts": "إدارة الحسابات",
+    "manage_categories": "إدارة الفئات"
+  },
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "required": "هذا الحقل مطلوب",
+    "invalid_number": "أدخل رقماً صحيحاً"
+  },
+  "accounts": {
+    "title": "الحسابات",
+    "empty": "لا توجد حسابات بعد. اضغط على + لإضافة حساب.",
+    "error": "تعذر تحميل الحسابات.",
+    "add_title": "إضافة حساب",
+    "edit_title": "تعديل الحساب",
+    "name": "الاسم",
+    "type_label": "النوع",
+    "currency": "العملة",
+    "initial_balance": "الرصيد الافتتاحي",
+    "archive_title": "أرشفة الحساب",
+    "archive_confirm": "سيتم إخفاء هذا الحساب مع الاحتفاظ بالمعاملات الحالية.",
+    "type": {
+      "cash": "نقداً",
+      "bank": "حساب بنكي",
+      "savings": "ادخار",
+      "credit_card": "بطاقة ائتمان",
+      "loan": "قرض / دين"
+    }
+  },
+  "categories": {
+    "title": "الفئات",
+    "empty": "لا توجد فئات بعد. اضغط على + لإضافة فئة.",
+    "error": "تعذر تحميل الفئات.",
+    "add_title": "إضافة فئة",
+    "edit_title": "تعديل الفئة",
+    "name": "الاسم",
+    "kind_label": "النوع",
+    "system": "مدمجة",
+    "archive_title": "أرشفة الفئة",
+    "archive_confirm": "سيتم إخفاء هذه الفئة مع الاحتفاظ بالمعاملات الحالية.",
+    "kind": {
+      "income": "دخل",
+      "expense": "مصروف",
+      "debt": "دين",
+      "loan": "قرض"
+    }
+  },
   "auth": {
     "setup_pin_title": "إنشاء رمز PIN",
     "unlock_title": "فتح مدبر",
