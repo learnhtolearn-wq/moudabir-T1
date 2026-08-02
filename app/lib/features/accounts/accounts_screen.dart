@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../transactions/providers/transactions_provider.dart';
 import 'accounts_form_screen.dart';
 import 'providers/accounts_provider.dart';
 
@@ -27,10 +28,15 @@ class AccountsScreen extends ConsumerWidget {
             itemCount: accounts.length,
             itemBuilder: (context, index) {
               final account = accounts[index];
-              final formatted = NumberFormat.currency(
-                symbol: account.currency,
-                decimalDigits: 2,
-              ).format(account.initialBalance);
+              final balanceAsync = ref.watch(accountBalanceProvider(account.id));
+              final formatted = balanceAsync.when(
+                data: (balance) => NumberFormat.currency(
+                  symbol: account.currency,
+                  decimalDigits: 2,
+                ).format(balance),
+                loading: () => '…',
+                error: (_, _) => '—',
+              );
               return ListTile(
                 leading: CircleAvatar(child: Text(account.name[0].toUpperCase())),
                 title: Text(account.name),
