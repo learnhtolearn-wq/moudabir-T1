@@ -1,0 +1,28 @@
+{
+  "app_name": "مدبر",
+  "nav": {
+    "dashboard": "لوحة القيادة",
+    "transactions": "المعاملات",
+    "goals": "الأهداف",
+    "reports": "التقارير",
+    "settings": "الإعدادات"
+  },
+  "dashboard": { "placeholder": "لوحة القيادة — قريباً" },
+  "transactions": { "placeholder": "سجل المعاملات — قريباً" },
+  "goals": { "placeholder": "أهداف الادخار — قريباً" },
+  "reports": { "placeholder": "التقارير — قريباً" },
+  "settings": { "language": "اللغة" },
+  "auth": {
+    "setup_pin_title": "إنشاء رمز PIN",
+    "unlock_title": "فتح مدبر",
+    "pin": "رمز PIN",
+    "confirm_pin": "تأكيد رمز PIN",
+    "save_pin": "حفظ",
+    "unlock": "فتح",
+    "use_biometric": "استخدام البصمة",
+    "pin_too_short": "يجب أن يتكون رمز PIN من 4 أرقام على الأقل",
+    "pin_mismatch": "رمزا PIN غير متطابقين",
+    "wrong_pin": "رمز PIN غير صحيح",
+    "biometric_reason": "المصادقة للوصول إلى مدبر"
+  }
+}

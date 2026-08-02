@@ -66,16 +66,16 @@ Flutter · SQLite (Drift or Isar) encrypted with SQLCipher · key in Android Key
 
 Ranked per the original sprint roadmap (see intel/wins.md for full milestone list):
 
-1. **Build this first — Sprint 0 (technical socle):** repo/CI init, encrypted DB schema (accounts, transactions, categories, goals), bottom-nav skeleton, i18n scaffold (FR/AR/EN + RTL wiring), PIN/biometric setup screen
-2. Sprint 1 — accounts, categories (incl. loans/debts), core data model
-3. Sprint 2 — income, expenses, account transfers (core business logic)
-4. Sprint 3 — dashboard summary, transaction history/search/filters
-5. Sprint 4 — savings goals
-6. Sprint 5 — reports (category breakdown, income vs. expense charts)
-7. Sprint 6 — settings, local backup/restore, notifications, security finalize
-8. Sprint 7 — full FR/AR/EN + RTL polish and testing
+- [x] Sprint 0 (technical socle) — shipped 2026-08-02: `app/` Flutter project, Drift schema (accounts/categories/transactions/goals), sqlite3mc-encrypted DB, PIN+biometric lock, go_router bottom-nav shell, i18n FR/AR/EN scaffold. `flutter analyze` clean, debug APK verified on Android.
+1. **Build this first — Sprint 1:** accounts + categories CRUD (incl. loans/debts) on top of the Sprint 0 schema
+2. Sprint 2 — income, expenses, account transfers (core business logic)
+3. Sprint 3 — dashboard summary, transaction history/search/filters
+4. Sprint 4 — savings goals
+5. Sprint 5 — reports (category breakdown, income vs. expense charts)
+6. Sprint 6 — settings, local backup/restore, notifications, security finalize
+7. Sprint 7 — full FR/AR/EN + RTL polish and testing
 
-Parallel/ongoing: get Figma design system from design team — blocks UI-polish only, not data-layer work.
+Parallel/ongoing: get Figma design system from design team — blocks UI-polish only, not data-layer work. iOS build still unverified (no macOS toolchain available here).
 
 To build any of these: say "build [item]."
 

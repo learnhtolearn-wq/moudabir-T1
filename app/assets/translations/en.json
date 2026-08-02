@@ -1,0 +1,28 @@
+{
+  "app_name": "Moudabbir",
+  "nav": {
+    "dashboard": "Dashboard",
+    "transactions": "Transactions",
+    "goals": "Goals",
+    "reports": "Reports",
+    "settings": "Settings"
+  },
+  "dashboard": { "placeholder": "Dashboard — coming soon" },
+  "transactions": { "placeholder": "Transaction history — coming soon" },
+  "goals": { "placeholder": "Savings goals — coming soon" },
+  "reports": { "placeholder": "Reports — coming soon" },
+  "settings": { "language": "Language" },
+  "auth": {
+    "setup_pin_title": "Create your PIN",
+    "unlock_title": "Unlock Moudabbir",
+    "pin": "PIN",
+    "confirm_pin": "Confirm PIN",
+    "save_pin": "Save",
+    "unlock": "Unlock",
+    "use_biometric": "Use biometrics",
+    "pin_too_short": "PIN must be at least 4 digits",
+    "pin_mismatch": "PINs do not match",
+    "wrong_pin": "Incorrect PIN",
+    "biometric_reason": "Authenticate to access Moudabbir"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "app_name": "Moudabbir",
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "transactions": "Transactions",
+    "goals": "Objectifs",
+    "reports": "Rapports",
+    "settings": "Paramètres"
+  },
+  "dashboard": { "placeholder": "Tableau de bord — à venir" },
+  "transactions": { "placeholder": "Historique des transactions — à venir" },
+  "goals": { "placeholder": "Objectifs d'épargne — à venir" },
+  "reports": { "placeholder": "Rapports — à venir" },
+  "settings": { "language": "Langue" },
+  "auth": {
+    "setup_pin_title": "Créer votre code PIN",
+    "unlock_title": "Déverrouiller Moudabbir",
+    "pin": "Code PIN",
+    "confirm_pin": "Confirmer le code PIN",
+    "save_pin": "Enregistrer",
+    "unlock": "Déverrouiller",
+    "use_biometric": "Utiliser la biométrie",
+    "pin_too_short": "Le code PIN doit contenir au moins 4 chiffres",
+    "pin_mismatch": "Les codes PIN ne correspondent pas",
+    "wrong_pin": "Code PIN incorrect",
+    "biometric_reason": "Authentifiez-vous pour accéder à Moudabbir"
+  }
+}
