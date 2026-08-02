@@ -7,7 +7,11 @@
     "reports": "Rapports",
     "settings": "Paramètres"
   },
-  "dashboard": { "placeholder": "Tableau de bord — à venir" },
+  "dashboard": {
+    "total_balance": "Solde total",
+    "month_income": "Revenus de ce mois",
+    "month_expense": "Dépenses de ce mois"
+  },
   "transactions": {
     "title": "Transactions",
     "empty": "Aucune transaction. Appuyez sur + pour en ajouter une.",
@@ -25,6 +29,14 @@
     "transfer_same_account": "Les comptes source et destination doivent être différents",
     "archive_title": "Supprimer la transaction",
     "archive_confirm": "Cette transaction sera retirée de l'historique et des soldes.",
+    "search_hint": "Rechercher un compte, une catégorie ou une note",
+    "filter_all": "Tous",
+    "filter_income": "Revenu",
+    "filter_expense": "Dépense",
+    "filter_transfer": "Virement",
+    "filter_date_range": "Période",
+    "filter_clear": "Effacer",
+    "no_matches": "Aucune transaction ne correspond à vos filtres.",
     "type": {
       "income": "Revenu",
       "expense": "Dépense",

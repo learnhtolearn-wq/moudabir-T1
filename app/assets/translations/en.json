@@ -7,7 +7,11 @@
     "reports": "Reports",
     "settings": "Settings"
   },
-  "dashboard": { "placeholder": "Dashboard — coming soon" },
+  "dashboard": {
+    "total_balance": "Total balance",
+    "month_income": "This month's income",
+    "month_expense": "This month's expenses"
+  },
   "transactions": {
     "title": "Transactions",
     "empty": "No transactions yet. Tap + to add one.",
@@ -25,6 +29,14 @@
     "transfer_same_account": "From and to account must be different",
     "archive_title": "Delete transaction",
     "archive_confirm": "This transaction will be removed from your history and balances.",
+    "search_hint": "Search account, category, or note",
+    "filter_all": "All",
+    "filter_income": "Income",
+    "filter_expense": "Expense",
+    "filter_transfer": "Transfer",
+    "filter_date_range": "Date range",
+    "filter_clear": "Clear",
+    "no_matches": "No transactions match your filters.",
     "type": {
       "income": "Income",
       "expense": "Expense",
