@@ -57,7 +57,7 @@ LazyDatabase _openConnection() {
 }
 
 bool _hasCipher(Database database) {
-  final result = database.select('PRAGMA cipher_version;');
+  final result = database.select('PRAGMA cipher;');
   return result.isNotEmpty;
 }
 
