@@ -31,6 +31,7 @@ class AccountsScreen extends ConsumerWidget {
               final balanceAsync = ref.watch(accountBalanceProvider(account.id));
               final formatted = balanceAsync.when(
                 data: (balance) => NumberFormat.currency(
+                  locale: context.locale.toString(),
                   symbol: account.currency,
                   decimalDigits: 2,
                 ).format(balance),

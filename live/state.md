@@ -3,6 +3,8 @@
 *Updated at the end of each session. Read this FIRST on startup.*
 
 ## Last Session
+- **Date:** 2026-08-02 (Sprint 6 committed as `a3bc708`; Sprint 7 started same session)
+- **Sprint 7 started:** scoped to RTL visual audit + fixes (user chose this over adding automated widget tests). Code-level audit found 2 bugs, both fixed: (1) `NumberFormat.currency()` calls in dashboard/accounts/transactions/goals/reports never passed `locale:`, so amounts always rendered with US grouping/decimals regardless of active language — unlike `DateFormat` calls which already did this correctly; fixed by adding `locale: context.locale.toString()` to all 5 sites. (2) Settings screen's 4 trailing chevron icons didn't mirror in RTL — fixed via `Directionality.of(context)` check. Needed `hide TextDirection` on easy_localization's import in settings_screen.dart (it re-exports intl's bidi TextDirection, shadowing dart:ui's). `flutter analyze` clean. **Not yet device-verified in AR/Darija.**
 - **Date:** 2026-08-02 (Sprint 6)
 - **Summary:** Sprint 4 (goals) + Sprint 5 (reports) + Darija/category-i18n work from the prior session was committed at session start (`a44086c`) — was sitting uncommitted for two sessions.
 - Sprint 6 built: backup/restore (`share_plus`/`file_picker`, encrypted DB file, same-device only — see decisions/ledger.md), notifications (daily expense reminder + goal-deadline nudges via `flutter_local_notifications`/`timezone`), and security finalize (auto re-lock on background/resume, PIN lockout after 5 attempts, Android `FLAG_SECURE`). US-022 (custom dashboards/KPIs) deferred to V2 per user decision — no spec existed for it.
@@ -15,6 +17,7 @@
 - Session ends with all Sprint 6 code **uncommitted**.
 
 ## Open Tasks
+- **Device-verify Sprint 7 RTL fixes** — switch to AR/Darija on physical device, confirm chevrons mirror in Settings and currency amounts format with correct locale conventions.
 - **Verify the restore fix** — user needs to retest Settings → Restore now that `withData: true` is in place; last known state was broken (silent no-op).
 - **Confirm backup (export/share sheet) works** — not explicitly confirmed by user this session, only restore was flagged as broken.
 - **Commit Sprint 6** once the above is confirmed — nothing from this session is committed yet.

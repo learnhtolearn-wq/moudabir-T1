@@ -67,8 +67,11 @@ class _StatCard extends StatelessWidget {
               data: (v) => Text(
                 // Default-currency formatting — see "Known limitation" note
                 // in the plan header re: multi-currency accounts.
-                NumberFormat.currency(symbol: 'MAD ', decimalDigits: 2)
-                    .format(v),
+                NumberFormat.currency(
+                  locale: context.locale.toString(),
+                  symbol: 'MAD ',
+                  decimalDigits: 2,
+                ).format(v),
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall

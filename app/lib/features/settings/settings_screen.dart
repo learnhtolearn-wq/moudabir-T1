@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,6 +46,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final chevron = Icon(
+      Directionality.of(context) == TextDirection.rtl
+          ? Icons.chevron_left
+          : Icons.chevron_right,
+    );
     return Scaffold(
       appBar: AppBar(title: Text('nav.settings'.tr())),
       body: ListView(
@@ -53,7 +58,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ListTile(
             leading: const Icon(Icons.account_balance_wallet_outlined),
             title: Text('settings.manage_accounts'.tr()),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: chevron,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const AccountsScreen()),
             ),
@@ -61,7 +66,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ListTile(
             leading: const Icon(Icons.category_outlined),
             title: Text('settings.manage_categories'.tr()),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: chevron,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const CategoriesScreen()),
             ),
@@ -90,7 +95,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ListTile(
             leading: const Icon(Icons.pin_outlined),
             title: Text('auth.change_pin_title'.tr()),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: chevron,
             enabled: !_busy,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const ChangePinScreen()),
@@ -100,7 +105,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             leading: const Icon(Icons.key_outlined),
             title: Text('settings.recovery_code'.tr()),
             subtitle: Text('settings.recovery_code_note'.tr()),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: chevron,
             enabled: !_busy,
             onTap: _handleRegenerateRecoveryCode,
           ),

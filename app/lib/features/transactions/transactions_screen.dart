@@ -142,6 +142,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                             ? Icons.swap_horiz
                             : Icons.arrow_downward);
                     final formatted = NumberFormat.currency(
+                      locale: context.locale.toString(),
                       symbol: row.account.currency,
                       decimalDigits: 2,
                     ).format(t.amount);

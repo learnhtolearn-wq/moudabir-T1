@@ -66,6 +66,7 @@ class GoalsScreen extends ConsumerWidget {
                   ? 0.0
                   : (goal.currentAmount / goal.targetAmount).clamp(0.0, 1.0);
               final formatted = NumberFormat.currency(
+                locale: context.locale.toString(),
                 symbol: 'MAD',
                 decimalDigits: 2,
               );

@@ -3,8 +3,8 @@
 *Last updated: 2026-08-02*
 
 ## Top Priorities Right Now
-- Sprints 1-5 committed. Sprint 6 (backup/restore, notifications, security finalize, + user-requested PIN recovery/change-PIN) built and mostly device-verified — restore had a silent-fail bug (file_picker null path on Samsung), just fixed, needs a retest before commit.
-- Sprint 6 code sitting uncommitted in the working tree — commit once restore is re-confirmed and backup (export/share) is explicitly confirmed.
+- Sprint 6 (backup/restore, notifications, security finalize, PIN recovery/change-PIN) committed as `a3bc708`. Restore fix + backup export still need final device retest (flagged, not blocking).
+- Sprint 7 (RTL polish) started — fixed currency locale formatting (5 sites) + Settings chevron mirroring. Needs device verification in AR/Darija.
 - Figma design system still not pulled in (MCP hit View-seat quota) — blocks UI-polish only, not data-layer/CRUD work. File: https://www.figma.com/design/CfQ5K7ZLCEXglxOtqDg15L/Moudabir?node-id=1-2
 
 ## Hard Deadlines

@@ -58,7 +58,11 @@ class _CategoryBreakdownChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = slices.fold<double>(0, (sum, s) => sum + s.total);
-    final formatted = NumberFormat.currency(symbol: 'MAD', decimalDigits: 0);
+    final formatted = NumberFormat.currency(
+      locale: context.locale.toString(),
+      symbol: 'MAD',
+      decimalDigits: 0,
+    );
 
     return Column(
       children: [
