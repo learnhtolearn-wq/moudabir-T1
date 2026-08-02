@@ -33,6 +33,7 @@ class Transactions extends Table {
   RealColumn get amount => real()();
   DateTimeColumn get date => dateTime()();
   TextColumn get note => text().nullable()();
+  BoolColumn get archived => boolean().withDefault(const Constant(false))();
   @ReferenceName('sourceTransactions')
   IntColumn get accountId =>
       integer().references(Accounts, #id)();
