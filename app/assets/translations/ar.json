@@ -8,7 +8,29 @@
     "settings": "الإعدادات"
   },
   "dashboard": { "placeholder": "لوحة القيادة — قريباً" },
-  "transactions": { "placeholder": "سجل المعاملات — قريباً" },
+  "transactions": {
+    "title": "المعاملات",
+    "empty": "لا توجد معاملات بعد. اضغط + لإضافة واحدة.",
+    "error": "تعذر تحميل المعاملات.",
+    "add_title": "إضافة معاملة",
+    "edit_title": "تعديل المعاملة",
+    "account": "الحساب",
+    "from_account": "من حساب",
+    "to_account": "إلى حساب",
+    "category": "الفئة",
+    "amount": "المبلغ",
+    "amount_positive": "يجب أن يكون المبلغ أكبر من صفر",
+    "date": "التاريخ",
+    "note": "ملاحظة",
+    "transfer_same_account": "يجب أن يكون حساب المصدر مختلفًا عن حساب الوجهة",
+    "archive_title": "حذف المعاملة",
+    "archive_confirm": "ستتم إزالة هذه المعاملة من السجل والأرصدة.",
+    "type": {
+      "income": "دخل",
+      "expense": "مصروف",
+      "transfer": "تحويل"
+    }
+  },
   "goals": { "placeholder": "أهداف الادخار — قريباً" },
   "reports": { "placeholder": "التقارير — قريباً" },
   "settings": {

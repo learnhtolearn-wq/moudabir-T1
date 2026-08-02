@@ -8,7 +8,29 @@
     "settings": "Settings"
   },
   "dashboard": { "placeholder": "Dashboard — coming soon" },
-  "transactions": { "placeholder": "Transaction history — coming soon" },
+  "transactions": {
+    "title": "Transactions",
+    "empty": "No transactions yet. Tap + to add one.",
+    "error": "Could not load transactions.",
+    "add_title": "Add transaction",
+    "edit_title": "Edit transaction",
+    "account": "Account",
+    "from_account": "From account",
+    "to_account": "To account",
+    "category": "Category",
+    "amount": "Amount",
+    "amount_positive": "Amount must be greater than zero",
+    "date": "Date",
+    "note": "Note",
+    "transfer_same_account": "From and to account must be different",
+    "archive_title": "Delete transaction",
+    "archive_confirm": "This transaction will be removed from your history and balances.",
+    "type": {
+      "income": "Income",
+      "expense": "Expense",
+      "transfer": "Transfer"
+    }
+  },
   "goals": { "placeholder": "Savings goals — coming soon" },
   "reports": { "placeholder": "Reports — coming soon" },
   "settings": {

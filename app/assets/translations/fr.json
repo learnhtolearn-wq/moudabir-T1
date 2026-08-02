@@ -8,7 +8,29 @@
     "settings": "Paramètres"
   },
   "dashboard": { "placeholder": "Tableau de bord — à venir" },
-  "transactions": { "placeholder": "Historique des transactions — à venir" },
+  "transactions": {
+    "title": "Transactions",
+    "empty": "Aucune transaction. Appuyez sur + pour en ajouter une.",
+    "error": "Impossible de charger les transactions.",
+    "add_title": "Ajouter une transaction",
+    "edit_title": "Modifier la transaction",
+    "account": "Compte",
+    "from_account": "Compte source",
+    "to_account": "Compte destination",
+    "category": "Catégorie",
+    "amount": "Montant",
+    "amount_positive": "Le montant doit être supérieur à zéro",
+    "date": "Date",
+    "note": "Note",
+    "transfer_same_account": "Les comptes source et destination doivent être différents",
+    "archive_title": "Supprimer la transaction",
+    "archive_confirm": "Cette transaction sera retirée de l'historique et des soldes.",
+    "type": {
+      "income": "Revenu",
+      "expense": "Dépense",
+      "transfer": "Virement"
+    }
+  },
   "goals": { "placeholder": "Objectifs d'épargne — à venir" },
   "reports": { "placeholder": "Rapports — à venir" },
   "settings": {
