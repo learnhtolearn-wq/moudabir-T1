@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/security/pin_store.dart';
+import 'recovery_code_screen.dart';
 
 class PinSetupScreen extends StatefulWidget {
   const PinSetupScreen({super.key});
@@ -37,7 +38,17 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
     }
 
     await PinStore.setPin(pin);
-    if (mounted) context.go('/dashboard');
+    final code = await PinStore.regenerateRecoveryCode();
+    if (!mounted) return;
+
+    Navigator.of(context, rootNavigator: true).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => RecoveryCodeScreen(
+          code: code,
+          onContinue: (ctx) => ctx.go('/dashboard'),
+        ),
+      ),
+    );
   }
 
   @override

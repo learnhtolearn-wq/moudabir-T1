@@ -6,7 +6,9 @@ plugins {
 
 android {
     namespace = "com.moudabbir.moudabbir"
-    compileSdk = flutter.compileSdkVersion
+    // Overrides Flutter's default (34) — file_picker's transitive
+    // flutter_plugin_android_lifecycle dependency requires compileSdk 36+.
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

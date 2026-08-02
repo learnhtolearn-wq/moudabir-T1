@@ -72,14 +72,41 @@
   "settings": {
     "language": "اللغة",
     "manage_accounts": "دبر الحسابات",
-    "manage_categories": "دبر الفئات"
+    "manage_categories": "دبر الفئات",
+    "backup_now": "دير نسخة احتياطية دابا",
+    "backup_note": "كتتحفظ كملف مشفّر ما يترجعش غير فهاد الجهاز",
+    "restore_backup": "رجّع نسخة احتياطية",
+    "restore_confirm_title": "ترجيع النسخة الاحتياطية؟",
+    "restore_confirm_body": "غادي تبدل جميع المعطيات الحالية بالنسخة اللي غادي تختار. ما يمكنش ترجع لور.",
+    "restore_confirm_action": "رجّع",
+    "backup_success": "النسخة الاحتياطية واجدة باش تتحفظ",
+    "backup_error": "ما نجحش النسخ الاحتياطي",
+    "restore_success": "تم ترجيع النسخة الاحتياطية",
+    "restore_error": "ما نجحاتش الاستعادة — يمكن الملف ماشي نسخة احتياطية ديال مدبر صالحة فهاد الجهاز",
+    "restore_cancelled": "تلغات الاستعادة",
+    "reminders_enabled": "التذكيرات",
+    "reminders_note": "تذكير كل نهار باش تسجل المصاريف + تنبيهات قبل آخر أجل ديال الأهداف",
+    "reminder_time": "وقت التذكير",
+    "reminders_permission_denied": "تم رفض إذن الإشعارات",
+    "recovery_code": "رمز الاسترجاع",
+    "recovery_code_note": "دير رمز جديد لمرة وحدة باش ترجع رمز PIN",
+    "recovery_code_confirm_title": "دير رمز استرجاع جديد؟",
+    "recovery_code_confirm_body": "الرمز القديم غادي يبقى ماخدامش. تأكد بلي حفظتي الرمز الجديد.",
+    "recovery_code_confirm_action": "دير"
+  },
+  "notifications": {
+    "daily_title": "سجل مصاريف اليوم",
+    "daily_body": "خود دقيقة باش تسجل شحال صرفتي اليوم.",
+    "goal_deadline_title": "آخر أجل ديال الهدف قريب",
+    "goal_deadline_body": "آخر أجل ديال \"{name}\" قريب — شوف فين وصلتي."
   },
   "common": {
     "save": "سجل",
     "cancel": "إلغي",
     "delete": "حيد",
     "required": "هاد الخانة خاصها تعمر",
-    "invalid_number": "دخل رقم صحيح"
+    "invalid_number": "دخل رقم صحيح",
+    "continue_label": "كمل"
   },
   "accounts": {
     "title": "الحسابات",
@@ -140,6 +167,21 @@
     "pin_too_short": "خاص رمز PIN يكون 4 أرقام على الأقل",
     "pin_mismatch": "رمز PIN ما تطابقوش",
     "wrong_pin": "رمز PIN غالط",
-    "biometric_reason": "صادق باش تدخل لمدبر"
+    "locked_out": "بزاف ديال المحاولات — عاود بعد {seconds} ثانية",
+    "biometric_reason": "صادق باش تدخل لمدبر",
+    "forgot_pin": "نسيتي رمز PIN؟",
+    "forgot_pin_title": "رجّع الدخول",
+    "forgot_pin_body": "دخل رمز الاسترجاع اللي حفظتي منين ديرتي رمز PIN لأول مرة.",
+    "recovery_code": "رمز الاسترجاع",
+    "recovery_code_invalid": "رمز الاسترجاع ماشي صحيح",
+    "recovery_code_title": "رمز الاسترجاع ديالك",
+    "recovery_code_body": "كتب هاد الرمز وحفظو فبلاصة آمنة. هو الطريقة الوحيدة باش ترجع لحسابك إلا نسيتي رمز PIN — كيخدم غير فهاد الجهاز وما غاديش يبان مرة أخرى.",
+    "recovery_code_copy": "انسخ الرمز",
+    "recovery_code_copied": "تنسخ للحافظة",
+    "recovery_code_ack": "حفظت هاد الرمز فبلاصة آمنة",
+    "recovery_code_continue": "كمل",
+    "change_pin_title": "بدل رمز PIN",
+    "current_pin": "رمز PIN الحالي",
+    "pin_changed": "تبدل رمز PIN"
   }
 }

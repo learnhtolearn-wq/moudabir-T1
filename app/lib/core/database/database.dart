@@ -15,6 +15,15 @@ part 'database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
+  /// Filename of the encrypted DB file on disk — shared with [BackupService]
+  /// so backup/restore and the live connection never disagree on the path.
+  static const fileName = 'moudabbir.sqlite';
+
+  static Future<File> resolveFile() async {
+    final dbFolder = await getApplicationSupportDirectory();
+    return File(p.join(dbFolder.path, fileName));
+  }
+
   @override
   int get schemaVersion => 4;
 
@@ -43,8 +52,7 @@ class AppDatabase extends _$AppDatabase {
 /// [DbKeyStore] and is only used in-memory to unlock the file.
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
-    final dbFolder = await getApplicationSupportDirectory();
-    final file = File(p.join(dbFolder.path, 'moudabbir.sqlite'));
+    final file = await AppDatabase.resolveFile();
     final passphrase = await DbKeyStore.getOrCreateKey();
 
     return NativeDatabase.createInBackground(

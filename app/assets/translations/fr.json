@@ -72,14 +72,41 @@
   "settings": {
     "language": "Langue",
     "manage_accounts": "Gérer les comptes",
-    "manage_categories": "Gérer les catégories"
+    "manage_categories": "Gérer les catégories",
+    "backup_now": "Sauvegarder maintenant",
+    "backup_note": "Enregistré comme fichier chiffré restaurable uniquement sur cet appareil",
+    "restore_backup": "Restaurer une sauvegarde",
+    "restore_confirm_title": "Restaurer la sauvegarde ?",
+    "restore_confirm_body": "Toutes les données actuelles seront remplacées par la sauvegarde choisie. Action irréversible.",
+    "restore_confirm_action": "Restaurer",
+    "backup_success": "Sauvegarde prête à enregistrer",
+    "backup_error": "Échec de la sauvegarde",
+    "restore_success": "Sauvegarde restaurée",
+    "restore_error": "Échec de la restauration — le fichier n'est peut-être pas une sauvegarde Moudabbir valide pour cet appareil",
+    "restore_cancelled": "Restauration annulée",
+    "reminders_enabled": "Rappels",
+    "reminders_note": "Rappel quotidien des dépenses + alertes avant l'échéance des objectifs",
+    "reminder_time": "Heure du rappel",
+    "reminders_permission_denied": "Autorisation de notification refusée",
+    "recovery_code": "Code de récupération",
+    "recovery_code_note": "Générer un nouveau code à usage unique pour récupérer votre code PIN",
+    "recovery_code_confirm_title": "Générer un nouveau code de récupération ?",
+    "recovery_code_confirm_body": "Votre ancien code de récupération cessera de fonctionner. Assurez-vous d'enregistrer le nouveau.",
+    "recovery_code_confirm_action": "Générer"
+  },
+  "notifications": {
+    "daily_title": "Enregistrez vos dépenses du jour",
+    "daily_body": "Prenez une minute pour noter ce que vous avez dépensé aujourd'hui.",
+    "goal_deadline_title": "Échéance d'objectif proche",
+    "goal_deadline_body": "« {name} » arrive bientôt à échéance — vérifiez votre progression."
   },
   "common": {
     "save": "Enregistrer",
     "cancel": "Annuler",
     "delete": "Supprimer",
     "required": "Champ requis",
-    "invalid_number": "Entrez un nombre valide"
+    "invalid_number": "Entrez un nombre valide",
+    "continue_label": "Continuer"
   },
   "accounts": {
     "title": "Comptes",
@@ -140,6 +167,21 @@
     "pin_too_short": "Le code PIN doit contenir au moins 4 chiffres",
     "pin_mismatch": "Les codes PIN ne correspondent pas",
     "wrong_pin": "Code PIN incorrect",
-    "biometric_reason": "Authentifiez-vous pour accéder à Moudabbir"
+    "locked_out": "Trop de tentatives — réessayez dans {seconds}s",
+    "biometric_reason": "Authentifiez-vous pour accéder à Moudabbir",
+    "forgot_pin": "Code PIN oublié ?",
+    "forgot_pin_title": "Récupérer l'accès",
+    "forgot_pin_body": "Entrez le code de récupération enregistré lors de la création de votre code PIN.",
+    "recovery_code": "Code de récupération",
+    "recovery_code_invalid": "Code de récupération non reconnu",
+    "recovery_code_title": "Votre code de récupération",
+    "recovery_code_body": "Notez-le et gardez-le en lieu sûr. C'est le seul moyen de récupérer l'accès en cas d'oubli du code PIN — il ne fonctionne que sur cet appareil et ne pourra plus être affiché.",
+    "recovery_code_copy": "Copier le code",
+    "recovery_code_copied": "Copié dans le presse-papiers",
+    "recovery_code_ack": "J'ai enregistré ce code en lieu sûr",
+    "recovery_code_continue": "Continuer",
+    "change_pin_title": "Changer le code PIN",
+    "current_pin": "Code PIN actuel",
+    "pin_changed": "Code PIN modifié"
   }
 }

@@ -72,14 +72,41 @@
   "settings": {
     "language": "Language",
     "manage_accounts": "Manage accounts",
-    "manage_categories": "Manage categories"
+    "manage_categories": "Manage categories",
+    "backup_now": "Back up now",
+    "backup_note": "Saved as an encrypted file only this device can restore",
+    "restore_backup": "Restore from backup",
+    "restore_confirm_title": "Restore backup?",
+    "restore_confirm_body": "This replaces all current data with the backup you pick. This cannot be undone.",
+    "restore_confirm_action": "Restore",
+    "backup_success": "Backup ready to save",
+    "backup_error": "Backup failed",
+    "restore_success": "Backup restored",
+    "restore_error": "Restore failed — file may not be a valid Moudabbir backup for this device",
+    "restore_cancelled": "Restore cancelled",
+    "reminders_enabled": "Reminders",
+    "reminders_note": "Daily expense reminder + nudges before goal deadlines",
+    "reminder_time": "Reminder time",
+    "reminders_permission_denied": "Notification permission denied",
+    "recovery_code": "Recovery code",
+    "recovery_code_note": "Generate a new one-time code for PIN recovery",
+    "recovery_code_confirm_title": "Generate new recovery code?",
+    "recovery_code_confirm_body": "Your old recovery code will stop working. Make sure to save the new one.",
+    "recovery_code_confirm_action": "Generate"
+  },
+  "notifications": {
+    "daily_title": "Log today's expenses",
+    "daily_body": "Take a minute to record what you spent today.",
+    "goal_deadline_title": "Goal deadline coming up",
+    "goal_deadline_body": "\"{name}\" is due soon — check your progress."
   },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
     "required": "Required",
-    "invalid_number": "Enter a valid number"
+    "invalid_number": "Enter a valid number",
+    "continue_label": "Continue"
   },
   "accounts": {
     "title": "Accounts",
@@ -140,6 +167,21 @@
     "pin_too_short": "PIN must be at least 4 digits",
     "pin_mismatch": "PINs do not match",
     "wrong_pin": "Incorrect PIN",
-    "biometric_reason": "Authenticate to access Moudabbir"
+    "locked_out": "Too many attempts — try again in {seconds}s",
+    "biometric_reason": "Authenticate to access Moudabbir",
+    "forgot_pin": "Forgot PIN?",
+    "forgot_pin_title": "Recover access",
+    "forgot_pin_body": "Enter the recovery code you saved when you first set up your PIN.",
+    "recovery_code": "Recovery code",
+    "recovery_code_invalid": "Recovery code not recognized",
+    "recovery_code_title": "Your recovery code",
+    "recovery_code_body": "Write this down and keep it somewhere safe. It's the only way back in if you forget your PIN — it only works on this device and cannot be shown again.",
+    "recovery_code_copy": "Copy code",
+    "recovery_code_copied": "Copied to clipboard",
+    "recovery_code_ack": "I've saved this code somewhere safe",
+    "recovery_code_continue": "Continue",
+    "change_pin_title": "Change PIN",
+    "current_pin": "Current PIN",
+    "pin_changed": "PIN changed"
   }
 }

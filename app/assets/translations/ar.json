@@ -72,14 +72,41 @@
   "settings": {
     "language": "اللغة",
     "manage_accounts": "إدارة الحسابات",
-    "manage_categories": "إدارة الفئات"
+    "manage_categories": "إدارة الفئات",
+    "backup_now": "نسخ احتياطي الآن",
+    "backup_note": "يُحفظ كملف مشفّر لا يمكن استعادته إلا على هذا الجهاز",
+    "restore_backup": "استعادة نسخة احتياطية",
+    "restore_confirm_title": "استعادة النسخة الاحتياطية؟",
+    "restore_confirm_body": "سيتم استبدال جميع البيانات الحالية بالنسخة الاحتياطية التي تختارها. لا يمكن التراجع عن هذا الإجراء.",
+    "restore_confirm_action": "استعادة",
+    "backup_success": "النسخة الاحتياطية جاهزة للحفظ",
+    "backup_error": "فشل النسخ الاحتياطي",
+    "restore_success": "تمت استعادة النسخة الاحتياطية",
+    "restore_error": "فشلت الاستعادة — قد لا يكون الملف نسخة احتياطية صالحة لمدبر على هذا الجهاز",
+    "restore_cancelled": "تم إلغاء الاستعادة",
+    "reminders_enabled": "التذكيرات",
+    "reminders_note": "تذكير يومي بتسجيل المصاريف + تنبيهات قبل مواعيد الأهداف",
+    "reminder_time": "وقت التذكير",
+    "reminders_permission_denied": "تم رفض إذن الإشعارات",
+    "recovery_code": "رمز الاسترداد",
+    "recovery_code_note": "إنشاء رمز جديد لمرة واحدة لاسترداد رمز PIN",
+    "recovery_code_confirm_title": "إنشاء رمز استرداد جديد؟",
+    "recovery_code_confirm_body": "سيتوقف رمز الاسترداد القديم عن العمل. تأكد من حفظ الرمز الجديد.",
+    "recovery_code_confirm_action": "إنشاء"
+  },
+  "notifications": {
+    "daily_title": "سجّل مصاريف اليوم",
+    "daily_body": "خذ دقيقة لتسجيل ما أنفقته اليوم.",
+    "goal_deadline_title": "اقترب موعد الهدف",
+    "goal_deadline_body": "الموعد النهائي لـ \"{name}\" اقترب — تحقق من تقدمك."
   },
   "common": {
     "save": "حفظ",
     "cancel": "إلغاء",
     "delete": "حذف",
     "required": "هذا الحقل مطلوب",
-    "invalid_number": "أدخل رقماً صحيحاً"
+    "invalid_number": "أدخل رقماً صحيحاً",
+    "continue_label": "متابعة"
   },
   "accounts": {
     "title": "الحسابات",
@@ -140,6 +167,21 @@
     "pin_too_short": "يجب أن يتكون رمز PIN من 4 أرقام على الأقل",
     "pin_mismatch": "رمزا PIN غير متطابقين",
     "wrong_pin": "رمز PIN غير صحيح",
-    "biometric_reason": "المصادقة للوصول إلى مدبر"
+    "locked_out": "محاولات كثيرة جداً — أعد المحاولة بعد {seconds} ثانية",
+    "biometric_reason": "المصادقة للوصول إلى مدبر",
+    "forgot_pin": "نسيت رمز PIN؟",
+    "forgot_pin_title": "استرداد الوصول",
+    "forgot_pin_body": "أدخل رمز الاسترداد الذي حفظته عند إنشاء رمز PIN لأول مرة.",
+    "recovery_code": "رمز الاسترداد",
+    "recovery_code_invalid": "رمز الاسترداد غير معروف",
+    "recovery_code_title": "رمز الاسترداد الخاص بك",
+    "recovery_code_body": "دوّن هذا الرمز واحتفظ به في مكان آمن. إنه الطريقة الوحيدة للعودة إلى حسابك في حال نسيان رمز PIN — يعمل فقط على هذا الجهاز ولن يظهر مرة أخرى.",
+    "recovery_code_copy": "نسخ الرمز",
+    "recovery_code_copied": "تم النسخ إلى الحافظة",
+    "recovery_code_ack": "حفظت هذا الرمز في مكان آمن",
+    "recovery_code_continue": "متابعة",
+    "change_pin_title": "تغيير رمز PIN",
+    "current_pin": "رمز PIN الحالي",
+    "pin_changed": "تم تغيير رمز PIN"
   }
 }

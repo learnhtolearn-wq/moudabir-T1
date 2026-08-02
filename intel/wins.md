@@ -19,7 +19,7 @@
   - [x] Sprint 3 — Dashboard & history (US-001 summary; US-012, US-013, US-014 history/search/filters) — shipped 2026-08-02
   - [x] Sprint 4 — Savings goals (US-015, US-016) — shipped + user-verified on device 2026-08-02 (see live/state.md)
   - [x] Sprint 5 — Reports (US-017 category breakdown chart; US-018 income vs expense chart) — built 2026-08-02, installed on device, awaiting user manual verification
-  - [ ] Sprint 6 — Settings & security finalize (US-019, US-020 backup/restore; US-021 notifications; US-022 custom dashboards/KPIs; Epic 9 finalize if not done in Phase 1)
+  - [~] Sprint 6 — Settings & security finalize (US-019, US-020 backup/restore; US-021 notifications; Epic 9 finalize). Built + device-verified 2026-08-02: backup/restore (encrypted DB file, same-device only), daily + goal-deadline notifications, auto-lock on background/resume, PIN lockout, FLAG_SECURE, PIN recovery code + change-PIN (user-requested addition beyond original scope). Restore had a silent-fail bug (file_picker null path on Samsung), fixed, awaiting final re-verification. US-022 (custom dashboards/KPIs) deferred to V2 per user decision — no spec existed for what "custom" meant here.
   - [ ] Sprint 7 — Full multilingual finalization (FR/AR/EN complete, RTL testing, in-app language switch)
 - [ ] **Phase 3 — Tests** — unit tests (balance calc, report aggregation), integration tests (DB encryption, backup/restore), manual offline-mode test, security tests (at-rest encryption, no log leaks), multilingual tests (RTL, truncation, date/amount formats), UI-vs-maquette conformity check
 - [ ] **Phase 4 — Closed beta** — TestFlight (iOS) / Internal Testing (Android), feedback on dashboard ergonomics + quick entry, adjustments before publish

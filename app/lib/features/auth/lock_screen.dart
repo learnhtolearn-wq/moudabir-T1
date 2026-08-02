@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +7,7 @@ import 'package:local_auth/local_auth.dart';
 
 import '../../core/security/biometric_auth_service.dart';
 import '../../core/security/pin_store.dart';
+import 'forgot_pin_screen.dart';
 
 class LockScreen extends StatefulWidget {
   const LockScreen({super.key});
@@ -17,11 +20,26 @@ class _LockScreenState extends State<LockScreen> {
   final _pinController = TextEditingController();
   final _biometrics = BiometricAuthService(LocalAuthentication());
   String? _error;
+  Duration? _lockoutRemaining;
+  Timer? _lockoutTimer;
 
   @override
   void initState() {
     super.initState();
+    _checkLockout();
     _tryBiometricUnlock();
+  }
+
+  Future<void> _checkLockout() async {
+    final remaining = await PinStore.lockoutRemaining();
+    if (!mounted) return;
+    setState(() => _lockoutRemaining = remaining);
+    _lockoutTimer?.cancel();
+    if (remaining != null) {
+      _lockoutTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+        _checkLockout();
+      });
+    }
   }
 
   Future<void> _tryBiometricUnlock() async {
@@ -38,18 +56,28 @@ class _LockScreenState extends State<LockScreen> {
     if (ok) {
       if (mounted) context.go('/dashboard');
     } else {
-      setState(() => _error = 'auth.wrong_pin'.tr());
+      await _checkLockout();
+      if (!mounted) return;
+      setState(() {
+        _error = _lockoutRemaining != null
+            ? 'auth.locked_out'.tr(
+                namedArgs: {'seconds': '${_lockoutRemaining!.inSeconds}'},
+              )
+            : 'auth.wrong_pin'.tr();
+      });
     }
   }
 
   @override
   void dispose() {
+    _lockoutTimer?.cancel();
     _pinController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final locked = _lockoutRemaining != null;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -65,17 +93,35 @@ class _LockScreenState extends State<LockScreen> {
                 keyboardType: TextInputType.number,
                 obscureText: true,
                 maxLength: 6,
+                enabled: !locked,
                 decoration: InputDecoration(labelText: 'auth.pin'.tr()),
               ),
-              if (_error != null) ...[
+              if (locked) ...[
+                const SizedBox(height: 8),
+                Text(
+                  'auth.locked_out'.tr(
+                    namedArgs: {'seconds': '${_lockoutRemaining!.inSeconds}'},
+                  ),
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ] else if (_error != null) ...[
                 const SizedBox(height: 8),
                 Text(_error!, style: const TextStyle(color: Colors.red)),
               ],
               const SizedBox(height: 16),
-              FilledButton(onPressed: _submitPin, child: Text('auth.unlock'.tr())),
+              FilledButton(
+                onPressed: locked ? null : _submitPin,
+                child: Text('auth.unlock'.tr()),
+              ),
               TextButton(
                 onPressed: _tryBiometricUnlock,
                 child: Text('auth.use_biometric'.tr()),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context, rootNavigator: true)
+                    .push(MaterialPageRoute(
+                        builder: (_) => const ForgotPinScreen())),
+                child: Text('auth.forgot_pin'.tr()),
               ),
             ],
           ),
