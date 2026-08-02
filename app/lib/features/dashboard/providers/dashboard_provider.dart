@@ -26,6 +26,7 @@ final totalBalanceProvider = Provider.autoDispose<AsyncValue<double>>((ref) {
           (sum, a) => sum + a.initialBalance,
         );
         for (final row in rows) {
+          if (row.account.archived) continue;
           final t = row.transaction;
           if (t.type == 'income') total += t.amount;
           if (t.type == 'expense') total -= t.amount;
@@ -50,6 +51,7 @@ final monthlySummaryProvider =
       var income = 0.0;
       var expense = 0.0;
       for (final row in rows) {
+        if (row.account.archived) continue;
         final t = row.transaction;
         if (t.date.year != now.year || t.date.month != now.month) continue;
         if (t.type == 'income') income += t.amount;
