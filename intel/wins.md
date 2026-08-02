@@ -16,7 +16,7 @@
 - [ ] **Phase 2 — MVP by functional lots**
   - [x] Sprint 1 — Accounts, categories, core data model (US-008, US-009, US-010 incl. loans/debts; account model for US-002/005/011) — shipped 2026-08-02
   - [x] Sprint 2 — Income & expenses, core business logic (US-002, US-003, US-004 income; US-005, US-006, US-007 expenses; US-011 transfers) — shipped 2026-08-02
-  - [ ] Sprint 3 — Dashboard & history (US-001 summary; US-012, US-013, US-014 history/search/filters)
+  - [x] Sprint 3 — Dashboard & history (US-001 summary; US-012, US-013, US-014 history/search/filters) — shipped 2026-08-02
   - [ ] Sprint 4 — Savings goals (US-015, US-016)
   - [ ] Sprint 5 — Reports (US-017 category breakdown chart; US-018 income vs expense chart)
   - [ ] Sprint 6 — Settings & security finalize (US-019, US-020 backup/restore; US-021 notifications; US-022 custom dashboards/KPIs; Epic 9 finalize if not done in Phase 1)
