@@ -120,6 +120,29 @@ class NotificationService {
 
   static Future<void> cancelAll() => _plugin.cancelAll();
 
+  /// Fires an immediate, non-scheduled notification — used for budget
+  /// threshold nudges and sweep confirmations. Reuses the same channel as
+  /// the daily reminder / goal nudges.
+  static Future<void> showOneShot({
+    required int id,
+    required String title,
+    String body = '',
+  }) async {
+    await _plugin.show(
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: const NotificationDetails(
+        android: AndroidNotificationDetails(
+          _channelId,
+          _channelName,
+          importance: Importance.defaultImportance,
+        ),
+        iOS: DarwinNotificationDetails(),
+      ),
+    );
+  }
+
   static tz.TZDateTime _nextInstanceOf(int hour, int minute) {
     final now = tz.TZDateTime.now(tz.local);
     var scheduled =
