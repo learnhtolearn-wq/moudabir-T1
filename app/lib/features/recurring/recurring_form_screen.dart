@@ -139,8 +139,10 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
                   .map((t) => ButtonSegment(value: t, label: Text('transactions.type.$t'.tr())))
                   .toList(),
               selected: {_type},
-              onSelectionChanged: (selection) =>
-                  setState(() => _type = selection.first),
+              onSelectionChanged: (selection) => setState(() {
+                _type = selection.first;
+                _categoryId = null;
+              }),
             ),
             const SizedBox(height: 16),
             accountsAsync.when(
