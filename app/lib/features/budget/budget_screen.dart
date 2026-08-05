@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
-import '../../core/database/database_provider.dart';
 import '../../core/notifications/notification_service.dart';
 import '../../core/settings/settings_prefs.dart';
 import '../accounts/providers/accounts_provider.dart';
@@ -21,6 +20,7 @@ class BudgetScreen extends ConsumerStatefulWidget {
 class _BudgetScreenState extends ConsumerState<BudgetScreen> {
   final Map<int, TextEditingController> _controllers = {};
   final Map<int, bool> _sweepFlags = {};
+  final Set<int> _sweepingTargetIds = {};
   bool _initialized = false;
 
   @override
@@ -74,39 +74,59 @@ class _BudgetScreenState extends ConsumerState<BudgetScreen> {
   }
 
   Future<void> _sweepCategory(BudgetTargetWithCategory row, double leftover) async {
-    final accounts = await ref.read(accountsProvider.future);
-    var savingsAccountId = await SettingsPrefs.getDefaultSavingsAccountId();
+    if (_sweepingTargetIds.contains(row.target.id)) return;
+    setState(() => _sweepingTargetIds.add(row.target.id));
+    try {
+      final accounts = await ref.read(accountsProvider.future);
+      var savingsAccountId = await SettingsPrefs.getDefaultSavingsAccountId();
 
-    if (savingsAccountId == null || !accounts.any((a) => a.id == savingsAccountId)) {
-      savingsAccountId =
-          await _pickAccount(accounts, title: 'budget.pick_savings_account'.tr());
-      if (savingsAccountId == null) return;
-      await SettingsPrefs.setDefaultSavingsAccountId(savingsAccountId);
-    }
+      if (savingsAccountId == null || !accounts.any((a) => a.id == savingsAccountId)) {
+        if (accounts.isEmpty) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('budget.no_accounts_available'.tr())));
+          }
+          return;
+        }
+        savingsAccountId =
+            await _pickAccount(accounts, title: 'budget.pick_savings_account'.tr());
+        if (savingsAccountId == null) return;
+        await SettingsPrefs.setDefaultSavingsAccountId(savingsAccountId);
+      }
 
-    final fromCandidates = accounts.where((a) => a.id != savingsAccountId).toList();
-    final fromAccountId =
-        await _pickAccount(fromCandidates, title: 'budget.pick_source_account'.tr());
-    if (fromAccountId == null) return;
+      final fromCandidates = accounts.where((a) => a.id != savingsAccountId).toList();
+      if (fromCandidates.isEmpty) {
+        if (mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('budget.no_accounts_available'.tr())));
+        }
+        return;
+      }
+      final fromAccountId =
+          await _pickAccount(fromCandidates, title: 'budget.pick_source_account'.tr());
+      if (fromAccountId == null) return;
 
-    final categoryLabel = row.category.name.tr();
-    await ref.read(budgetNotifierProvider).sweep(
-          target: row.target,
-          leftover: leftover,
-          spentSoFar: row.target.targetAmount - leftover,
-          fromAccountId: fromAccountId,
-          toAccountId: savingsAccountId,
-          note: 'budget.sweep_note'.tr(namedArgs: {'category': categoryLabel}),
-        );
-    await NotificationService.showOneShot(
-      id: 3000 + row.target.id,
-      title: 'notifications.sweep_done'.tr(
-        namedArgs: {'category': categoryLabel, 'amount': leftover.toStringAsFixed(2)},
-      ),
-    );
-    if (mounted) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('budget.sweep_success'.tr())));
+      final categoryLabel = row.category.name.tr();
+      await ref.read(budgetNotifierProvider).sweep(
+            target: row.target,
+            leftover: leftover,
+            spentSoFar: row.target.targetAmount - leftover,
+            fromAccountId: fromAccountId,
+            toAccountId: savingsAccountId,
+            note: 'budget.sweep_note'.tr(namedArgs: {'category': categoryLabel}),
+          );
+      await NotificationService.showOneShot(
+        id: 3000 + row.target.id,
+        title: 'notifications.sweep_done'.tr(
+          namedArgs: {'category': categoryLabel, 'amount': leftover.toStringAsFixed(2)},
+        ),
+      );
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('budget.sweep_success'.tr())));
+      }
+    } finally {
+      if (mounted) setState(() => _sweepingTargetIds.remove(row.target.id));
     }
   }
 
@@ -204,7 +224,9 @@ class _BudgetScreenState extends ConsumerState<BudgetScreen> {
                                 ).format(entry.leftover),
                               ),
                               trailing: FilledButton(
-                                onPressed: () => _sweepCategory(entry.row, entry.leftover),
+                                onPressed: _sweepingTargetIds.contains(entry.row.target.id)
+                                    ? null
+                                    : () => _sweepCategory(entry.row, entry.leftover),
                                 child: Text('budget.sweep_action'.tr()),
                               ),
                             ),
