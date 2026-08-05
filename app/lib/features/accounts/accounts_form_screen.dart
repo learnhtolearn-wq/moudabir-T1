@@ -25,30 +25,18 @@ class AccountsFormScreen extends ConsumerStatefulWidget {
 class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
-  late final TextEditingController _balanceController;
-  late final TextEditingController _currencyController;
-  late String _type;
 
   bool get _isEditing => widget.account != null;
 
   @override
   void initState() {
     super.initState();
-    final account = widget.account;
-    _nameController = TextEditingController(text: account?.name ?? '');
-    _balanceController = TextEditingController(
-      text: account != null ? account.initialBalance.toString() : '0',
-    );
-    _currencyController =
-        TextEditingController(text: account?.currency ?? 'MAD');
-    _type = account?.type ?? accountTypes.first;
+    _nameController = TextEditingController(text: widget.account?.name ?? '');
   }
 
   @override
   void dispose() {
     _nameController.dispose();
-    _balanceController.dispose();
-    _currencyController.dispose();
     super.dispose();
   }
 
@@ -56,24 +44,15 @@ class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
     if (!_formKey.currentState!.validate()) return;
     final notifier = ref.read(accountsNotifierProvider);
     final name = _nameController.text.trim();
-    final currency = _currencyController.text.trim();
-    final balance = double.parse(_balanceController.text.trim());
 
     if (_isEditing) {
-      await notifier.update(
-        widget.account!.copyWith(
-          name: name,
-          type: _type,
-          currency: currency,
-          initialBalance: balance,
-        ),
-      );
+      await notifier.update(widget.account!.copyWith(name: name));
     } else {
       await notifier.add(
         name: name,
-        type: _type,
-        currency: currency,
-        initialBalance: balance,
+        type: accountTypes.first,
+        currency: 'MAD',
+        initialBalance: 0,
       );
     }
     if (!mounted) return;
@@ -136,40 +115,6 @@ class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
               label: 'accounts.name'.tr(),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
-            ),
-            const SizedBox(height: 16),
-            AppSelectField(
-              label: 'accounts.type_label'.tr(),
-              valueLabel: 'accounts.type.$_type'.tr(),
-              onTap: () async {
-                final picked = await showAppOptionSheet<String>(
-                  context: context,
-                  title: 'accounts.type_label'.tr(),
-                  options: accountTypes,
-                  labelOf: (t) => 'accounts.type.$t'.tr(),
-                  selected: _type,
-                );
-                if (picked != null) setState(() => _type = picked);
-              },
-            ),
-            const SizedBox(height: 16),
-            AppTextField(
-              controller: _currencyController,
-              label: 'accounts.currency'.tr(),
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
-            ),
-            const SizedBox(height: 16),
-            AppTextField(
-              controller: _balanceController,
-              label: 'accounts.initial_balance'.tr(),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              validator: (v) {
-                if (v == null || v.trim().isEmpty) return 'common.required'.tr();
-                return double.tryParse(v.trim()) == null
-                    ? 'common.invalid_number'.tr()
-                    : null;
-              },
             ),
             const SizedBox(height: 24),
             ElevatedButton(

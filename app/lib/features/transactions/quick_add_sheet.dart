@@ -140,6 +140,7 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
               error: (_, _) => const SizedBox.shrink(),
               data: (accounts) {
                 _accountId ??= accounts.isNotEmpty ? accounts.first.id : null;
+                if (accounts.length <= 1) return const SizedBox.shrink();
                 final labelOf = {for (final a in accounts) a.id: a.name};
                 return AppSelectField(
                   label: 'transactions.account'.tr(),

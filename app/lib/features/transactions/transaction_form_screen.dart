@@ -189,6 +189,14 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
               loading: () => const CircularProgressIndicator(),
               error: (_, _) => Text('accounts.error'.tr()),
               data: (accounts) {
+                // Single-account app: skip the picker, auto-bind to the
+                // only account instead of making the user pick it.
+                if (accounts.length <= 1 && _type != 'transfer') {
+                  if (accounts.isNotEmpty && _accountId != accounts.first.id) {
+                    _accountId = accounts.first.id;
+                  }
+                  return const SizedBox.shrink();
+                }
                 final labelOf = {for (final a in accounts) a.id: a.name};
                 return AppSelectField(
                   label: _type == 'transfer'
