@@ -20,6 +20,7 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
   final _noteController = TextEditingController();
   int? _categoryId;
   int? _accountId;
+  bool _saving = false;
 
   @override
   void dispose() {
@@ -29,23 +30,33 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
   }
 
   Future<void> _save() async {
+    if (_saving) return;
+
     final amount = double.tryParse(_amountController.text.trim());
     if (amount == null || amount <= 0 || _categoryId == null || _accountId == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('transactions.quick_add_invalid'.tr())));
       return;
     }
     final note = _noteController.text.trim();
     final categoryId = _categoryId;
 
-    await ref.read(transactionsNotifierProvider).add(
-          type: 'expense',
-          amount: amount,
-          date: DateTime.now(),
-          accountId: _accountId!,
-          categoryId: categoryId,
-          note: note.isEmpty ? null : note,
-        );
-    await checkAndNotifyOverspend(ref.read(databaseProvider), categoryId, DateTime.now());
-    if (mounted) Navigator.of(context).pop();
+    setState(() => _saving = true);
+    try {
+      await ref.read(transactionsNotifierProvider).add(
+            type: 'expense',
+            amount: amount,
+            date: DateTime.now(),
+            accountId: _accountId!,
+            categoryId: categoryId,
+            note: note.isEmpty ? null : note,
+          );
+      if (!mounted) return;
+      await checkAndNotifyOverspend(ref.read(databaseProvider), categoryId, DateTime.now());
+      if (mounted) Navigator.of(context).pop();
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 
   @override
@@ -132,7 +143,7 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
               decoration: InputDecoration(labelText: 'transactions.note'.tr()),
             ),
             const SizedBox(height: 16),
-            FilledButton(onPressed: _save, child: Text('common.save'.tr())),
+            FilledButton(onPressed: _saving ? null : _save, child: Text('common.save'.tr())),
           ],
         ),
       ),

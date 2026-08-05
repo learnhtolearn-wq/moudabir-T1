@@ -101,6 +101,7 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
         note: note.isEmpty ? null : note,
       );
     }
+    if (!mounted) return;
     if (_type == 'expense' && _categoryId != null) {
       await checkAndNotifyOverspend(ref.read(databaseProvider), _categoryId, _date);
     }
