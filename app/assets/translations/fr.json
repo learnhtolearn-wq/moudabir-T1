@@ -10,9 +10,7 @@
   "dashboard": {
     "total_balance": "Solde total",
     "month_income": "Revenus de ce mois",
-    "month_expense": "Dépenses de ce mois",
-    "allocate_banner": "Répartissez vos revenus en budgets",
-    "budget_progress_title": "Progression du budget"
+    "month_expense": "Dépenses de ce mois"
   },
   "transactions": {
     "title": "Transactions",

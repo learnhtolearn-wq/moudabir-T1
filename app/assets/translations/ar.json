@@ -10,9 +10,7 @@
   "dashboard": {
     "total_balance": "الرصيد الإجمالي",
     "month_income": "دخل هذا الشهر",
-    "month_expense": "مصروفات هذا الشهر",
-    "allocate_banner": "وزّع دخلك على الميزانيات",
-    "budget_progress_title": "تقدم الميزانية"
+    "month_expense": "مصروفات هذا الشهر"
   },
   "transactions": {
     "title": "المعاملات",

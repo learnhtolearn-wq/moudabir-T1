@@ -10,9 +10,7 @@
   "dashboard": {
     "total_balance": "الرصيد الكامل",
     "month_income": "الدخل ديال هاد الشهر",
-    "month_expense": "المصاريف ديال هاد الشهر",
-    "allocate_banner": "وزّع الدخل ديالك على الميزانيات",
-    "budget_progress_title": "تقدم الميزانية"
+    "month_expense": "المصاريف ديال هاد الشهر"
   },
   "transactions": {
     "title": "العمليات",
