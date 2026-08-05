@@ -1,11 +1,11 @@
 {
   "app_name": "Moudabbir",
   "nav": {
-    "dashboard": "Dashboard",
+    "dashboard": "Home",
     "transactions": "Transactions",
-    "goals": "Goals",
-    "reports": "Reports",
-    "settings": "Settings"
+    "goals": "Budget",
+    "reports": "Bills",
+    "settings": "Profile"
   },
   "dashboard": {
     "total_balance": "Total balance",
@@ -37,6 +37,10 @@
     "filter_date_range": "Date range",
     "filter_clear": "Clear",
     "no_matches": "No transactions match your filters.",
+    "quick_add_income": "+ Income",
+    "quick_add_expense": "+ Expense",
+    "section_today": "Today",
+    "section_yesterday": "Yesterday",
     "type": {
       "income": "Income",
       "expense": "Expense",
@@ -74,7 +78,7 @@
     "manage_accounts": "Manage accounts",
     "manage_categories": "Manage categories",
     "backup_now": "Back up now",
-    "backup_note": "Saved as an encrypted file only this device can restore",
+    "backup_note": "Protected by a backup password you choose — restorable on any device",
     "restore_backup": "Restore from backup",
     "restore_confirm_title": "Restore backup?",
     "restore_confirm_body": "This replaces all current data with the backup you pick. This cannot be undone.",
@@ -82,8 +86,16 @@
     "backup_success": "Backup ready to save",
     "backup_error": "Backup failed",
     "restore_success": "Backup restored",
-    "restore_error": "Restore failed — file may not be a valid Moudabbir backup for this device",
+    "restore_error": "Restore failed — file may not be a valid Moudabbir backup",
+    "restore_wrong_password": "Wrong backup password",
     "restore_cancelled": "Restore cancelled",
+    "backup_password_title": "Set a backup password",
+    "backup_password_body": "Protects this backup. You'll need it to restore — it's never saved anywhere, so don't lose it.",
+    "backup_password_hint": "Backup password",
+    "backup_password_confirm_hint": "Confirm password",
+    "backup_password_mismatch": "Passwords do not match",
+    "backup_password_too_short": "Must be at least {count} characters",
+    "restore_password_title": "Enter backup password",
     "reminders_enabled": "Reminders",
     "reminders_note": "Daily expense reminder + nudges before goal deadlines",
     "reminder_time": "Reminder time",
@@ -92,7 +104,15 @@
     "recovery_code_note": "Generate a new one-time code for PIN recovery",
     "recovery_code_confirm_title": "Generate new recovery code?",
     "recovery_code_confirm_body": "Your old recovery code will stop working. Make sure to save the new one.",
-    "recovery_code_confirm_action": "Generate"
+    "recovery_code_confirm_action": "Generate",
+    "delete_all_data": "Delete all data",
+    "delete_all_data_note": "Permanently erases every account, category, transaction, and goal on this device",
+    "delete_all_confirm_title": "Delete all data?",
+    "delete_all_confirm_body": "This permanently erases every account, category, transaction, and goal on this device. There is no backend copy — without a backup, this cannot be undone.",
+    "delete_all_confirm_hint": "Type DELETE to confirm",
+    "delete_all_confirm_action": "Delete everything",
+    "delete_all_success": "All data deleted",
+    "delete_all_error": "Failed to delete data"
   },
   "notifications": {
     "daily_title": "Log today's expenses",

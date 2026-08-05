@@ -11,9 +11,13 @@ import 'providers/transactions_provider.dart';
 const transactionTypes = ['income', 'expense', 'transfer'];
 
 class TransactionFormScreen extends ConsumerStatefulWidget {
-  const TransactionFormScreen({super.key, this.transaction});
+  const TransactionFormScreen({super.key, this.transaction, this.initialType});
 
   final Transaction? transaction;
+
+  /// Preselects the type when adding a new transaction (e.g. from a
+  /// "+ Income" / "+ Expense" quick-add button). Ignored when editing.
+  final String? initialType;
 
   @override
   ConsumerState<TransactionFormScreen> createState() =>
@@ -40,7 +44,7 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
     _amountController =
         TextEditingController(text: t != null ? t.amount.toString() : '');
     _noteController = TextEditingController(text: t?.note ?? '');
-    _type = t?.type ?? transactionTypes.first;
+    _type = t?.type ?? widget.initialType ?? transactionTypes.first;
     _date = t?.date ?? DateTime.now();
     _accountId = t?.accountId;
     _toAccountId = t?.toAccountId;
@@ -149,24 +153,29 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            SegmentedButton<String>(
-              segments: transactionTypes
-                  .map((t) => ButtonSegment(
-                        value: t,
-                        label: Text('transactions.type.$t'.tr()),
-                      ))
-                  .toList(),
-              selected: {_type},
-              onSelectionChanged: _isEditing
-                  ? null
-                  : (selection) => setState(() {
-                        _type = selection.first;
-                        _categoryId = null;
-                        _toAccountId = null;
-                        _transferError = null;
-                      }),
-            ),
-            const SizedBox(height: 16),
+            // Quick-add ("+ Revenu" / "+ Dépense") already commits to a type,
+            // so re-showing the picker would look like it ignored the tap.
+            // Only editing (type is fixed) and the generic add path show it.
+            if (_isEditing || widget.initialType == null) ...[
+              SegmentedButton<String>(
+                segments: transactionTypes
+                    .map((t) => ButtonSegment(
+                          value: t,
+                          label: Text('transactions.type.$t'.tr()),
+                        ))
+                    .toList(),
+                selected: {_type},
+                onSelectionChanged: _isEditing
+                    ? null
+                    : (selection) => setState(() {
+                          _type = selection.first;
+                          _categoryId = null;
+                          _toAccountId = null;
+                          _transferError = null;
+                        }),
+              ),
+              const SizedBox(height: 16),
+            ],
             accountsAsync.when(
               loading: () => const CircularProgressIndicator(),
               error: (_, _) => Text('accounts.error'.tr()),

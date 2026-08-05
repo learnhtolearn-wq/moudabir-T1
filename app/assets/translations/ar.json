@@ -1,11 +1,11 @@
 {
   "app_name": "مدبر",
   "nav": {
-    "dashboard": "لوحة القيادة",
+    "dashboard": "الرئيسية",
     "transactions": "المعاملات",
-    "goals": "الأهداف",
-    "reports": "التقارير",
-    "settings": "الإعدادات"
+    "goals": "الميزانية",
+    "reports": "الفواتير",
+    "settings": "الملف الشخصي"
   },
   "dashboard": {
     "total_balance": "الرصيد الإجمالي",
@@ -37,6 +37,10 @@
     "filter_date_range": "الفترة الزمنية",
     "filter_clear": "مسح",
     "no_matches": "لا توجد معاملات مطابقة للفلاتر.",
+    "quick_add_income": "+ دخل",
+    "quick_add_expense": "+ مصروف",
+    "section_today": "اليوم",
+    "section_yesterday": "أمس",
     "type": {
       "income": "دخل",
       "expense": "مصروف",
@@ -74,7 +78,7 @@
     "manage_accounts": "إدارة الحسابات",
     "manage_categories": "إدارة الفئات",
     "backup_now": "نسخ احتياطي الآن",
-    "backup_note": "يُحفظ كملف مشفّر لا يمكن استعادته إلا على هذا الجهاز",
+    "backup_note": "محمية بكلمة مرور نسخ احتياطي تختارها — قابلة للاستعادة على أي جهاز",
     "restore_backup": "استعادة نسخة احتياطية",
     "restore_confirm_title": "استعادة النسخة الاحتياطية؟",
     "restore_confirm_body": "سيتم استبدال جميع البيانات الحالية بالنسخة الاحتياطية التي تختارها. لا يمكن التراجع عن هذا الإجراء.",
@@ -82,8 +86,16 @@
     "backup_success": "النسخة الاحتياطية جاهزة للحفظ",
     "backup_error": "فشل النسخ الاحتياطي",
     "restore_success": "تمت استعادة النسخة الاحتياطية",
-    "restore_error": "فشلت الاستعادة — قد لا يكون الملف نسخة احتياطية صالحة لمدبر على هذا الجهاز",
+    "restore_error": "فشلت الاستعادة — قد لا يكون الملف نسخة احتياطية صالحة لمدبر",
+    "restore_wrong_password": "كلمة مرور النسخة الاحتياطية غير صحيحة",
     "restore_cancelled": "تم إلغاء الاستعادة",
+    "backup_password_title": "اختر كلمة مرور للنسخة الاحتياطية",
+    "backup_password_body": "تحمي هذه النسخة الاحتياطية. ستحتاجها للاستعادة — لا تُحفظ في أي مكان، فلا تفقدها.",
+    "backup_password_hint": "كلمة مرور النسخة الاحتياطية",
+    "backup_password_confirm_hint": "تأكيد كلمة المرور",
+    "backup_password_mismatch": "كلمتا المرور غير متطابقتين",
+    "backup_password_too_short": "يجب أن تحتوي على {count} أحرف على الأقل",
+    "restore_password_title": "أدخل كلمة مرور النسخة الاحتياطية",
     "reminders_enabled": "التذكيرات",
     "reminders_note": "تذكير يومي بتسجيل المصاريف + تنبيهات قبل مواعيد الأهداف",
     "reminder_time": "وقت التذكير",
@@ -92,7 +104,15 @@
     "recovery_code_note": "إنشاء رمز جديد لمرة واحدة لاسترداد رمز PIN",
     "recovery_code_confirm_title": "إنشاء رمز استرداد جديد؟",
     "recovery_code_confirm_body": "سيتوقف رمز الاسترداد القديم عن العمل. تأكد من حفظ الرمز الجديد.",
-    "recovery_code_confirm_action": "إنشاء"
+    "recovery_code_confirm_action": "إنشاء",
+    "delete_all_data": "حذف جميع البيانات",
+    "delete_all_data_note": "يمحو نهائياً جميع الحسابات والفئات والمعاملات والأهداف على هذا الجهاز",
+    "delete_all_confirm_title": "حذف جميع البيانات؟",
+    "delete_all_confirm_body": "سيتم محو جميع الحسابات والفئات والمعاملات والأهداف على هذا الجهاز نهائياً. لا توجد نسخة على أي خادم — بدون نسخة احتياطية، لا يمكن التراجع عن هذا الإجراء.",
+    "delete_all_confirm_hint": "اكتب DELETE للتأكيد",
+    "delete_all_confirm_action": "حذف كل شيء",
+    "delete_all_success": "تم حذف جميع البيانات",
+    "delete_all_error": "فشل حذف البيانات"
   },
   "notifications": {
     "daily_title": "سجّل مصاريف اليوم",

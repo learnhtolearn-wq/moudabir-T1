@@ -21,6 +21,13 @@ class DbKeyStore {
     return generated;
   }
 
+  /// Overwrites the stored passphrase with one recovered from a portable
+  /// backup ([BackupCrypto]), so the restored DB file — encrypted under
+  /// that recovered passphrase — opens correctly on this device.
+  static Future<void> setKey(String key) async {
+    await _storage.write(key: _dbKeyName, value: key);
+  }
+
   static String _generatePassphrase({int length = 32}) {
     const chars =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

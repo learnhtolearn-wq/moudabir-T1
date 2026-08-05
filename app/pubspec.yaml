@@ -39,6 +39,8 @@ dependencies:
   # Local backup/restore (share/pick the encrypted DB file)
   share_plus: 12.0.0
   file_picker: 8.3.3
+  archive: ^4.0.7
+  cryptography: ^2.7.0
 
   # Notification scheduling (local time zone aware)
   timezone: ^0.11.1
@@ -50,6 +52,15 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   drift_dev: ^2.34.5
   build_runner: ^2.4.13
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/branding/icon_mark_flat.png"
+  adaptive_icon_background: "#F6F1E4"
+  adaptive_icon_foreground: "assets/branding/icon_mark.png"
+  min_sdk_android: 21
 
 # Encrypted SQLite via SQLite3MultipleCiphers (SQLCipher successor).
 # Replaces the now-EOL sqlcipher_flutter_libs package — this is drift's
@@ -63,3 +74,24 @@ flutter:
   uses-material-design: true
   assets:
     - assets/translations/
+    - assets/branding/
+  fonts:
+    - family: Noto Sans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+        - asset: assets/fonts/NotoSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/NotoSans-Bold.ttf
+          weight: 700
+    - family: Noto Sans Arabic
+      fonts:
+        - asset: assets/fonts/NotoSansArabic-Regular.ttf
+        - asset: assets/fonts/NotoSansArabic-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/NotoSansArabic-Bold.ttf
+          weight: 700
+    - family: Roboto Mono
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+        - asset: assets/fonts/RobotoMono-SemiBold.ttf
+          weight: 600

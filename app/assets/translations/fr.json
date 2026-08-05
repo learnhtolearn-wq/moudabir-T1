@@ -1,11 +1,11 @@
 {
   "app_name": "Moudabbir",
   "nav": {
-    "dashboard": "Tableau de bord",
+    "dashboard": "Accueil",
     "transactions": "Transactions",
-    "goals": "Objectifs",
-    "reports": "Rapports",
-    "settings": "Paramètres"
+    "goals": "Budget",
+    "reports": "Charges",
+    "settings": "Profil"
   },
   "dashboard": {
     "total_balance": "Solde total",
@@ -37,6 +37,10 @@
     "filter_date_range": "Période",
     "filter_clear": "Effacer",
     "no_matches": "Aucune transaction ne correspond à vos filtres.",
+    "quick_add_income": "+ Revenu",
+    "quick_add_expense": "+ Dépense",
+    "section_today": "Aujourd'hui",
+    "section_yesterday": "Hier",
     "type": {
       "income": "Revenu",
       "expense": "Dépense",
@@ -74,7 +78,7 @@
     "manage_accounts": "Gérer les comptes",
     "manage_categories": "Gérer les catégories",
     "backup_now": "Sauvegarder maintenant",
-    "backup_note": "Enregistré comme fichier chiffré restaurable uniquement sur cet appareil",
+    "backup_note": "Protégée par un mot de passe de sauvegarde à vous — restaurable sur n'importe quel appareil",
     "restore_backup": "Restaurer une sauvegarde",
     "restore_confirm_title": "Restaurer la sauvegarde ?",
     "restore_confirm_body": "Toutes les données actuelles seront remplacées par la sauvegarde choisie. Action irréversible.",
@@ -82,8 +86,16 @@
     "backup_success": "Sauvegarde prête à enregistrer",
     "backup_error": "Échec de la sauvegarde",
     "restore_success": "Sauvegarde restaurée",
-    "restore_error": "Échec de la restauration — le fichier n'est peut-être pas une sauvegarde Moudabbir valide pour cet appareil",
+    "restore_error": "Échec de la restauration — le fichier n'est peut-être pas une sauvegarde Moudabbir valide",
+    "restore_wrong_password": "Mot de passe de sauvegarde incorrect",
     "restore_cancelled": "Restauration annulée",
+    "backup_password_title": "Choisissez un mot de passe de sauvegarde",
+    "backup_password_body": "Protège cette sauvegarde. Vous en aurez besoin pour restaurer — il n'est jamais enregistré nulle part, ne le perdez pas.",
+    "backup_password_hint": "Mot de passe de sauvegarde",
+    "backup_password_confirm_hint": "Confirmer le mot de passe",
+    "backup_password_mismatch": "Les mots de passe ne correspondent pas",
+    "backup_password_too_short": "Doit contenir au moins {count} caractères",
+    "restore_password_title": "Entrez le mot de passe de sauvegarde",
     "reminders_enabled": "Rappels",
     "reminders_note": "Rappel quotidien des dépenses + alertes avant l'échéance des objectifs",
     "reminder_time": "Heure du rappel",
@@ -92,7 +104,15 @@
     "recovery_code_note": "Générer un nouveau code à usage unique pour récupérer votre code PIN",
     "recovery_code_confirm_title": "Générer un nouveau code de récupération ?",
     "recovery_code_confirm_body": "Votre ancien code de récupération cessera de fonctionner. Assurez-vous d'enregistrer le nouveau.",
-    "recovery_code_confirm_action": "Générer"
+    "recovery_code_confirm_action": "Générer",
+    "delete_all_data": "Supprimer toutes les données",
+    "delete_all_data_note": "Efface définitivement tous les comptes, catégories, transactions et objectifs sur cet appareil",
+    "delete_all_confirm_title": "Supprimer toutes les données ?",
+    "delete_all_confirm_body": "Cela efface définitivement tous les comptes, catégories, transactions et objectifs sur cet appareil. Il n'y a aucune copie sur un serveur — sans sauvegarde, cette action est irréversible.",
+    "delete_all_confirm_hint": "Tapez DELETE pour confirmer",
+    "delete_all_confirm_action": "Tout supprimer",
+    "delete_all_success": "Toutes les données ont été supprimées",
+    "delete_all_error": "Échec de la suppression des données"
   },
   "notifications": {
     "daily_title": "Enregistrez vos dépenses du jour",

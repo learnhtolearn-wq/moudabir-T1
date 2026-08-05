@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/backup/backup_crypto.dart';
 import '../../core/backup/backup_service.dart';
+import '../../core/database/database.dart';
 import '../../core/database/database_provider.dart';
 import '../../core/notifications/notification_prefs.dart';
 import '../../core/notifications/notification_provider.dart';
@@ -125,6 +127,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               enabled: !_busy,
               onTap: _handleChangeReminderTime,
             ),
+          const Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.delete_forever_outlined,
+              color: Theme.of(context).colorScheme.error,
+            ),
+            title: Text(
+              'settings.delete_all_data'.tr(),
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
+            subtitle: Text('settings.delete_all_data_note'.tr()),
+            enabled: !_busy,
+            onTap: _handleDeleteAllData,
+          ),
         ],
       ),
     );
@@ -157,12 +173,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
+  static const _minBackupPasswordLength = 6;
+
   Future<void> _handleBackup() async {
+    final password = await _promptBackupPassword(confirm: true);
+    if (password == null) return;
+
     setState(() => _busy = true);
     try {
       // Flush pending writes and release the file handle before copying it.
       await ref.read(databaseProvider).close();
-      await BackupService.exportBackup();
+      await BackupService.exportBackup(password);
       _showMessage('settings.backup_success'.tr());
     } catch (_) {
       _showMessage('settings.backup_error'.tr());
@@ -193,20 +214,106 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
     if (confirmed != true) return;
 
+    final password = await _promptBackupPassword(confirm: false);
+    if (password == null) return;
+
     setState(() => _busy = true);
     try {
       await ref.read(databaseProvider).close();
-      final restored = await BackupService.importBackup();
+      final restored = await BackupService.importBackup(password);
       _showMessage(
         (restored ? 'settings.restore_success' : 'settings.restore_cancelled')
             .tr(),
       );
+    } on BackupPasswordException {
+      _showMessage('settings.restore_wrong_password'.tr());
     } catch (_) {
       _showMessage('settings.restore_error'.tr());
     } finally {
       ref.invalidate(databaseProvider);
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  /// Prompts for the backup password. When [confirm] is true (export flow)
+  /// also requires a matching confirmation field and a minimum length,
+  /// since this password is the only thing protecting the DB passphrase
+  /// riding along inside the exported bundle. Returns null if cancelled.
+  Future<String?> _promptBackupPassword({required bool confirm}) async {
+    final passwordController = TextEditingController();
+    final confirmController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    return showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          (confirm
+                  ? 'settings.backup_password_title'
+                  : 'settings.restore_password_title')
+              .tr(),
+        ),
+        content: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (confirm) Text('settings.backup_password_body'.tr()),
+              if (confirm) const SizedBox(height: 12),
+              TextFormField(
+                controller: passwordController,
+                obscureText: true,
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'settings.backup_password_hint'.tr(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'common.required'.tr();
+                  }
+                  if (confirm && value.length < _minBackupPasswordLength) {
+                    return 'settings.backup_password_too_short'.tr(
+                      namedArgs: {'count': '$_minBackupPasswordLength'},
+                    );
+                  }
+                  return null;
+                },
+              ),
+              if (confirm) ...[
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: confirmController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'settings.backup_password_confirm_hint'.tr(),
+                  ),
+                  validator: (value) {
+                    if (value != passwordController.text) {
+                      return 'settings.backup_password_mismatch'.tr();
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text('common.cancel'.tr()),
+          ),
+          FilledButton(
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                Navigator.pop(ctx, passwordController.text);
+              }
+            },
+            child: Text('common.continue_label'.tr()),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _handleRegenerateRecoveryCode() async {
@@ -237,6 +344,80 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           code: code,
           onContinue: (ctx) => Navigator.of(ctx).pop(),
         ),
+      ),
+    );
+  }
+
+  /// Wipes every account/category/transaction/goal by closing then deleting
+  /// the encrypted DB file — reopening it re-triggers onCreate, which
+  /// re-seeds default categories. The Keystore passphrase is left untouched
+  /// so the fresh file opens under the same key. Requires typing "DELETE"
+  /// since there's no server-side undo for this device.
+  Future<void> _handleDeleteAllData() async {
+    final confirmed = await _confirmDeleteAllDialog();
+    if (confirmed != true) return;
+
+    setState(() => _busy = true);
+    try {
+      await ref.read(databaseProvider).close();
+      final file = await AppDatabase.resolveFile();
+      if (await file.exists()) {
+        await file.delete();
+      }
+      _showMessage('settings.delete_all_success'.tr());
+    } catch (_) {
+      _showMessage('settings.delete_all_error'.tr());
+    } finally {
+      ref.invalidate(databaseProvider);
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<bool?> _confirmDeleteAllDialog() {
+    final controller = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    return showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('settings.delete_all_confirm_title'.tr()),
+        content: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('settings.delete_all_confirm_body'.tr()),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: controller,
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'settings.delete_all_confirm_hint'.tr(),
+                ),
+                validator: (value) =>
+                    value?.trim().toUpperCase() == 'DELETE'
+                        ? null
+                        : 'common.required'.tr(),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text('common.cancel'.tr()),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(ctx).colorScheme.error,
+            ),
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                Navigator.pop(ctx, true);
+              }
+            },
+            child: Text('settings.delete_all_confirm_action'.tr()),
+          ),
+        ],
       ),
     );
   }

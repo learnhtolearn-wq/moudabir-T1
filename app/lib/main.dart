@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/notifications/notification_provider.dart';
 import 'core/router/app_router.dart';
 import 'core/security/pin_store.dart';
+import 'core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,10 +85,7 @@ class _MoudabbirAppState extends ConsumerState<MoudabbirApp>
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xFF1F6F5C),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.light(),
       routerConfig: router,
     );
   }

@@ -3,9 +3,9 @@
   "nav": {
     "dashboard": "الرئيسية",
     "transactions": "العمليات",
-    "goals": "الأهداف",
-    "reports": "التقارير",
-    "settings": "الإعدادات"
+    "goals": "الميزانية",
+    "reports": "الفواتير",
+    "settings": "البروفايل"
   },
   "dashboard": {
     "total_balance": "الرصيد الكامل",
@@ -37,6 +37,10 @@
     "filter_date_range": "المدة الزمنية",
     "filter_clear": "مسح",
     "no_matches": "ما كاين حتى عملية كتوافق الفلاتر ديالك.",
+    "quick_add_income": "+ دخل",
+    "quick_add_expense": "+ مصروف",
+    "section_today": "اليوم",
+    "section_yesterday": "البارح",
     "type": {
       "income": "دخل",
       "expense": "مصروف",
@@ -74,7 +78,7 @@
     "manage_accounts": "دبر الحسابات",
     "manage_categories": "دبر الفئات",
     "backup_now": "دير نسخة احتياطية دابا",
-    "backup_note": "كتتحفظ كملف مشفّر ما يترجعش غير فهاد الجهاز",
+    "backup_note": "محمية بكلمة سر ديال النسخة الاحتياطية كتختارها نتا — تقدر ترجعها فأي جهاز",
     "restore_backup": "رجّع نسخة احتياطية",
     "restore_confirm_title": "ترجيع النسخة الاحتياطية؟",
     "restore_confirm_body": "غادي تبدل جميع المعطيات الحالية بالنسخة اللي غادي تختار. ما يمكنش ترجع لور.",
@@ -82,8 +86,16 @@
     "backup_success": "النسخة الاحتياطية واجدة باش تتحفظ",
     "backup_error": "ما نجحش النسخ الاحتياطي",
     "restore_success": "تم ترجيع النسخة الاحتياطية",
-    "restore_error": "ما نجحاتش الاستعادة — يمكن الملف ماشي نسخة احتياطية ديال مدبر صالحة فهاد الجهاز",
+    "restore_error": "ما نجحاتش الاستعادة — يمكن الملف ماشي نسخة احتياطية ديال مدبر صالحة",
+    "restore_wrong_password": "كلمة سر النسخة الاحتياطية غالطة",
     "restore_cancelled": "تلغات الاستعادة",
+    "backup_password_title": "اختار كلمة سر للنسخة الاحتياطية",
+    "backup_password_body": "كتحمي هاد النسخة الاحتياطية. غادي تحتاجها باش ترجعها — ما كتتحفظش حتى شي بلاصة، ماتنساهاش.",
+    "backup_password_hint": "كلمة سر النسخة الاحتياطية",
+    "backup_password_confirm_hint": "أكد كلمة السر",
+    "backup_password_mismatch": "كلمات السر ماشي بحال بحال",
+    "backup_password_too_short": "خاصها {count} ديال الحروف على الأقل",
+    "restore_password_title": "دخل كلمة سر النسخة الاحتياطية",
     "reminders_enabled": "التذكيرات",
     "reminders_note": "تذكير كل نهار باش تسجل المصاريف + تنبيهات قبل آخر أجل ديال الأهداف",
     "reminder_time": "وقت التذكير",
@@ -92,7 +104,15 @@
     "recovery_code_note": "دير رمز جديد لمرة وحدة باش ترجع رمز PIN",
     "recovery_code_confirm_title": "دير رمز استرجاع جديد؟",
     "recovery_code_confirm_body": "الرمز القديم غادي يبقى ماخدامش. تأكد بلي حفظتي الرمز الجديد.",
-    "recovery_code_confirm_action": "دير"
+    "recovery_code_confirm_action": "دير",
+    "delete_all_data": "حيد جميع البيانات",
+    "delete_all_data_note": "كيمحي بشكل نهائي جميع الحسابات والفئات والعمليات والأهداف فهاد الجهاز",
+    "delete_all_confirm_title": "حيد جميع البيانات؟",
+    "delete_all_confirm_body": "غادي يتمحاو جميع الحسابات والفئات والعمليات والأهداف فهاد الجهاز بشكل نهائي. ما كاينة حتى نسخة فسيرفر — بلا نسخة احتياطية، ما يمكنش ترجع لور.",
+    "delete_all_confirm_hint": "كتب DELETE باش تأكد",
+    "delete_all_confirm_action": "حيد كولشي",
+    "delete_all_success": "تحذفات جميع البيانات",
+    "delete_all_error": "ما نجحش حذف البيانات"
   },
   "notifications": {
     "daily_title": "سجل مصاريف اليوم",
