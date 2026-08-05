@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
+import '../../core/database/database_provider.dart';
 import '../accounts/providers/accounts_provider.dart';
+import '../budget/providers/budget_provider.dart';
 import '../categories/providers/categories_provider.dart';
 import 'providers/transactions_provider.dart';
 
@@ -98,6 +100,9 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
         categoryId: _type == 'transfer' ? null : _categoryId,
         note: note.isEmpty ? null : note,
       );
+    }
+    if (_type == 'expense' && _categoryId != null) {
+      await checkAndNotifyOverspend(ref.read(databaseProvider), _categoryId, _date);
     }
     if (mounted) Navigator.of(context).pop();
   }
