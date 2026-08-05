@@ -64,6 +64,8 @@ Single screen, two sections:
 
 **① Allocate** — one row per active (non-archived, kind=`expense`) category: text field for `targetAmount`, toggle for `sweepToSavings`. A running "remaining to allocate" figure (this month's income total minus sum of entered targets) updates live. "Save Allocation" upserts `BudgetTargets` rows for the current month.
 
+A final "+ Add category" row sits below the list. Tapping it reveals an inline text field (name only — `kind` is fixed to `expense` since this list only shows expense categories; icon/color take Sprint 1's existing defaults). Confirming calls the existing Sprint 1 category-create repository function; the new category then appears as a normal allocate row (target field + sweep toggle) in the same list, same session — no separate screen, no new table. Identical result to creating the category from Settings, just reachable without leaving Budget.
+
 **② Unused Budget — Sweep** — computed list, not stored: for every `BudgetTargets` row this month with `sweepToSavings = true` and `leftover = targetAmount - spentSoFar > 0`, show category name + leftover amount + a "Sweep →" button. Categories with leftover ≤ 0 or sweep off don't appear — section shows an empty state ("Nothing to sweep yet") if the list is empty.
 
 Tapping "Sweep →" on a category:
@@ -95,6 +97,15 @@ Extends `runDueRecurringTemplatesProvider`'s app-launch check pattern: after any
 
 Visual bar (green/orange/red) always reflects current state regardless of notification history — notifications are a one-time nudge, the bar is the persistent source of truth.
 
+## Single-Account Onboarding Gate
+
+App moves from unrestricted multi-account (Sprint 1) to a single-user, single-account model: the app assumes one account per user, but the underlying Accounts CRUD and schema are unchanged — only reachability changes.
+
+- **Gate:** after PIN unlock, before any shell route (Dashboard/Budget/Transactions/etc.) is reachable, check `accounts` row count. If 0, force the existing `AccountFormScreen` (Sprint 1, reused as-is) — same router-gating pattern already used for PIN setup. Router doesn't allow navigation past this screen until an account is saved.
+- **Post-creation:** once ≥1 account exists, the accounts list screen hides its "Add Account" FAB/entry point. Editing the existing account stays available.
+- **Deletion:** account deletion (existing Sprint 1 flow) stays available; deleting the only account drops the count back to 0, so the gate re-triggers on next launch.
+- No new screens, no new table. `BudgetTargets`/`RecurringTemplates`/`Transactions` continue to reference `accountId` exactly as designed above — with one account, every picker in Budget/Recurring/Quick-Add has exactly one option and can preselect it.
+
 ## Routing
 
 New routes added to the existing `go_router` shell (`lib/core/router` or equivalent Sprint 0 setup):
@@ -115,3 +126,5 @@ New keys added to `fr.json`/`en.json`/`ar.json`/`ar-MA.json` in the same pass:
 
 - `flutter analyze` clean.
 - Manual: allocate salary across categories, verify remaining-to-allocate math; log spend via quick-add and confirm progress bar color transitions at 80%/100%; add a recurring template with today's day-of-month, relaunch app, confirm single auto-logged transaction (and no duplicate on a second relaunch same month); sweep a category with leftover, confirm savings account balance increases and category shows zero remaining; confirm notifications fire once per threshold, not repeatedly.
+- Manual: fresh install, confirm account-creation screen blocks Dashboard until first account saved; confirm "Add Account" entry point disappears after; delete the only account, relaunch, confirm gate re-triggers.
+- Manual: from Budget's Allocate section, add a new category inline, confirm it persists (visible in Settings' category list too) and its target/sweep-toggle behave like any pre-existing category.
