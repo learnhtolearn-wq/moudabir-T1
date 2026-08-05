@@ -10,7 +10,9 @@
   "dashboard": {
     "total_balance": "Total balance",
     "month_income": "This month's income",
-    "month_expense": "This month's expenses"
+    "month_expense": "This month's expenses",
+    "allocate_banner": "Allocate your income to budgets",
+    "budget_progress_title": "Budget progress"
   },
   "transactions": {
     "title": "Transactions",
