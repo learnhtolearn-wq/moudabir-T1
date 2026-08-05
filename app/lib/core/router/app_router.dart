@@ -32,18 +32,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       if (hasPin && !goingToAuth) {
         try {
-          final hasAccount = ref.read(hasAnyAccountProvider).maybeWhen(
-                data: (value) => value,
-                orElse: () => null,
-              );
-          // Still loading (first read of the session) or errored — don't
-          // redirect on incomplete information; let the next navigation
-          // (or the stream's next emission) resolve it.
-          if (hasAccount != null) {
-            final goingToSetupAccount = state.matchedLocation == '/setup-account';
-            if (!hasAccount && !goingToSetupAccount) return '/setup-account';
-            if (hasAccount && goingToSetupAccount) return '/dashboard';
-          }
+          // `.future` resolves with the stream's first emitted value (and
+          // is served from cache on subsequent reads for the session, since
+          // accountsProvider stays alive as long as something — this
+          // redirect included — is reading it). Awaiting here matches the
+          // determinism of the original inline query: the redirect blocks
+          // until the real answer is known, so the very first post-unlock
+          // navigation for a 0-account user is correctly caught, instead of
+          // racing an AsyncLoading value.
+          final accounts = await ref.read(accountsProvider.future);
+          final hasAccount = accounts.isNotEmpty;
+          final goingToSetupAccount = state.matchedLocation == '/setup-account';
+          if (!hasAccount && !goingToSetupAccount) return '/setup-account';
+          if (hasAccount && goingToSetupAccount) return '/dashboard';
         } catch (_) {
           // A transient DB failure (e.g. mid backup-restore) must not crash
           // routing — fall through to no redirect.
