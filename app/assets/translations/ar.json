@@ -10,7 +10,10 @@
   "dashboard": {
     "total_balance": "الرصيد الإجمالي",
     "month_income": "دخل هذا الشهر",
-    "month_expense": "مصروفات هذا الشهر"
+    "month_expense": "مصروفات هذا الشهر",
+    "allocate_banner": "تم استلام الراتب — وزّع ميزانيتك ◂",
+    "quick_add_hint": "إضافة سريعة",
+    "budget_progress_title": "تقدم الميزانية"
   },
   "transactions": {
     "title": "المعاملات",
@@ -37,6 +40,8 @@
     "filter_date_range": "الفترة الزمنية",
     "filter_clear": "مسح",
     "no_matches": "لا توجد معاملات مطابقة للفلاتر.",
+    "quick_add_title": "إضافة سريعة",
+    "quick_add_invalid": "يرجى إدخال مبلغ وفئة وحساب صالحين.",
     "type": {
       "income": "دخل",
       "expense": "مصروف",
@@ -73,6 +78,8 @@
     "language": "اللغة",
     "manage_accounts": "إدارة الحسابات",
     "manage_categories": "إدارة الفئات",
+    "manage_budget": "الراتب والميزانية",
+    "manage_recurring": "الفواتير المتكررة",
     "backup_now": "نسخ احتياطي الآن",
     "backup_note": "يُحفظ كملف مشفّر لا يمكن استعادته إلا على هذا الجهاز",
     "restore_backup": "استعادة نسخة احتياطية",
@@ -98,7 +105,10 @@
     "daily_title": "سجّل مصاريف اليوم",
     "daily_body": "خذ دقيقة لتسجيل ما أنفقته اليوم.",
     "goal_deadline_title": "اقترب موعد الهدف",
-    "goal_deadline_body": "الموعد النهائي لـ \"{name}\" اقترب — تحقق من تقدمك."
+    "goal_deadline_body": "الموعد النهائي لـ \"{name}\" اقترب — تحقق من تقدمك.",
+    "budget_90": "{category} وصلت إلى 90% من الميزانية.",
+    "budget_100": "{category} تجاوزت الميزانية.",
+    "sweep_done": "{category}: تم نقل {amount} إلى الادخار."
   },
   "common": {
     "save": "حفظ",
@@ -155,6 +165,35 @@
       "freelance": "العمل الحر",
       "other_income": "دخل آخر"
     }
+  },
+  "budget": {
+    "title": "الراتب والميزانية",
+    "error": "تعذر تحميل الميزانية.",
+    "allocate_header": "① توزيع الراتب",
+    "remaining_to_allocate": "المتبقي للتوزيع: {amount}",
+    "target_amount": "الهدف",
+    "save_allocation": "حفظ التوزيع",
+    "allocation_saved": "تم حفظ التوزيع",
+    "sweep_header": "② ميزانية غير مستخدمة — نقل",
+    "sweep_empty": "لا يوجد شيء لنقله الآن",
+    "sweep_action": "نقل ←",
+    "pick_savings_account": "اختر حساب الادخار",
+    "pick_source_account": "من أي حساب؟",
+    "sweep_success": "تم النقل إلى الادخار",
+    "sweep_note": "نقل ميزانية {category}",
+    "no_accounts_available": "لا توجد حسابات متاحة."
+  },
+  "recurring": {
+    "title": "الفواتير المتكررة",
+    "error": "تعذر تحميل الفواتير المتكررة.",
+    "empty": "لا توجد فواتير متكررة بعد. اضغط + لإضافة واحدة.",
+    "add_title": "إضافة فاتورة متكررة",
+    "edit_title": "تعديل الفاتورة المتكررة",
+    "name": "الاسم",
+    "day_of_month": "يوم الشهر",
+    "day_of_month_subtitle": "يوم {day} من كل شهر",
+    "delete_title": "حذف الفاتورة المتكررة",
+    "delete_confirm": "لن يتم تفعيل هذه الفاتورة المتكررة بعد الآن."
   },
   "auth": {
     "setup_pin_title": "إنشاء رمز PIN",

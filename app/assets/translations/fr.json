@@ -10,7 +10,10 @@
   "dashboard": {
     "total_balance": "Solde total",
     "month_income": "Revenus de ce mois",
-    "month_expense": "Dépenses de ce mois"
+    "month_expense": "Dépenses de ce mois",
+    "allocate_banner": "Salaire reçu — Allouer votre budget ▸",
+    "quick_add_hint": "Ajout rapide",
+    "budget_progress_title": "Suivi du budget"
   },
   "transactions": {
     "title": "Transactions",
@@ -37,6 +40,8 @@
     "filter_date_range": "Période",
     "filter_clear": "Effacer",
     "no_matches": "Aucune transaction ne correspond à vos filtres.",
+    "quick_add_title": "Ajout rapide",
+    "quick_add_invalid": "Veuillez renseigner un montant, une catégorie et un compte valides.",
     "type": {
       "income": "Revenu",
       "expense": "Dépense",
@@ -73,6 +78,8 @@
     "language": "Langue",
     "manage_accounts": "Gérer les comptes",
     "manage_categories": "Gérer les catégories",
+    "manage_budget": "Salaire & Budget",
+    "manage_recurring": "Prélèvements récurrents",
     "backup_now": "Sauvegarder maintenant",
     "backup_note": "Enregistré comme fichier chiffré restaurable uniquement sur cet appareil",
     "restore_backup": "Restaurer une sauvegarde",
@@ -98,7 +105,10 @@
     "daily_title": "Enregistrez vos dépenses du jour",
     "daily_body": "Prenez une minute pour noter ce que vous avez dépensé aujourd'hui.",
     "goal_deadline_title": "Échéance d'objectif proche",
-    "goal_deadline_body": "« {name} » arrive bientôt à échéance — vérifiez votre progression."
+    "goal_deadline_body": "« {name} » arrive bientôt à échéance — vérifiez votre progression.",
+    "budget_90": "{category} est à 90% du budget.",
+    "budget_100": "{category} a dépassé le budget.",
+    "sweep_done": "{category} : {amount} transféré vers l'épargne."
   },
   "common": {
     "save": "Enregistrer",
@@ -155,6 +165,35 @@
       "freelance": "Freelance",
       "other_income": "Autre revenu"
     }
+  },
+  "budget": {
+    "title": "Salaire & Budget",
+    "error": "Impossible de charger le budget.",
+    "allocate_header": "① Allouer le salaire",
+    "remaining_to_allocate": "Reste à allouer : {amount}",
+    "target_amount": "Objectif",
+    "save_allocation": "Enregistrer l'allocation",
+    "allocation_saved": "Allocation enregistrée",
+    "sweep_header": "② Budget non utilisé — Balayer",
+    "sweep_empty": "Rien à balayer pour l'instant",
+    "sweep_action": "Balayer →",
+    "pick_savings_account": "Choisir le compte d'épargne",
+    "pick_source_account": "Depuis quel compte ?",
+    "sweep_success": "Montant transféré vers l'épargne",
+    "sweep_note": "Balayage budget {category}",
+    "no_accounts_available": "Aucun compte disponible."
+  },
+  "recurring": {
+    "title": "Prélèvements récurrents",
+    "error": "Impossible de charger les prélèvements récurrents.",
+    "empty": "Aucun prélèvement récurrent. Appuyez sur + pour en ajouter un.",
+    "add_title": "Ajouter un prélèvement récurrent",
+    "edit_title": "Modifier le prélèvement récurrent",
+    "name": "Nom",
+    "day_of_month": "Jour du mois",
+    "day_of_month_subtitle": "Le {day} de chaque mois",
+    "delete_title": "Supprimer le prélèvement",
+    "delete_confirm": "Ce prélèvement récurrent ne se déclenchera plus."
   },
   "auth": {
     "setup_pin_title": "Créer votre code PIN",
