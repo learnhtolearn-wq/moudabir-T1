@@ -15,7 +15,6 @@ import '../../core/widgets/app_widgets.dart';
 import '../accounts/accounts_screen.dart';
 import '../auth/change_pin_screen.dart';
 import '../auth/recovery_code_screen.dart';
-import '../budget/budget_screen.dart';
 import '../categories/categories_screen.dart';
 import '../recurring/recurring_templates_screen.dart';
 
@@ -77,13 +76,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     title: 'settings.manage_categories'.tr(),
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const CategoriesScreen()),
-                    ),
-                  ),
-                  AppListItem(
-                    leading: const AppIconAvatar(icon: Icons.account_balance_outlined),
-                    title: 'settings.manage_budget'.tr(),
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const BudgetScreen()),
                     ),
                   ),
                   AppListItem(
@@ -204,7 +196,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       builder: (ctx) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: context.supportedLocales.map((locale) {
+          children: context.supportedLocales
+              .where((locale) => locale.languageCode != 'en')
+              .map((locale) {
             return ListTile(
               title: Text(_localeLabels[locale.toString()] ?? locale.toString()),
               onTap: () {

@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/app_widgets.dart';
-import '../budget/budget_screen.dart';
-import '../budget/providers/budget_provider.dart';
 import '../transactions/quick_add_sheet.dart';
 import 'providers/dashboard_provider.dart';
 
@@ -25,7 +23,6 @@ class DashboardScreen extends ConsumerWidget {
           children: [
             ScreenHeader(title: 'nav.dashboard'.tr()),
             const SizedBox(height: 20),
-            const _AllocateBanner(),
             _StatCard(
               label: 'dashboard.total_balance'.tr(),
               value: totalAsync,
@@ -43,8 +40,6 @@ class DashboardScreen extends ConsumerWidget {
               value: monthlyAsync.whenData((s) => s.expense),
               color: Colors.red,
             ),
-            const SizedBox(height: 20),
-            const _BudgetProgressSection(),
           ],
         ),
       ),
@@ -56,93 +51,6 @@ class DashboardScreen extends ConsumerWidget {
         ),
         child: const Icon(Icons.add),
       ),
-    );
-  }
-}
-
-class _AllocateBanner extends ConsumerWidget {
-  const _AllocateBanner();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final monthlyAsync = ref.watch(monthlySummaryProvider);
-    final targetsAsync = ref.watch(budgetTargetsProvider);
-
-    final hasIncome = (monthlyAsync.asData?.value.income ?? 0) > 0;
-    final hasTargets = targetsAsync.asData?.value.isNotEmpty ?? true;
-    if (!hasIncome || hasTargets) return const SizedBox.shrink();
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: AppListItem(
-        title: 'dashboard.allocate_banner'.tr(),
-        leading: const AppIconAvatar(icon: Icons.account_balance_wallet_outlined),
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const BudgetScreen()),
-        ),
-      ),
-    );
-  }
-}
-
-class _BudgetProgressSection extends ConsumerWidget {
-  const _BudgetProgressSection();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final targetsAsync = ref.watch(budgetTargetsProvider);
-
-    return targetsAsync.when(
-      loading: () => const SizedBox.shrink(),
-      error: (_, _) => const SizedBox.shrink(),
-      data: (targets) {
-        if (targets.isEmpty) return const SizedBox.shrink();
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('dashboard.budget_progress_title'.tr(), style: AppTextStyles.body),
-            const SizedBox(height: 8),
-            for (final row in targets) _BudgetProgressRow(row: row),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _BudgetProgressRow extends ConsumerWidget {
-  const _BudgetProgressRow({required this.row});
-
-  final BudgetTargetWithCategory row;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final spentAsync = ref.watch(categorySpentProvider(row.category.id));
-
-    return spentAsync.when(
-      loading: () => const SizedBox.shrink(),
-      error: (_, _) => const SizedBox.shrink(),
-      data: (spent) {
-        final target = row.target.targetAmount;
-        final ratio = target <= 0 ? 0.0 : (spent / target).clamp(0.0, 1.0);
-        final color = ratio >= 1.0
-            ? Colors.red
-            : ratio >= 0.8
-                ? Colors.orange
-                : AppColors.vault;
-
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(row.category.name.tr(), style: AppTextStyles.bodyRegular),
-              const SizedBox(height: 6),
-              ProgressGauge(value: ratio, fillColors: [color, color]),
-            ],
-          ),
-        );
-      },
     );
   }
 }
