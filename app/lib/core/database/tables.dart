@@ -59,3 +59,35 @@ class Goals extends Table {
   BoolColumn get archived => boolean().withDefault(const Constant(false))();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }
+
+/// Per-month spending target per category (Hybrid Budget Model).
+class BudgetTargets extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get categoryId => integer().references(Categories, #id)();
+  TextColumn get month => text()(); // 'YYYY-MM', one row per category per month
+  RealColumn get targetAmount => real()();
+  BoolColumn get sweepToSavings =>
+      boolean().withDefault(const Constant(false))();
+  // Edge-triggered overspend notification guards — reset implicitly since a
+  // new month gets a fresh row (no explicit month-rollover step needed).
+  BoolColumn get notified90 => boolean().withDefault(const Constant(false))();
+  BoolColumn get notified100 =>
+      boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+/// Recurring bill/income templates that auto-create transactions on their due day.
+class RecurringTemplates extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text().withLength(min: 1, max: 80)();
+  TextColumn get type => text()(); // income | expense
+  RealColumn get amount => real()();
+  IntColumn get accountId => integer().references(Accounts, #id)();
+  IntColumn get categoryId =>
+      integer().nullable().references(Categories, #id)();
+  // 1-28 only — every month has at least 28 days, so no clamping is needed.
+  IntColumn get dayOfMonth => integer()();
+  BoolColumn get active => boolean().withDefault(const Constant(true))();
+  DateTimeColumn get lastRunMonth => dateTime().nullable()();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
