@@ -12,6 +12,17 @@ final accountsProvider = StreamProvider.autoDispose<List<Account>>((ref) {
       .watch();
 });
 
+/// Whether at least one non-archived account exists. Derived from
+/// [accountsProvider] so the "archived == false" filter has a single source
+/// of truth. Deliberately NOT autoDispose: the router reads this on every
+/// navigation via `ref.read`, and keeping it alive for the app session means
+/// that read is served from Riverpod's cache (and kept fresh by the
+/// underlying Drift stream) instead of re-issuing a DB query each time.
+final hasAnyAccountProvider = Provider<AsyncValue<bool>>((ref) {
+  final accounts = ref.watch(accountsProvider);
+  return accounts.whenData((list) => list.isNotEmpty);
+});
+
 final accountsNotifierProvider =
     Provider.autoDispose<AccountsNotifier>((ref) {
   return AccountsNotifier(ref.watch(databaseProvider));

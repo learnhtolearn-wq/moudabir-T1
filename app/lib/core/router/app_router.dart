@@ -1,10 +1,10 @@
-import 'package:drift/drift.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/accounts/accounts_form_screen.dart';
+import '../../features/accounts/providers/accounts_provider.dart';
 import '../../features/auth/pin_setup_screen.dart';
 import '../../features/auth/lock_screen.dart';
 import '../../features/dashboard/dashboard_screen.dart';
@@ -12,7 +12,6 @@ import '../../features/goals/goals_screen.dart';
 import '../../features/reports/reports_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/transactions/transactions_screen.dart';
-import '../database/database_provider.dart';
 import '../security/pin_store.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -31,18 +30,24 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return '/lock';
       }
 
-      if (hasPin &&
-          state.matchedLocation != '/lock' &&
-          state.matchedLocation != '/setup-pin') {
-        final db = ref.read(databaseProvider);
-        final accountCount = await (db.selectOnly(db.accounts)
-              ..addColumns([db.accounts.id.count()])
-              ..where(db.accounts.archived.equals(false)))
-            .map((row) => row.read(db.accounts.id.count()) ?? 0)
-            .getSingle();
-        final goingToSetupAccount = state.matchedLocation == '/setup-account';
-        if (accountCount == 0 && !goingToSetupAccount) return '/setup-account';
-        if (accountCount > 0 && goingToSetupAccount) return '/dashboard';
+      if (hasPin && !goingToAuth) {
+        try {
+          final hasAccount = ref.read(hasAnyAccountProvider).maybeWhen(
+                data: (value) => value,
+                orElse: () => null,
+              );
+          // Still loading (first read of the session) or errored — don't
+          // redirect on incomplete information; let the next navigation
+          // (or the stream's next emission) resolve it.
+          if (hasAccount != null) {
+            final goingToSetupAccount = state.matchedLocation == '/setup-account';
+            if (!hasAccount && !goingToSetupAccount) return '/setup-account';
+            if (hasAccount && goingToSetupAccount) return '/dashboard';
+          }
+        } catch (_) {
+          // A transient DB failure (e.g. mid backup-restore) must not crash
+          // routing — fall through to no redirect.
+        }
       }
       return null;
     },
