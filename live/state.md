@@ -3,6 +3,17 @@
 *Updated at the end of each session. Read this FIRST on startup.*
 
 ## Last Session
+- **Date:** 2026-08-05 — hybrid budget model implementation, executed via `superpowers:subagent-driven-development` in an isolated worktree (`.claude/worktrees/hybrid-budget-model`, branch `worktree-hybrid-budget-model`), following the plan at `docs/superpowers/plans/2026-08-05-hybrid-budget-model.md`.
+- All 12 plan tasks implemented, each through implementer + spec-compliance review + code-quality review: schema (`BudgetTargets`/`RecurringTemplates`, migration v4→v5), `SettingsPrefs` (default savings account), `NotificationService.showOneShot`, recurring provider (CRUD + `runDueRecurringTemplatesProvider` auto-fire on app start), budget provider (targets/spend/allocation/sweep/`checkAndNotifyOverspend`), recurring templates screen+form, Salary & Budget screen (allocate + sweep), quick-add bottom sheet, Dashboard FAB/allocate-banner/progress-bars, Settings entries, full i18n (fr/en/ar/ar-MA).
+- Code-review passes caught and fixed several real bugs beyond the plan's literal text: sweep button double-tap could insert duplicate transfer transactions (fixed with a `_sweepingTargetIds` guard); same double-tap risk in quick-add's Save (fixed with a `_saving` flag) plus silent-fail-with-no-feedback on invalid input (added a SnackBar) plus a missing `mounted` guard before a post-await `ref.read`; recurring-template form didn't reset the selected category when switching income/expense type, letting a stale wrong-kind category get saved (fixed). One reviewer false-positive was overridden: "missing sweep notification" — it's actually fired at the UI layer in `budget_screen.dart`, not inside `BudgetNotifier.sweep()`, matching the plan's intended split.
+- One scope-creep incident: the Task 10 implementer proactively added dashboard i18n keys with different wording than the plan's canonical Task 12 text — caught in review, reverted, left for Task 12 to add correctly. Lesson: even "obviously helpful" out-of-scope additions can conflict with a later task's exact literal spec in a plan this prescriptive.
+- Two keys not in the original plan were added during review and folded into Task 12: `budget.no_accounts_available` (empty-account-list guard) and `transactions.quick_add_invalid` (quick-add validation feedback) — added across all 4 locale files.
+- `flutter analyze` clean throughout; debug APK built clean (`flutter build apk --debug`).
+- **Manual device verification in progress** (user's physical device, model `2201117TY`/HyperOS — `adb screencap` returns 0 bytes on this device, a ROM-level screenshot restriction, so this session's agent could not visually drive/verify the UI itself; monitored `adb logcat` for crashes during user's manual testing instead — no Moudabbir crashes observed). User was confused by the Sweep flow at first (didn't realize a category needs its "sweep" checkbox ticked at allocation time AND positive leftover before it appears in section ②) — walked through the mechanism, checklist below.
+- **New feature request surfaced, not yet scoped:** user wants the ability to add "whatever he wants" in the Salary & Budget screen — ambiguous whether this means inline quick-create of a new category from the Budget screen, or a free-text budget line not tied to the `Categories` table at all (bigger schema change). Asked a clarifying question, user redirected to wrap up the session instead — **needs a follow-up conversation before any implementation**.
+- Session ends mid-Task-13 (manual walkthrough not yet fully confirmed by user) — implementation itself is complete and committed on the worktree branch, not yet merged to `master`.
+
+## Prior Session
 - **Date:** 2026-08-05 — design-only session (no code), spec doc committed as `0dcb0a5`.
 - User wants a hybrid budgeting model, not pure after-the-fact logging: allocate salary into per-category targets on payday, auto-log known recurring bills, fast quick-add for daily variable spend, and — new idea from user mid-session — let unspent category budget (e.g. Health with no doctor visit that month) be swept into savings on the user's own timing, not automatically.
 - Full brainstorming pass run via `superpowers:brainstorming` skill. Design settled: recurring templates auto-fire (no confirm step); category-level budget targets (not account-only); FAB + smart-defaults quick-add; overspend alert = visual bar + notification (both). Leftover sweep evolved during discussion from "auto month-end job" to a single **Salary & Budget page** the user opens themselves — section ① allocate salary into category targets, section ② lists only sweep-eligible categories with current leftover and a per-category "Sweep →" button (no bulk sweep, no background/app-open catch-up logic).
@@ -32,7 +43,10 @@
 - Session ends with all Sprint 6 code **uncommitted**.
 
 ## Open Tasks
-- **Get user approval on hybrid budget model spec** (`docs/superpowers/specs/2026-08-05-hybrid-budget-model-design.md`), then run `superpowers:writing-plans` to turn it into an implementation plan — nothing built yet, design-only session.
+- **Finish manual QA on hybrid budget model** (checklist: allocate, quick-add + progress bar, 90%/100% overspend notifications, recurring auto-log + no-duplicate-on-relaunch, sweep flow + account memory, ar-MA/ar RTL) — in progress on user's physical device at session end, not yet fully confirmed.
+- **Scope and implement "add whatever he wants" in Salary & Budget** — user request at session end, ambiguous (inline category quick-create vs. free-text budget line not tied to `Categories`) — needs a clarifying conversation before building.
+- **Merge or PR the `worktree-hybrid-budget-model` branch** once manual QA passes — currently sitting in the worktree, not on `master`.
+- **Root-cause `adb screencap` returning 0 bytes** on the user's physical device (HyperOS/Xiaomi-family ROM, model `2201117TY`) — blocks this agent from visually driving/verifying the UI directly on that device in future sessions; logcat monitoring works as a fallback for crash detection but not UI-state verification.
 - **Commit this session's work** (design system install, Transactions redesign, nav relabel, logo) — nothing committed yet.
 - **Diagnose `flutter install` staleness bug** — reused a cached APK after source changes on this machine; worked around with `flutter build apk --release` + direct `adb install -r`, not root-caused.
 - **Get design mockups for Budget/Charges/Profil tabs** from design team — currently just relabeled old Goals/Reports/Settings screens with no matching design, tracked as a gap, not silently treated as done.
@@ -51,11 +65,13 @@
 - Darija (`ar-MA`) built-in Material widget strings (date pickers etc.) fall back to standard Arabic since Flutter's `GlobalMaterialLocalizations` resolves by languageCode only, ignoring country — known/accepted tradeoff, not a bug to fix
 
 ## Current Priorities
-- Land hybrid budget model: get spec approved, write implementation plan, build (new Sprint, not yet numbered in intel/wins.md)
+- Finish manual QA on hybrid budget model, then merge/PR `worktree-hybrid-budget-model`
+- Scope the "add whatever he wants" Salary & Budget request with the user before building it
 - Commit this session's design-install + logo work (Transactions redesign, theme tokens, fonts, nav relabel, launcher icon)
 - Get Budget/Charges/Profil mockups from design team — only Transactions has a real design so far
 - Re-verify restore + confirm backup, then commit Sprint 6
 - Sprint 7 (full FR/AR/EN + RTL polish and testing) — next build item per Build Queue once Sprint 6 closes out
 
 ## Active Work
-- None — design install (fonts, theme tokens, Transactions redesign, nav relabel, app logo) shipped and device-verified by user this session, including a follow-up bugfix round (quick-add type switcher, missing transfer entry). Uncommitted.
+- Hybrid budget model manual QA (physical device) — mid-checklist at session end, no crashes seen in logcat so far.
+- Design install (fonts, theme tokens, Transactions redesign, nav relabel, app logo) shipped and device-verified by user this session, including a follow-up bugfix round (quick-add type switcher, missing transfer entry). Uncommitted.
