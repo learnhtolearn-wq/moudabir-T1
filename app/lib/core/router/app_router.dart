@@ -9,6 +9,7 @@ import '../../features/auth/pin_setup_screen.dart';
 import '../../features/auth/lock_screen.dart';
 import '../../features/dashboard/dashboard_screen.dart';
 import '../../features/goals/goals_screen.dart';
+import '../../features/recurring/providers/recurring_provider.dart';
 import '../../features/reports/reports_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/transactions/transactions_screen.dart';
@@ -94,13 +95,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   );
 });
 
-class _AppShell extends StatelessWidget {
+class _AppShell extends ConsumerWidget {
   const _AppShell({required this.shell});
 
   final StatefulNavigationShell shell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Side-effect only: fires any recurring bills/income due this month
+    // that haven't already run yet. Result is intentionally unused.
+    //
+    // Deliberately watched here rather than in MoudabbirApp.build: this
+    // shell is only reached once the router's redirect logic has confirmed
+    // the user has a PIN, has passed /lock (or biometric unlock), and has
+    // at least one account — i.e. strictly post-authentication. Watching it
+    // in MoudabbirApp.build would run it on every cold start regardless of
+    // lock state, silently inserting a real transaction (and potentially
+    // firing an overspend notification exposing a category name) before the
+    // user has unlocked.
+    ref.watch(runDueRecurringTemplatesProvider);
+
     return Scaffold(
       body: shell,
       bottomNavigationBar: NavigationBar(

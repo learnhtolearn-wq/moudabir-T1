@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/notifications/notification_provider.dart';
 import 'core/router/app_router.dart';
 import 'core/security/pin_store.dart';
-import 'features/recurring/providers/recurring_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,11 +70,12 @@ class _MoudabbirAppState extends ConsumerState<MoudabbirApp>
   Widget build(BuildContext context) {
     final router = ref.watch(appRouterProvider);
     // Side-effect only: reschedules reminders left enabled from a prior
-    // session. Result is intentionally unused.
+    // session. Result is intentionally unused. Safe to run pre-auth: it only
+    // reschedules previously-configured OS notifications (idempotent) and
+    // never mutates financial records, unlike the recurring-template runner
+    // below (which is deliberately NOT watched here — see _AppShell in
+    // app_router.dart for why).
     ref.watch(notificationBootstrapProvider);
-    // Side-effect only: fires any recurring bills/income due this month
-    // that haven't already run. Result is intentionally unused.
-    ref.watch(runDueRecurringTemplatesProvider);
 
     return MaterialApp.router(
       // Forces the router (and every StatefulShellRoute branch it caches)
