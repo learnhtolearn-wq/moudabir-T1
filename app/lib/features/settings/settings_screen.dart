@@ -13,7 +13,9 @@ import '../../core/security/pin_store.dart';
 import '../accounts/accounts_screen.dart';
 import '../auth/change_pin_screen.dart';
 import '../auth/recovery_code_screen.dart';
+import '../budget/budget_screen.dart';
 import '../categories/categories_screen.dart';
+import '../recurring/recurring_templates_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -71,6 +73,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             trailing: chevron,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.account_balance_outlined),
+            title: Text('settings.manage_budget'.tr()),
+            trailing: chevron,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const BudgetScreen()),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.repeat_outlined),
+            title: Text('settings.manage_recurring'.tr()),
+            trailing: chevron,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const RecurringTemplatesScreen()),
             ),
           ),
           const Divider(),

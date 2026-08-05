@@ -71,7 +71,11 @@ class _MoudabbirAppState extends ConsumerState<MoudabbirApp>
   Widget build(BuildContext context) {
     final router = ref.watch(appRouterProvider);
     // Side-effect only: reschedules reminders left enabled from a prior
-    // session. Result is intentionally unused.
+    // session. Result is intentionally unused. Safe to run pre-auth: it only
+    // reschedules previously-configured OS notifications (idempotent) and
+    // never mutates financial records, unlike the recurring-template runner
+    // below (which is deliberately NOT watched here — see _AppShell in
+    // app_router.dart for why).
     ref.watch(notificationBootstrapProvider);
 
     return MaterialApp.router(

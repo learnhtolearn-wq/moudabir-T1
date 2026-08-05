@@ -1,13 +1,14 @@
-# Focus — Hybrid budget model: plan done, build next
+# Focus — Hybrid Budget Model QA + wrap-up
 
 *Last updated: 2026-08-05*
 
 ## Top Priorities Right Now
-- Hybrid budget model plan (14 tasks) committed at `docs/superpowers/plans/2026-08-05-hybrid-budget-model.md` — spec approved, nothing built yet. Next session: execute via `superpowers:subagent-driven-development` or `superpowers:executing-plans`.
-- First Figma design pull-in shipped earlier session (Transactions screen, shared theme tokens, bundled fonts, nav relabel, app logo) — device-verified by user, **still uncommitted**. Commit before/alongside budget build.
-- Figma file (CfQ5K7ZLCEXglxOtqDg15L) only has ONE real screen mockup (Transactions) — Budget/Charges/Profil tabs are old Goals/Reports/Settings screens just relabeled. Need actual mockups from design team before those get restyled.
-- Sprint 6 (backup/restore, notifications, security finalize, PIN recovery/change-PIN) committed as `a3bc708`. Restore/backup retest false-alarmed on an uninstall+reinstall (Keystore passphrase wipe, documented limitation) — needs a clean same-install retest, not a code fix.
+- Hybrid budget model implementation complete (**14/14 plan tasks**, all reviewed — Task 13 onboarding gate + Task 14 verification finished this session, plus a pre-auth recurring-transaction fix found in final whole-plan review) on branch `worktree-hybrid-budget-model`, `flutter analyze` clean, debug APK built clean. **Manual QA on physical device needs a fresh pass against these newest commits** (previous partial walkthrough predates Task 13 and the pre-auth fix) — merged to `master`, not yet manually verified.
+- User wants to add "whatever he wants" in the Salary & Budget screen — scope unclear (inline category quick-create vs. free-text budget line). Needs a clarifying conversation, not yet started.
+- `adb screencap` returns 0 bytes on the user's physical device (HyperOS/Xiaomi-family, model `2201117TY`) — agent can't visually verify UI on this device; logcat-only fallback for now.
+- Sprint 6 (backup/restore, notifications, security finalize, PIN recovery/change-PIN) committed as `a3bc708`. Restore fix + backup export still need final device retest (flagged, not blocking).
 - Sprint 7 (RTL polish) committed as `a7d4711` — currency locale formatting (5 sites) + Settings chevron mirroring. Needs device verification in AR/Darija.
+- Figma design system still not pulled in (MCP hit View-seat quota) — blocks UI-polish only, not data-layer/CRUD work. File: https://www.figma.com/design/CfQ5K7ZLCEXglxOtqDg15L/Moudabir?node-id=1-2
 
 ## Hard Deadlines
 None specified yet.

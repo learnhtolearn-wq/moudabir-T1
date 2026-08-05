@@ -11,7 +11,9 @@ import 'tables.dart';
 
 part 'database.g.dart';
 
-@DriftDatabase(tables: [Accounts, Categories, Transactions, Goals])
+@DriftDatabase(
+  tables: [Accounts, Categories, Transactions, Goals, BudgetTargets, RecurringTemplates],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
@@ -25,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -42,6 +44,10 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 4) {
             await _migrateSeedCategoryNamesToKeys(this);
+          }
+          if (from < 5) {
+            await m.createTable(budgetTargets);
+            await m.createTable(recurringTemplates);
           }
         },
       );

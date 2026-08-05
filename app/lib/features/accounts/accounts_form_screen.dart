@@ -7,9 +7,13 @@ import 'accounts_screen.dart' show accountTypes;
 import 'providers/accounts_provider.dart';
 
 class AccountsFormScreen extends ConsumerStatefulWidget {
-  const AccountsFormScreen({super.key, this.account});
+  const AccountsFormScreen({super.key, this.account, this.onSaved});
 
   final Account? account;
+
+  /// Called instead of [Navigator.pop] after a successful save. Used by the
+  /// onboarding gate route, which has no prior route to pop back to.
+  final VoidCallback? onSaved;
 
   @override
   ConsumerState<AccountsFormScreen> createState() =>
@@ -70,7 +74,12 @@ class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
         initialBalance: balance,
       );
     }
-    if (mounted) Navigator.of(context).pop();
+    if (!mounted) return;
+    if (widget.onSaved != null) {
+      widget.onSaved!();
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   Future<void> _archive() async {
@@ -115,6 +124,10 @@ class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            if (widget.onSaved != null) ...[
+              Text('accounts.onboarding_intro'.tr()),
+              const SizedBox(height: 16),
+            ],
             TextFormField(
               controller: _nameController,
               decoration: InputDecoration(labelText: 'accounts.name'.tr()),

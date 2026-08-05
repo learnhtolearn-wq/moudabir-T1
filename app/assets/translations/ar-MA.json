@@ -10,7 +10,10 @@
   "dashboard": {
     "total_balance": "الرصيد الكامل",
     "month_income": "الدخل ديال هاد الشهر",
-    "month_expense": "المصاريف ديال هاد الشهر"
+    "month_expense": "المصاريف ديال هاد الشهر",
+    "allocate_banner": "وصل الصالير — وزّع الميزانية ديالك ◂",
+    "quick_add_hint": "زيادة سريعة",
+    "budget_progress_title": "تتبع الميزانية"
   },
   "transactions": {
     "title": "العمليات",
@@ -41,6 +44,8 @@
     "quick_add_expense": "+ مصروف",
     "section_today": "اليوم",
     "section_yesterday": "البارح",
+    "quick_add_title": "زيادة سريعة",
+    "quick_add_invalid": "خاصك دخل مبلغ وفئة وحساب صحاح.",
     "type": {
       "income": "دخل",
       "expense": "مصروف",
@@ -77,6 +82,8 @@
     "language": "اللغة",
     "manage_accounts": "دبر الحسابات",
     "manage_categories": "دبر الفئات",
+    "manage_budget": "الصالير والميزانية",
+    "manage_recurring": "الفواتير المتكررة",
     "backup_now": "دير نسخة احتياطية دابا",
     "backup_note": "محمية بكلمة سر ديال النسخة الاحتياطية كتختارها نتا — تقدر ترجعها فأي جهاز",
     "restore_backup": "رجّع نسخة احتياطية",
@@ -118,7 +125,10 @@
     "daily_title": "سجل مصاريف اليوم",
     "daily_body": "خود دقيقة باش تسجل شحال صرفتي اليوم.",
     "goal_deadline_title": "آخر أجل ديال الهدف قريب",
-    "goal_deadline_body": "آخر أجل ديال \"{name}\" قريب — شوف فين وصلتي."
+    "goal_deadline_body": "آخر أجل ديال \"{name}\" قريب — شوف فين وصلتي.",
+    "budget_90": "{category} وصلات لـ90% ديال الميزانية.",
+    "budget_100": "{category} فاتت الميزانية.",
+    "sweep_done": "{category}: تحول {amount} للادخار."
   },
   "common": {
     "save": "سجل",
@@ -140,6 +150,7 @@
     "initial_balance": "الرصيد ديال البداية",
     "archive_title": "أرشيف الحساب",
     "archive_confirm": "هاد الحساب غادي يتخبى ولكن العمليات ديالو غادي يبقاو.",
+    "onboarding_intro": "دير حسابك باش تبدا.",
     "type": {
       "cash": "الكاش",
       "bank": "حساب بنكي",
@@ -175,6 +186,35 @@
       "freelance": "الخدمة الحرة",
       "other_income": "دخل آخر"
     }
+  },
+  "budget": {
+    "title": "الصالير والميزانية",
+    "error": "ما قدرناش نحملو الميزانية.",
+    "allocate_header": "① وزّع الصالير",
+    "remaining_to_allocate": "الباقي باش توزع: {amount}",
+    "target_amount": "الهدف",
+    "save_allocation": "سجل التوزيع",
+    "allocation_saved": "تسجل التوزيع",
+    "sweep_header": "② ميزانية ماستعملاتش — حول",
+    "sweep_empty": "مازال ما كاين والو باش تحول",
+    "sweep_action": "حول ←",
+    "pick_savings_account": "اختار حساب الادخار",
+    "pick_source_account": "من أي حساب؟",
+    "sweep_success": "تحول للادخار",
+    "sweep_note": "تحويل ميزانية {category}",
+    "no_accounts_available": "ما كاين حتى حساب متاح."
+  },
+  "recurring": {
+    "title": "الفواتير المتكررة",
+    "error": "ما قدرناش نحملو الفواتير المتكررة.",
+    "empty": "مازال ما كاين حتى فاتورة متكررة. دوز على + باش تزيد وحدة.",
+    "add_title": "زيد فاتورة متكررة",
+    "edit_title": "بدل الفاتورة المتكررة",
+    "name": "السمية",
+    "day_of_month": "نهار الشهر",
+    "day_of_month_subtitle": "النهار {day} ديال كل شهر",
+    "delete_title": "حيد الفاتورة المتكررة",
+    "delete_confirm": "هاد الفاتورة المتكررة ماغاديش تخدم مرة أخرى."
   },
   "auth": {
     "setup_pin_title": "دير رمز PIN ديالك",

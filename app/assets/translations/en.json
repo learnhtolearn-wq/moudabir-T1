@@ -10,7 +10,10 @@
   "dashboard": {
     "total_balance": "Total balance",
     "month_income": "This month's income",
-    "month_expense": "This month's expenses"
+    "month_expense": "This month's expenses",
+    "allocate_banner": "Salary received — Allocate your budget ▸",
+    "quick_add_hint": "Quick add",
+    "budget_progress_title": "Budget progress"
   },
   "transactions": {
     "title": "Transactions",
@@ -41,6 +44,8 @@
     "quick_add_expense": "+ Expense",
     "section_today": "Today",
     "section_yesterday": "Yesterday",
+    "quick_add_title": "Quick add",
+    "quick_add_invalid": "Please provide a valid amount, category, and account.",
     "type": {
       "income": "Income",
       "expense": "Expense",
@@ -77,6 +82,8 @@
     "language": "Language",
     "manage_accounts": "Manage accounts",
     "manage_categories": "Manage categories",
+    "manage_budget": "Salary & Budget",
+    "manage_recurring": "Recurring bills",
     "backup_now": "Back up now",
     "backup_note": "Protected by a backup password you choose — restorable on any device",
     "restore_backup": "Restore from backup",
@@ -118,7 +125,10 @@
     "daily_title": "Log today's expenses",
     "daily_body": "Take a minute to record what you spent today.",
     "goal_deadline_title": "Goal deadline coming up",
-    "goal_deadline_body": "\"{name}\" is due soon — check your progress."
+    "goal_deadline_body": "\"{name}\" is due soon — check your progress.",
+    "budget_90": "{category} is at 90% of budget.",
+    "budget_100": "{category} is over budget.",
+    "sweep_done": "{category}: {amount} moved to Savings."
   },
   "common": {
     "save": "Save",
@@ -140,6 +150,7 @@
     "initial_balance": "Initial balance",
     "archive_title": "Archive account",
     "archive_confirm": "This account will be hidden but existing transactions are kept.",
+    "onboarding_intro": "Create your account to get started.",
     "type": {
       "cash": "Cash",
       "bank": "Bank account",
@@ -175,6 +186,35 @@
       "freelance": "Freelance",
       "other_income": "Other income"
     }
+  },
+  "budget": {
+    "title": "Salary & Budget",
+    "error": "Could not load budget.",
+    "allocate_header": "① Allocate salary",
+    "remaining_to_allocate": "Remaining to allocate: {amount}",
+    "target_amount": "Target",
+    "save_allocation": "Save allocation",
+    "allocation_saved": "Allocation saved",
+    "sweep_header": "② Unused budget — Sweep",
+    "sweep_empty": "Nothing to sweep yet",
+    "sweep_action": "Sweep →",
+    "pick_savings_account": "Choose savings account",
+    "pick_source_account": "From which account?",
+    "sweep_success": "Moved to savings",
+    "sweep_note": "{category} budget sweep",
+    "no_accounts_available": "No accounts available."
+  },
+  "recurring": {
+    "title": "Recurring bills",
+    "error": "Could not load recurring bills.",
+    "empty": "No recurring bills yet. Tap + to add one.",
+    "add_title": "Add recurring bill",
+    "edit_title": "Edit recurring bill",
+    "name": "Name",
+    "day_of_month": "Day of month",
+    "day_of_month_subtitle": "The {day}th of every month",
+    "delete_title": "Delete recurring bill",
+    "delete_confirm": "This recurring bill will stop firing."
   },
   "auth": {
     "setup_pin_title": "Create your PIN",

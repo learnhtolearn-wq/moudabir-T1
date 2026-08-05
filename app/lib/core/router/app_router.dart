@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/accounts/accounts_form_screen.dart';
+import '../../features/accounts/providers/accounts_provider.dart';
 import '../../features/auth/pin_setup_screen.dart';
 import '../../features/auth/lock_screen.dart';
 import '../../features/dashboard/dashboard_screen.dart';
 import '../../features/goals/goals_screen.dart';
+import '../../features/recurring/providers/recurring_provider.dart';
 import '../../features/reports/reports_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/transactions/transactions_screen.dart';
@@ -27,6 +30,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       if (hasPin && !goingToAuth && state.matchedLocation == '/setup-pin') {
         return '/lock';
       }
+
+      if (hasPin && !goingToAuth) {
+        try {
+          // `.future` resolves with the stream's first emitted value (and
+          // is served from cache on subsequent reads for the session, since
+          // accountsProvider stays alive as long as something — this
+          // redirect included — is reading it). Awaiting here matches the
+          // determinism of the original inline query: the redirect blocks
+          // until the real answer is known, so the very first post-unlock
+          // navigation for a 0-account user is correctly caught, instead of
+          // racing an AsyncLoading value.
+          final accounts = await ref.read(accountsProvider.future);
+          final hasAccount = accounts.isNotEmpty;
+          final goingToSetupAccount = state.matchedLocation == '/setup-account';
+          if (!hasAccount && !goingToSetupAccount) return '/setup-account';
+          if (hasAccount && goingToSetupAccount) return '/dashboard';
+        } catch (_) {
+          // A transient DB failure (e.g. mid backup-restore) must not crash
+          // routing — fall through to no redirect.
+        }
+      }
       return null;
     },
     routes: [
@@ -39,6 +63,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/lock',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const LockScreen(),
+      ),
+      GoRoute(
+        path: '/setup-account',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => AccountsFormScreen(
+          onSaved: () => GoRouter.of(context).go('/dashboard'),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _AppShell(shell: shell),
@@ -64,13 +95,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   );
 });
 
-class _AppShell extends StatelessWidget {
+class _AppShell extends ConsumerWidget {
   const _AppShell({required this.shell});
 
   final StatefulNavigationShell shell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Side-effect only: fires any recurring bills/income due this month
+    // that haven't already run yet. Result is intentionally unused.
+    //
+    // Deliberately watched here rather than in MoudabbirApp.build: this
+    // shell is only reached once the router's redirect logic has confirmed
+    // the user has a PIN, has passed /lock (or biometric unlock), and has
+    // at least one account — i.e. strictly post-authentication. Watching it
+    // in MoudabbirApp.build would run it on every cold start regardless of
+    // lock state, silently inserting a real transaction (and potentially
+    // firing an overspend notification exposing a category name) before the
+    // user has unlocked.
+    ref.watch(runDueRecurringTemplatesProvider);
+
     return Scaffold(
       body: shell,
       bottomNavigationBar: NavigationBar(
