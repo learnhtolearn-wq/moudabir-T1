@@ -166,10 +166,12 @@
     "add_title": "Add category",
     "edit_title": "Edit category",
     "name": "Name",
+    "duplicate_name": "A category with this name already exists. Choose a different name.",
     "kind_label": "Kind",
     "system": "Built-in",
     "archive_title": "Archive category",
     "archive_confirm": "This category will be hidden but existing transactions are kept.",
+    "archive_blocked": "This category has transactions and can't be deleted.",
     "kind": {
       "income": "Income",
       "expense": "Expense",

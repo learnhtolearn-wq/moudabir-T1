@@ -22,6 +22,7 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late String _kind;
+  String? _nameError;
 
   bool get _isEditing => widget.category != null;
 
@@ -43,6 +44,16 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
     final notifier = ref.read(categoriesNotifierProvider);
     final name = _nameController.text.trim();
 
+    final duplicate = await notifier.existsByName(
+      name,
+      excludeId: widget.category?.id,
+    );
+    if (duplicate) {
+      setState(() => _nameError = 'categories.duplicate_name'.tr());
+      _formKey.currentState!.validate();
+      return;
+    }
+
     if (_isEditing) {
       await notifier.update(
         widget.category!.copyWith(name: name, kind: _kind),
@@ -54,6 +65,27 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
   }
 
   Future<void> _archive() async {
+    final notifier = ref.read(categoriesNotifierProvider);
+    final inUse = await notifier.hasTransactions(widget.category!.id);
+    if (inUse) {
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('categories.archive_title'.tr()),
+          content: Text('categories.archive_blocked'.tr()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text('common.continue_label'.tr()),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+    if (!mounted) return;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -101,8 +133,15 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
             AppTextField(
               controller: _nameController,
               label: 'categories.name'.tr(),
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
+              onChanged: (_) {
+                if (_nameError != null) setState(() => _nameError = null);
+              },
+              validator: (v) {
+                if (v == null || v.trim().isEmpty) {
+                  return 'common.required'.tr();
+                }
+                return _nameError;
+              },
             ),
             const SizedBox(height: 16),
             AppSelectField(

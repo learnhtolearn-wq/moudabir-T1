@@ -22,6 +22,16 @@ class CategoriesNotifier {
 
   final AppDatabase _db;
 
+  Future<bool> existsByName(String name, {int? excludeId}) async {
+    final query = _db.select(_db.categories)
+      ..where((c) => c.name.lower().equals(name.trim().toLowerCase()));
+    if (excludeId != null) {
+      query.where((c) => c.id.equals(excludeId).not());
+    }
+    final match = await query.getSingleOrNull();
+    return match != null;
+  }
+
   Future<void> add({
     required String name,
     required String kind,
@@ -42,6 +52,14 @@ class CategoriesNotifier {
 
   Future<void> update(Category category) {
     return _db.update(_db.categories).replace(category);
+  }
+
+  Future<bool> hasTransactions(int categoryId) async {
+    final match = await (_db.select(_db.transactions)
+          ..where((t) => t.categoryId.equals(categoryId))
+          ..limit(1))
+        .getSingleOrNull();
+    return match != null;
   }
 
   Future<void> archive(int id) {

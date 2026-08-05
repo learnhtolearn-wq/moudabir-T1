@@ -166,10 +166,12 @@
     "add_title": "Ajouter une catégorie",
     "edit_title": "Modifier la catégorie",
     "name": "Nom",
+    "duplicate_name": "Une catégorie avec ce nom existe déjà. Choisissez un autre nom.",
     "kind_label": "Type",
     "system": "Intégrée",
     "archive_title": "Archiver la catégorie",
     "archive_confirm": "Cette catégorie sera masquée mais les transactions existantes sont conservées.",
+    "archive_blocked": "Cette catégorie contient des transactions et ne peut pas être supprimée.",
     "kind": {
       "income": "Revenu",
       "expense": "Dépense",
