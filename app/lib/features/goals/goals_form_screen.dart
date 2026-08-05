@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import '../accounts/providers/accounts_provider.dart';
 import 'providers/goals_provider.dart';
 
@@ -109,6 +111,7 @@ class _GoalsFormScreenState extends ConsumerState<GoalsFormScreen> {
     final accountsAsync = ref.watch(accountsProvider);
 
     return Scaffold(
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
         title: Text(_isEditing ? 'goals.edit_title'.tr() : 'goals.add_title'.tr()),
         actions: [
@@ -122,18 +125,18 @@ class _GoalsFormScreenState extends ConsumerState<GoalsFormScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           children: [
-            TextFormField(
+            AppTextField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'goals.name'.tr()),
+              label: 'goals.name'.tr(),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _targetController,
-              decoration: InputDecoration(labelText: 'goals.target_amount'.tr()),
+              label: 'goals.target_amount'.tr(),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return 'common.required'.tr();
@@ -143,38 +146,45 @@ class _GoalsFormScreenState extends ConsumerState<GoalsFormScreen> {
               },
             ),
             const SizedBox(height: 16),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text('goals.deadline'.tr()),
-              subtitle: Text(
-                _deadline == null
-                    ? 'goals.no_deadline'.tr()
-                    : DateFormat.yMMMd().format(_deadline!),
-              ),
-              trailing: const Icon(Icons.calendar_today_outlined),
+            AppSelectField(
+              label: 'goals.deadline'.tr(),
+              valueLabel: _deadline == null ? null : DateFormat.yMMMd().format(_deadline!),
+              placeholder: 'goals.no_deadline'.tr(),
               onTap: _pickDeadline,
             ),
             const SizedBox(height: 16),
             accountsAsync.when(
               loading: () => const SizedBox.shrink(),
               error: (_, _) => const SizedBox.shrink(),
-              data: (accounts) => DropdownButtonFormField<int?>(
-                initialValue: _linkedAccountId,
-                decoration: InputDecoration(labelText: 'goals.linked_account'.tr()),
-                items: [
-                  DropdownMenuItem<int?>(
-                    value: null,
-                    child: Text('goals.no_linked_account'.tr()),
-                  ),
-                  ...accounts.map(
-                    (a) => DropdownMenuItem<int?>(value: a.id, child: Text(a.name)),
-                  ),
-                ],
-                onChanged: (v) => setState(() => _linkedAccountId = v),
-              ),
+              data: (accounts) {
+                final labelOf = {
+                  for (final a in accounts) a.id: a.name,
+                };
+                return AppSelectField(
+                  label: 'goals.linked_account'.tr(),
+                  valueLabel: _linkedAccountId == null
+                      ? null
+                      : labelOf[_linkedAccountId],
+                  placeholder: 'goals.no_linked_account'.tr(),
+                  onTap: () async {
+                    final options = <int?>[null, ...accounts.map((a) => a.id)];
+                    final picked = await showAppOptionSheet<int?>(
+                      context: context,
+                      title: 'goals.linked_account'.tr(),
+                      options: options,
+                      labelOf: (id) =>
+                          id == null ? 'goals.no_linked_account'.tr() : labelOf[id]!,
+                      selected: _linkedAccountId,
+                    );
+                    if (picked != _linkedAccountId) {
+                      setState(() => _linkedAccountId = picked);
+                    }
+                  },
+                );
+              },
             ),
             const SizedBox(height: 24),
-            FilledButton(
+            ElevatedButton(
               onPressed: _submit,
               child: Text('common.save'.tr()),
             ),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import 'providers/transaction_filter_provider.dart';
 import 'providers/transactions_provider.dart';
 import 'transaction_form_screen.dart';
@@ -80,24 +81,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('nav.transactions'.tr(), style: AppTextStyles.display),
-                  CircleAvatar(
-                    radius: 18,
-                    backgroundColor: AppColors.vaultTint,
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/branding/icon_mark.png',
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              child: ScreenHeader(title: 'nav.transactions'.tr()),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
@@ -269,9 +253,8 @@ class _TransactionCard extends StatelessWidget {
     final title = isTransfer
         ? '${row.account.name} → ${row.toAccount?.name ?? ''}'
         : (row.category?.name.tr() ?? row.account.name);
-    final subtitle = isTransfer
-        ? row.category?.name.tr() ?? ''
-        : '${row.category?.name.tr() ?? ''} · ${row.account.name}';
+    final categoryLabel = row.category?.name.tr();
+    final subtitle = isTransfer ? row.category?.name.tr() ?? '' : row.account.name;
 
     return Material(
       color: AppColors.surface,
@@ -303,7 +286,15 @@ class _TransactionCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(title, style: AppTextStyles.body),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 4),
+                    if (categoryLabel != null && !isTransfer)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: CategoryBadge(label: categoryLabel),
+                        ),
+                      ),
                     Text(subtitle, style: AppTextStyles.caption),
                   ],
                 ),

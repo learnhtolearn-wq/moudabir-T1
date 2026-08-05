@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import 'categories_screen.dart' show categoryKinds;
 import 'providers/categories_provider.dart';
 
@@ -78,6 +80,7 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
         title: Text(_isEditing
             ? 'categories.edit_title'.tr()
@@ -93,28 +96,31 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           children: [
-            TextFormField(
+            AppTextField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'categories.name'.tr()),
+              label: 'categories.name'.tr(),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
             ),
             const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              initialValue: _kind,
-              decoration: InputDecoration(labelText: 'categories.kind_label'.tr()),
-              items: categoryKinds
-                  .map((k) => DropdownMenuItem(
-                        value: k,
-                        child: Text('categories.kind.$k'.tr()),
-                      ))
-                  .toList(),
-              onChanged: (v) => setState(() => _kind = v!),
+            AppSelectField(
+              label: 'categories.kind_label'.tr(),
+              valueLabel: 'categories.kind.$_kind'.tr(),
+              onTap: () async {
+                final picked = await showAppOptionSheet<String>(
+                  context: context,
+                  title: 'categories.kind_label'.tr(),
+                  options: categoryKinds,
+                  labelOf: (k) => 'categories.kind.$k'.tr(),
+                  selected: _kind,
+                );
+                if (picked != null) setState(() => _kind = picked);
+              },
             ),
             const SizedBox(height: 24),
-            FilledButton(
+            ElevatedButton(
               onPressed: _submit,
               child: Text('common.save'.tr()),
             ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import 'accounts_screen.dart' show accountTypes;
 import 'providers/accounts_provider.dart';
 
@@ -109,6 +111,7 @@ class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
         title: Text(_isEditing ? 'accounts.edit_title'.tr() : 'accounts.add_title'.tr()),
         actions: [
@@ -122,42 +125,44 @@ class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           children: [
             if (widget.onSaved != null) ...[
-              Text('accounts.onboarding_intro'.tr()),
+              Text('accounts.onboarding_intro'.tr(), style: AppTextStyles.bodyRegular),
               const SizedBox(height: 16),
             ],
-            TextFormField(
+            AppTextField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'accounts.name'.tr()),
+              label: 'accounts.name'.tr(),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
             ),
             const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              initialValue: _type,
-              decoration: InputDecoration(labelText: 'accounts.type_label'.tr()),
-              items: accountTypes
-                  .map((t) => DropdownMenuItem(
-                        value: t,
-                        child: Text('accounts.type.$t'.tr()),
-                      ))
-                  .toList(),
-              onChanged: (v) => setState(() => _type = v!),
+            AppSelectField(
+              label: 'accounts.type_label'.tr(),
+              valueLabel: 'accounts.type.$_type'.tr(),
+              onTap: () async {
+                final picked = await showAppOptionSheet<String>(
+                  context: context,
+                  title: 'accounts.type_label'.tr(),
+                  options: accountTypes,
+                  labelOf: (t) => 'accounts.type.$t'.tr(),
+                  selected: _type,
+                );
+                if (picked != null) setState(() => _type = picked);
+              },
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _currencyController,
-              decoration: InputDecoration(labelText: 'accounts.currency'.tr()),
+              label: 'accounts.currency'.tr(),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _balanceController,
-              decoration:
-                  InputDecoration(labelText: 'accounts.initial_balance'.tr()),
+              label: 'accounts.initial_balance'.tr(),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return 'common.required'.tr();
@@ -167,7 +172,7 @@ class _AccountsFormScreenState extends ConsumerState<AccountsFormScreen> {
               },
             ),
             const SizedBox(height: 24),
-            FilledButton(
+            ElevatedButton(
               onPressed: _submit,
               child: Text('common.save'.tr()),
             ),

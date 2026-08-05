@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database_provider.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import '../accounts/providers/accounts_provider.dart';
 import '../budget/providers/budget_provider.dart';
 import '../categories/providers/categories_provider.dart';
@@ -84,14 +86,13 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('transactions.quick_add_title'.tr(),
-                style: Theme.of(context).textTheme.titleMedium),
+            Text('transactions.quick_add_title'.tr(), style: AppTextStyles.body),
             const SizedBox(height: 12),
-            TextField(
+            AppTextField(
               controller: _amountController,
               autofocus: true,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(labelText: 'transactions.amount'.tr()),
+              label: 'transactions.amount'.tr(),
             ),
             const SizedBox(height: 12),
             categoriesAsync.when(
@@ -110,12 +111,24 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
 
                 return Wrap(
                   spacing: 8,
+                  runSpacing: 8,
                   children: [
                     for (final category in ordered)
-                      ChoiceChip(
-                        label: Text(category.name.tr()),
-                        selected: _categoryId == category.id,
-                        onSelected: (_) => setState(() => _categoryId = category.id),
+                      GestureDetector(
+                        onTap: () => setState(() => _categoryId = category.id),
+                        child: _categoryId == category.id
+                            ? CategoryBadge(label: category.name.tr())
+                            : Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: AppColors.surfaceSunken,
+                                  borderRadius: BorderRadius.circular(999),
+                                ),
+                                child: Text(
+                                  category.name.tr(),
+                                  style: AppTextStyles.caption,
+                                ),
+                              ),
                       ),
                   ],
                 );
@@ -127,23 +140,30 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
               error: (_, _) => const SizedBox.shrink(),
               data: (accounts) {
                 _accountId ??= accounts.isNotEmpty ? accounts.first.id : null;
-                return DropdownButtonFormField<int>(
-                  initialValue: _accountId,
-                  decoration: InputDecoration(labelText: 'transactions.account'.tr()),
-                  items: accounts
-                      .map((a) => DropdownMenuItem(value: a.id, child: Text(a.name)))
-                      .toList(),
-                  onChanged: (v) => setState(() => _accountId = v),
+                final labelOf = {for (final a in accounts) a.id: a.name};
+                return AppSelectField(
+                  label: 'transactions.account'.tr(),
+                  valueLabel: _accountId == null ? null : labelOf[_accountId],
+                  onTap: () async {
+                    final picked = await showAppOptionSheet<int>(
+                      context: context,
+                      title: 'transactions.account'.tr(),
+                      options: accounts.map((a) => a.id).toList(),
+                      labelOf: (id) => labelOf[id]!,
+                      selected: _accountId,
+                    );
+                    setState(() => _accountId = picked);
+                  },
                 );
               },
             ),
             const SizedBox(height: 12),
-            TextField(
+            AppTextField(
               controller: _noteController,
-              decoration: InputDecoration(labelText: 'transactions.note'.tr()),
+              label: 'transactions.note'.tr(),
             ),
             const SizedBox(height: 16),
-            FilledButton(onPressed: _saving ? null : _save, child: Text('common.save'.tr())),
+            ElevatedButton(onPressed: _saving ? null : _save, child: Text('common.save'.tr())),
           ],
         ),
       ),

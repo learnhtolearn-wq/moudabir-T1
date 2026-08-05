@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/database/database.dart';
 import '../../core/notifications/notification_service.dart';
 import '../../core/settings/settings_prefs.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import '../accounts/providers/accounts_provider.dart';
 import '../categories/providers/categories_provider.dart';
 import '../dashboard/providers/dashboard_provider.dart';
@@ -138,6 +140,7 @@ class _BudgetScreenState extends ConsumerState<BudgetScreen> {
     final monthlyAsync = ref.watch(monthlySummaryProvider);
 
     return Scaffold(
+      backgroundColor: AppColors.bg,
       appBar: AppBar(title: Text('budget.title'.tr())),
       body: categoriesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -165,45 +168,50 @@ class _BudgetScreenState extends ConsumerState<BudgetScreen> {
               final remaining = income - allocated;
 
               return ListView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
                 children: [
-                  Text('budget.allocate_header'.tr(),
-                      style: Theme.of(context).textTheme.titleMedium),
+                  Text('budget.allocate_header'.tr(), style: AppTextStyles.body),
                   const SizedBox(height: 8),
-                  Text('budget.remaining_to_allocate'
-                      .tr(namedArgs: {'amount': remaining.toStringAsFixed(2)})),
+                  Text(
+                    'budget.remaining_to_allocate'
+                        .tr(namedArgs: {'amount': remaining.toStringAsFixed(2)}),
+                    style: AppTextStyles.caption,
+                  ),
                   const SizedBox(height: 12),
                   for (final category in expenseCategories)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(flex: 3, child: Text(category.name.tr())),
+                          Expanded(
+                            flex: 3,
+                            child: Text(category.name.tr(), style: AppTextStyles.bodyRegular),
+                          ),
                           Expanded(
                             flex: 2,
-                            child: TextFormField(
+                            child: AppTextField(
                               controller: _controllerFor(category.id, 0),
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                              decoration:
-                                  InputDecoration(labelText: 'budget.target_amount'.tr()),
+                              label: 'budget.target_amount'.tr(),
                               onChanged: (_) => setState(() {}),
                             ),
                           ),
                           Checkbox(
                             value: _sweepFlags[category.id] ?? false,
+                            activeColor: AppColors.vault,
                             onChanged: (v) =>
                                 setState(() => _sweepFlags[category.id] = v ?? false),
                           ),
                         ],
                       ),
                     ),
-                  FilledButton(
+                  ElevatedButton(
                     onPressed: () => _saveAllocation(expenseCategories),
                     child: Text('budget.save_allocation'.tr()),
                   ),
-                  const Divider(height: 32),
-                  Text('budget.sweep_header'.tr(),
-                      style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 32),
+                  Text('budget.sweep_header'.tr(), style: AppTextStyles.body),
                   const SizedBox(height: 8),
                   sweepEligibleAsync.when(
                     loading: () => const Center(child: CircularProgressIndicator()),
@@ -213,21 +221,22 @@ class _BudgetScreenState extends ConsumerState<BudgetScreen> {
                       return Column(
                         children: [
                           for (final entry in rows)
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(entry.row.category.name.tr()),
-                              subtitle: Text(
-                                NumberFormat.currency(
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: AppListItem(
+                                leading: const AppIconAvatar(icon: Icons.savings_outlined),
+                                title: entry.row.category.name.tr(),
+                                subtitle: NumberFormat.currency(
                                   locale: context.locale.toString(),
                                   symbol: 'MAD ',
                                   decimalDigits: 2,
                                 ).format(entry.leftover),
-                              ),
-                              trailing: FilledButton(
-                                onPressed: _sweepingTargetIds.contains(entry.row.target.id)
-                                    ? null
-                                    : () => _sweepCategory(entry.row, entry.leftover),
-                                child: Text('budget.sweep_action'.tr()),
+                                trailing: FilledButton(
+                                  onPressed: _sweepingTargetIds.contains(entry.row.target.id)
+                                      ? null
+                                      : () => _sweepCategory(entry.row, entry.leftover),
+                                  child: Text('budget.sweep_action'.tr()),
+                                ),
                               ),
                             ),
                         ],

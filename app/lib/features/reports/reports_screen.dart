@@ -3,6 +3,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import 'providers/reports_provider.dart';
 
 class ReportsScreen extends ConsumerWidget {
@@ -14,13 +16,16 @@ class ReportsScreen extends ConsumerWidget {
     final trendAsync = ref.watch(monthlyTrendProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text('nav.reports'.tr())),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
+      backgroundColor: AppColors.bg,
+      body: SafeArea(
+        child: ListView(
+        padding: const EdgeInsets.all(20),
         children: [
+          ScreenHeader(title: 'nav.reports'.tr()),
+          const SizedBox(height: 20),
           Text(
             'reports.category_breakdown_title'.tr(),
-            style: Theme.of(context).textTheme.titleMedium,
+            style: AppTextStyles.body,
           ),
           const SizedBox(height: 12),
           breakdownAsync.when(
@@ -36,7 +41,7 @@ class ReportsScreen extends ConsumerWidget {
           const SizedBox(height: 32),
           Text(
             'reports.trend_title'.tr(),
-            style: Theme.of(context).textTheme.titleMedium,
+            style: AppTextStyles.body,
           ),
           const SizedBox(height: 12),
           trendAsync.when(
@@ -44,7 +49,8 @@ class ReportsScreen extends ConsumerWidget {
             error: (err, _) => Text('reports.error'.tr()),
             data: (months) => _MonthlyTrendChart(months: months),
           ),
-        ],
+          ],
+        ),
       ),
     );
   }

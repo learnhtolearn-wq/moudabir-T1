@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
 import '../../core/database/database_provider.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import '../accounts/providers/accounts_provider.dart';
 import '../budget/providers/budget_provider.dart';
 import '../categories/providers/categories_provider.dart';
@@ -142,6 +144,7 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
     final categoriesAsync = ref.watch(categoriesProvider);
 
     return Scaffold(
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
         title: Text(_isEditing
             ? 'transactions.edit_title'.tr()
@@ -157,7 +160,7 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           children: [
             // Quick-add ("+ Revenu" / "+ Dépense") already commits to a type,
             // so re-showing the picker would look like it ignored the tap.
@@ -185,47 +188,53 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
             accountsAsync.when(
               loading: () => const CircularProgressIndicator(),
               error: (_, _) => Text('accounts.error'.tr()),
-              data: (accounts) => DropdownButtonFormField<int>(
-                initialValue: _accountId,
-                decoration: InputDecoration(
-                  labelText: _type == 'transfer'
+              data: (accounts) {
+                final labelOf = {for (final a in accounts) a.id: a.name};
+                return AppSelectField(
+                  label: _type == 'transfer'
                       ? 'transactions.from_account'.tr()
                       : 'transactions.account'.tr(),
-                ),
-                items: accounts
-                    .map((a) => DropdownMenuItem(value: a.id, child: Text(a.name)))
-                    .toList(),
-                onChanged: (v) => setState(() => _accountId = v),
-                validator: (v) => v == null ? 'common.required'.tr() : null,
-              ),
+                  valueLabel: _accountId == null ? null : labelOf[_accountId],
+                  onTap: () async {
+                    final picked = await showAppOptionSheet<int>(
+                      context: context,
+                      title: 'transactions.account'.tr(),
+                      options: accounts.map((a) => a.id).toList(),
+                      labelOf: (id) => labelOf[id]!,
+                      selected: _accountId,
+                    );
+                    setState(() => _accountId = picked);
+                  },
+                );
+              },
             ),
             if (_type == 'transfer') ...[
               const SizedBox(height: 16),
               accountsAsync.when(
                 loading: () => const SizedBox.shrink(),
                 error: (_, _) => const SizedBox.shrink(),
-                data: (accounts) => DropdownButtonFormField<int>(
-                  initialValue: _toAccountId,
-                  decoration:
-                      InputDecoration(labelText: 'transactions.to_account'.tr()),
-                  items: accounts
-                      .map((a) => DropdownMenuItem(value: a.id, child: Text(a.name)))
-                      .toList(),
-                  onChanged: (v) => setState(() {
-                    _toAccountId = v;
-                    _transferError = null;
-                  }),
-                  validator: (v) => v == null ? 'common.required'.tr() : null,
-                ),
+                data: (accounts) {
+                  final labelOf = {for (final a in accounts) a.id: a.name};
+                  return AppSelectField(
+                    label: 'transactions.to_account'.tr(),
+                    valueLabel: _toAccountId == null ? null : labelOf[_toAccountId],
+                    errorText: _transferError,
+                    onTap: () async {
+                      final picked = await showAppOptionSheet<int>(
+                        context: context,
+                        title: 'transactions.to_account'.tr(),
+                        options: accounts.map((a) => a.id).toList(),
+                        labelOf: (id) => labelOf[id]!,
+                        selected: _toAccountId,
+                      );
+                      setState(() {
+                        _toAccountId = picked;
+                        _transferError = null;
+                      });
+                    },
+                  );
+                },
               ),
-              if (_transferError != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text(
-                    _transferError!,
-                    style: TextStyle(color: Theme.of(context).colorScheme.error),
-                  ),
-                ),
             ] else ...[
               const SizedBox(height: 16),
               categoriesAsync.when(
@@ -234,25 +243,30 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
                 data: (categories) {
                   final filtered =
                       categories.where((c) => c.kind == _type).toList();
-                  return DropdownButtonFormField<int>(
-                    initialValue: filtered.any((c) => c.id == _categoryId)
-                        ? _categoryId
-                        : null,
-                    decoration:
-                        InputDecoration(labelText: 'transactions.category'.tr()),
-                    items: filtered
-                        .map((c) => DropdownMenuItem(value: c.id, child: Text(c.name.tr())))
-                        .toList(),
-                    onChanged: (v) => setState(() => _categoryId = v),
-                    validator: (v) => v == null ? 'common.required'.tr() : null,
+                  final validCategoryId =
+                      filtered.any((c) => c.id == _categoryId) ? _categoryId : null;
+                  final labelOf = {for (final c in filtered) c.id: c.name.tr()};
+                  return AppSelectField(
+                    label: 'transactions.category'.tr(),
+                    valueLabel: validCategoryId == null ? null : labelOf[validCategoryId],
+                    onTap: () async {
+                      final picked = await showAppOptionSheet<int>(
+                        context: context,
+                        title: 'transactions.category'.tr(),
+                        options: filtered.map((c) => c.id).toList(),
+                        labelOf: (id) => labelOf[id]!,
+                        selected: validCategoryId,
+                      );
+                      setState(() => _categoryId = picked);
+                    },
                   );
                 },
               ),
             ],
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _amountController,
-              decoration: InputDecoration(labelText: 'transactions.amount'.tr()),
+              label: 'transactions.amount'.tr(),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return 'common.required'.tr();
@@ -263,20 +277,18 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
               },
             ),
             const SizedBox(height: 16),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text('transactions.date'.tr()),
-              subtitle: Text(DateFormat.yMMMd(context.locale.toString()).format(_date)),
-              trailing: const Icon(Icons.calendar_today_outlined),
+            AppSelectField(
+              label: 'transactions.date'.tr(),
+              valueLabel: DateFormat.yMMMd(context.locale.toString()).format(_date),
               onTap: _pickDate,
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _noteController,
-              decoration: InputDecoration(labelText: 'transactions.note'.tr()),
+              label: 'transactions.note'.tr(),
             ),
             const SizedBox(height: 24),
-            FilledButton(
+            ElevatedButton(
               onPressed: _submit,
               child: Text('common.save'.tr()),
             ),

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/database.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import '../accounts/providers/accounts_provider.dart';
 import '../categories/providers/categories_provider.dart';
 import '../transactions/transaction_form_screen.dart' show transactionTypes;
@@ -114,6 +116,7 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
     final categoriesAsync = ref.watch(categoriesProvider);
 
     return Scaffold(
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
         title: Text(_isEditing ? 'recurring.edit_title'.tr() : 'recurring.add_title'.tr()),
         actions: [
@@ -124,11 +127,11 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           children: [
-            TextFormField(
+            AppTextField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'recurring.name'.tr()),
+              label: 'recurring.name'.tr(),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'common.required'.tr() : null,
             ),
@@ -148,15 +151,23 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
             accountsAsync.when(
               loading: () => const CircularProgressIndicator(),
               error: (_, _) => Text('accounts.error'.tr()),
-              data: (accounts) => DropdownButtonFormField<int>(
-                initialValue: _accountId,
-                decoration: InputDecoration(labelText: 'transactions.account'.tr()),
-                items: accounts
-                    .map((a) => DropdownMenuItem(value: a.id, child: Text(a.name)))
-                    .toList(),
-                onChanged: (v) => setState(() => _accountId = v),
-                validator: (v) => v == null ? 'common.required'.tr() : null,
-              ),
+              data: (accounts) {
+                final labelOf = {for (final a in accounts) a.id: a.name};
+                return AppSelectField(
+                  label: 'transactions.account'.tr(),
+                  valueLabel: _accountId == null ? null : labelOf[_accountId],
+                  onTap: () async {
+                    final picked = await showAppOptionSheet<int>(
+                      context: context,
+                      title: 'transactions.account'.tr(),
+                      options: accounts.map((a) => a.id).toList(),
+                      labelOf: (id) => labelOf[id]!,
+                      selected: _accountId,
+                    );
+                    setState(() => _accountId = picked);
+                  },
+                );
+              },
             ),
             const SizedBox(height: 16),
             categoriesAsync.when(
@@ -164,23 +175,33 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
               error: (_, _) => const SizedBox.shrink(),
               data: (categories) {
                 final filtered = categories.where((c) => c.kind == _type).toList();
-                return DropdownButtonFormField<int?>(
-                  initialValue: filtered.any((c) => c.id == _categoryId) ? _categoryId : null,
-                  decoration: InputDecoration(labelText: 'transactions.category'.tr()),
-                  items: [
-                    DropdownMenuItem<int?>(value: null, child: Text('goals.no_linked_account'.tr())),
-                    ...filtered.map(
-                      (c) => DropdownMenuItem<int?>(value: c.id, child: Text(c.name.tr())),
-                    ),
-                  ],
-                  onChanged: (v) => setState(() => _categoryId = v),
+                final validCategoryId = filtered.any((c) => c.id == _categoryId) ? _categoryId : null;
+                final labelOf = {for (final c in filtered) c.id: c.name.tr()};
+                return AppSelectField(
+                  label: 'transactions.category'.tr(),
+                  valueLabel: validCategoryId == null
+                      ? null
+                      : labelOf[validCategoryId],
+                  placeholder: 'goals.no_linked_account'.tr(),
+                  onTap: () async {
+                    final options = <int?>[null, ...filtered.map((c) => c.id)];
+                    final picked = await showAppOptionSheet<int?>(
+                      context: context,
+                      title: 'transactions.category'.tr(),
+                      options: options,
+                      labelOf: (id) =>
+                          id == null ? 'goals.no_linked_account'.tr() : labelOf[id]!,
+                      selected: validCategoryId,
+                    );
+                    setState(() => _categoryId = picked);
+                  },
                 );
               },
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _amountController,
-              decoration: InputDecoration(labelText: 'transactions.amount'.tr()),
+              label: 'transactions.amount'.tr(),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return 'common.required'.tr();
@@ -190,9 +211,9 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
               },
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _dayController,
-              decoration: InputDecoration(labelText: 'recurring.day_of_month'.tr()),
+              label: 'recurring.day_of_month'.tr(),
               keyboardType: TextInputType.number,
               validator: (v) {
                 final parsed = int.tryParse(v?.trim() ?? '');
@@ -201,7 +222,7 @@ class _RecurringFormScreenState extends ConsumerState<RecurringFormScreen> {
               },
             ),
             const SizedBox(height: 24),
-            FilledButton(onPressed: _submit, child: Text('common.save'.tr())),
+            ElevatedButton(onPressed: _submit, child: Text('common.save'.tr())),
           ],
         ),
       ),

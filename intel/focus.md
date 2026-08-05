@@ -1,14 +1,15 @@
-# Focus — Hybrid Budget Model QA + wrap-up
+# Focus — Design sweep done, QA + commit backlog next
 
 *Last updated: 2026-08-05*
 
 ## Top Priorities Right Now
-- Hybrid budget model implementation complete (**14/14 plan tasks**, all reviewed — Task 13 onboarding gate + Task 14 verification finished this session, plus a pre-auth recurring-transaction fix found in final whole-plan review) on branch `worktree-hybrid-budget-model`, `flutter analyze` clean, debug APK built clean. **Manual QA on physical device needs a fresh pass against these newest commits** (previous partial walkthrough predates Task 13 and the pre-auth fix) — merged to `master`, not yet manually verified.
+- **Figma design system sweep just finished** (full sweep, user-confirmed scope): shared widget library `app/lib/core/widgets/app_widgets.dart` (ScreenHeader, AppTextField, AppSelectField/AppOptionTile/showAppOptionSheet, CategoryBadge, ProgressGauge, AppListItem, AppIconAvatar) built from the Figma file's newer components and wired into every screen still on plain Material (Dashboard, Transactions, Goals, Reports, Settings, Budget, Categories, Accounts, Recurring + all their form screens). `flutter analyze` and `flutter build apk --debug` both clean. **Not yet device-verified** — needs a visual pass on a real device/emulator before trusting it.
+- Two rounds of uncommitted design work are now stacked: the 2026-08-03 design-install session (fonts/theme/Transactions redesign/nav relabel/logo) and this session's widget-library sweep. Neither is committed yet — needs a commit (or two) before anything else touches these files.
+- Hybrid budget model implementation complete (**14/14 plan tasks**), merged to `master`. **Manual QA on physical device still needs a fresh pass** (previous partial walkthrough predates Task 13 and the pre-auth fix).
 - User wants to add "whatever he wants" in the Salary & Budget screen — scope unclear (inline category quick-create vs. free-text budget line). Needs a clarifying conversation, not yet started.
 - `adb screencap` returns 0 bytes on the user's physical device (HyperOS/Xiaomi-family, model `2201117TY`) — agent can't visually verify UI on this device; logcat-only fallback for now.
 - Sprint 6 (backup/restore, notifications, security finalize, PIN recovery/change-PIN) committed as `a3bc708`. Restore fix + backup export still need final device retest (flagged, not blocking).
 - Sprint 7 (RTL polish) committed as `a7d4711` — currency locale formatting (5 sites) + Settings chevron mirroring. Needs device verification in AR/Darija.
-- Figma design system still not pulled in (MCP hit View-seat quota) — blocks UI-polish only, not data-layer/CRUD work. File: https://www.figma.com/design/CfQ5K7ZLCEXglxOtqDg15L/Moudabir?node-id=1-2
 
 ## Hard Deadlines
 None specified yet.

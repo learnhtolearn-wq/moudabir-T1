@@ -10,6 +10,8 @@ import '../../core/notifications/notification_prefs.dart';
 import '../../core/notifications/notification_provider.dart';
 import '../../core/notifications/notification_service.dart';
 import '../../core/security/pin_store.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/widgets/app_widgets.dart';
 import '../accounts/accounts_screen.dart';
 import '../auth/change_pin_screen.dart';
 import '../auth/recovery_code_screen.dart';
@@ -50,116 +52,141 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final chevron = Icon(
-      Directionality.of(context) == TextDirection.rtl
-          ? Icons.chevron_left
-          : Icons.chevron_right,
-    );
     return Scaffold(
-      appBar: AppBar(title: Text('nav.settings'.tr())),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.account_balance_wallet_outlined),
-            title: Text('settings.manage_accounts'.tr()),
-            trailing: chevron,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const AccountsScreen()),
+      backgroundColor: AppColors.bg,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
+              child: ScreenHeader(title: 'nav.settings'.tr()),
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.category_outlined),
-            title: Text('settings.manage_categories'.tr()),
-            trailing: chevron,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.account_balance_wallet_outlined),
+                    title: 'settings.manage_accounts'.tr(),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const AccountsScreen()),
+                    ),
+                  ),
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.category_outlined),
+                    title: 'settings.manage_categories'.tr(),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+                    ),
+                  ),
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.account_balance_outlined),
+                    title: 'settings.manage_budget'.tr(),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const BudgetScreen()),
+                    ),
+                  ),
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.repeat_outlined),
+                    title: 'settings.manage_recurring'.tr(),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const RecurringTemplatesScreen()),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  AppListItem(
+                    title: 'settings.language'.tr(),
+                    subtitle: context.locale.toString(),
+                    onTap: () => _showLanguagePicker(context),
+                  ),
+                  const SizedBox(height: 12),
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.backup_outlined),
+                    title: 'settings.backup_now'.tr(),
+                    subtitle: 'settings.backup_note'.tr(),
+                    enabled: !_busy,
+                    trailing: const SizedBox.shrink(),
+                    onTap: _handleBackup,
+                  ),
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.restore_outlined),
+                    title: 'settings.restore_backup'.tr(),
+                    enabled: !_busy,
+                    trailing: const SizedBox.shrink(),
+                    onTap: _handleRestore,
+                  ),
+                  const SizedBox(height: 12),
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.pin_outlined),
+                    title: 'auth.change_pin_title'.tr(),
+                    enabled: !_busy,
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ChangePinScreen()),
+                    ),
+                  ),
+                  AppListItem(
+                    leading: const AppIconAvatar(icon: Icons.key_outlined),
+                    title: 'settings.recovery_code'.tr(),
+                    subtitle: 'settings.recovery_code_note'.tr(),
+                    enabled: !_busy,
+                    onTap: _handleRegenerateRecoveryCode,
+                  ),
+                  const SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: Row(
+                      children: [
+                        const AppIconAvatar(icon: Icons.notifications_outlined),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('settings.reminders_enabled'.tr(), style: AppTextStyles.bodyRegular),
+                              const SizedBox(height: 2),
+                              Text('settings.reminders_note'.tr(), style: AppTextStyles.caption),
+                            ],
+                          ),
+                        ),
+                        Switch(
+                          value: _remindersEnabled,
+                          onChanged: _busy ? null : _handleToggleReminders,
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (_remindersEnabled)
+                    AppListItem(
+                      leading: const AppIconAvatar(icon: Icons.schedule_outlined),
+                      title: 'settings.reminder_time'.tr(),
+                      subtitle: _reminderTime.format(context),
+                      enabled: !_busy,
+                      onTap: _handleChangeReminderTime,
+                    ),
+                  const SizedBox(height: 12),
+                  AppListItem(
+                    leading: CircleAvatar(
+                      radius: 16,
+                      backgroundColor: Theme.of(context).colorScheme.error.withValues(alpha: 0.12),
+                      child: Icon(
+                        Icons.delete_forever_outlined,
+                        color: Theme.of(context).colorScheme.error,
+                        size: 16,
+                      ),
+                    ),
+                    title: 'settings.delete_all_data'.tr(),
+                    titleColor: Theme.of(context).colorScheme.error,
+                    subtitle: 'settings.delete_all_data_note'.tr(),
+                    enabled: !_busy,
+                    trailing: const SizedBox.shrink(),
+                    onTap: _handleDeleteAllData,
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.account_balance_outlined),
-            title: Text('settings.manage_budget'.tr()),
-            trailing: chevron,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const BudgetScreen()),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.repeat_outlined),
-            title: Text('settings.manage_recurring'.tr()),
-            trailing: chevron,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const RecurringTemplatesScreen()),
-            ),
-          ),
-          const Divider(),
-          ListTile(
-            title: Text('settings.language'.tr()),
-            subtitle: Text(context.locale.toString()),
-            onTap: () => _showLanguagePicker(context),
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.backup_outlined),
-            title: Text('settings.backup_now'.tr()),
-            subtitle: Text('settings.backup_note'.tr()),
-            enabled: !_busy,
-            onTap: _handleBackup,
-          ),
-          ListTile(
-            leading: const Icon(Icons.restore_outlined),
-            title: Text('settings.restore_backup'.tr()),
-            enabled: !_busy,
-            onTap: _handleRestore,
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.pin_outlined),
-            title: Text('auth.change_pin_title'.tr()),
-            trailing: chevron,
-            enabled: !_busy,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const ChangePinScreen()),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.key_outlined),
-            title: Text('settings.recovery_code'.tr()),
-            subtitle: Text('settings.recovery_code_note'.tr()),
-            trailing: chevron,
-            enabled: !_busy,
-            onTap: _handleRegenerateRecoveryCode,
-          ),
-          const Divider(),
-          SwitchListTile(
-            secondary: const Icon(Icons.notifications_outlined),
-            title: Text('settings.reminders_enabled'.tr()),
-            subtitle: Text('settings.reminders_note'.tr()),
-            value: _remindersEnabled,
-            onChanged: _busy ? null : _handleToggleReminders,
-          ),
-          if (_remindersEnabled)
-            ListTile(
-              leading: const Icon(Icons.schedule_outlined),
-              title: Text('settings.reminder_time'.tr()),
-              subtitle: Text(_reminderTime.format(context)),
-              enabled: !_busy,
-              onTap: _handleChangeReminderTime,
-            ),
-          const Divider(),
-          ListTile(
-            leading: Icon(
-              Icons.delete_forever_outlined,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            title: Text(
-              'settings.delete_all_data'.tr(),
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
-            subtitle: Text('settings.delete_all_data_note'.tr()),
-            enabled: !_busy,
-            onTap: _handleDeleteAllData,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -278,13 +305,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             children: [
               if (confirm) Text('settings.backup_password_body'.tr()),
               if (confirm) const SizedBox(height: 12),
-              TextFormField(
+              AppTextField(
                 controller: passwordController,
                 obscureText: true,
                 autofocus: true,
-                decoration: InputDecoration(
-                  labelText: 'settings.backup_password_hint'.tr(),
-                ),
+                label: 'settings.backup_password_hint'.tr(),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'common.required'.tr();
@@ -299,12 +324,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               if (confirm) ...[
                 const SizedBox(height: 12),
-                TextFormField(
+                AppTextField(
                   controller: confirmController,
                   obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'settings.backup_password_confirm_hint'.tr(),
-                  ),
+                  label: 'settings.backup_password_confirm_hint'.tr(),
                   validator: (value) {
                     if (value != passwordController.text) {
                       return 'settings.backup_password_mismatch'.tr();
@@ -405,12 +428,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             children: [
               Text('settings.delete_all_confirm_body'.tr()),
               const SizedBox(height: 12),
-              TextFormField(
+              AppTextField(
                 controller: controller,
                 autofocus: true,
-                decoration: InputDecoration(
-                  labelText: 'settings.delete_all_confirm_hint'.tr(),
-                ),
+                label: 'settings.delete_all_confirm_hint'.tr(),
                 validator: (value) =>
                     value?.trim().toUpperCase() == 'DELETE'
                         ? null
