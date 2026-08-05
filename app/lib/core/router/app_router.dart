@@ -1,8 +1,10 @@
+import 'package:drift/drift.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/accounts/accounts_form_screen.dart';
 import '../../features/auth/pin_setup_screen.dart';
 import '../../features/auth/lock_screen.dart';
 import '../../features/dashboard/dashboard_screen.dart';
@@ -10,6 +12,7 @@ import '../../features/goals/goals_screen.dart';
 import '../../features/reports/reports_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/transactions/transactions_screen.dart';
+import '../database/database_provider.dart';
 import '../security/pin_store.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -27,6 +30,20 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       if (hasPin && !goingToAuth && state.matchedLocation == '/setup-pin') {
         return '/lock';
       }
+
+      if (hasPin &&
+          state.matchedLocation != '/lock' &&
+          state.matchedLocation != '/setup-pin') {
+        final db = ref.read(databaseProvider);
+        final accountCount = await (db.selectOnly(db.accounts)
+              ..addColumns([db.accounts.id.count()])
+              ..where(db.accounts.archived.equals(false)))
+            .map((row) => row.read(db.accounts.id.count()) ?? 0)
+            .getSingle();
+        final goingToSetupAccount = state.matchedLocation == '/setup-account';
+        if (accountCount == 0 && !goingToSetupAccount) return '/setup-account';
+        if (accountCount > 0 && goingToSetupAccount) return '/dashboard';
+      }
       return null;
     },
     routes: [
@@ -39,6 +56,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/lock',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const LockScreen(),
+      ),
+      GoRoute(
+        path: '/setup-account',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => AccountsFormScreen(
+          onSaved: () => GoRouter.of(context).go('/dashboard'),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _AppShell(shell: shell),

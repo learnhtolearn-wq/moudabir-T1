@@ -130,6 +130,7 @@
     "initial_balance": "Initial balance",
     "archive_title": "Archive account",
     "archive_confirm": "This account will be hidden but existing transactions are kept.",
+    "onboarding_intro": "Create your account to get started.",
     "type": {
       "cash": "Cash",
       "bank": "Bank account",

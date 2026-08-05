@@ -53,11 +53,16 @@ class AccountsScreen extends ConsumerWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const AccountsFormScreen()),
-        ),
-        child: const Icon(Icons.add),
+      floatingActionButton: accountsAsync.maybeWhen(
+        data: (accounts) => accounts.isEmpty
+            ? FloatingActionButton(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const AccountsFormScreen()),
+                ),
+                child: const Icon(Icons.add),
+              )
+            : null,
+        orElse: () => null,
       ),
     );
   }

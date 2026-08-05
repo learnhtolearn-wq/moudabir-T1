@@ -130,6 +130,7 @@
     "initial_balance": "Solde initial",
     "archive_title": "Archiver le compte",
     "archive_confirm": "Ce compte sera masqué mais les transactions existantes sont conservées.",
+    "onboarding_intro": "Créez votre compte pour commencer.",
     "type": {
       "cash": "Espèces",
       "bank": "Compte bancaire",
