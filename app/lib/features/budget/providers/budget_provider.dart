@@ -59,6 +59,27 @@ final categorySpentProvider =
       .map((rows) => rows.fold<double>(0, (sum, t) => sum + t.amount));
 });
 
+/// One-shot sum of this-month non-archived expense transactions for
+/// [categoryId], in `[monthStart, monthEnd)`. Shared by call sites that need
+/// a single read rather than a live stream (see [categorySpentProvider] for
+/// the reactive `.watch()` equivalent used by the dashboard).
+Future<double> _spentForCategory(
+  AppDatabase db,
+  int categoryId,
+  DateTime monthStart,
+  DateTime monthEnd,
+) async {
+  final rows = await (db.select(db.transactions)
+        ..where((t) =>
+            t.archived.equals(false) &
+            t.categoryId.equals(categoryId) &
+            t.type.equals('expense') &
+            t.date.isBiggerOrEqualValue(monthStart) &
+            t.date.isSmallerThanValue(monthEnd)))
+      .get();
+  return rows.fold<double>(0, (sum, t) => sum + t.amount);
+}
+
 /// This month's sweep-eligible categories with their computed leftover —
 /// drives both the Sweep section's list and its empty state.
 final sweepEligibleProvider = StreamProvider.autoDispose<
@@ -86,15 +107,8 @@ final sweepEligibleProvider = StreamProvider.autoDispose<
     for (final joined in rows) {
       final target = joined.readTable(db.budgetTargets);
       final category = joined.readTable(db.categories);
-      final spentRows = await (db.select(db.transactions)
-            ..where((t) =>
-                t.archived.equals(false) &
-                t.categoryId.equals(category.id) &
-                t.type.equals('expense') &
-                t.date.isBiggerOrEqualValue(monthStart) &
-                t.date.isSmallerThanValue(monthEnd)))
-          .get();
-      final spent = spentRows.fold<double>(0, (sum, t) => sum + t.amount);
+      final spent =
+          await _spentForCategory(db, category.id, monthStart, monthEnd);
       final leftover = target.targetAmount - spent;
       if (leftover > 0) {
         result.add((
@@ -199,15 +213,7 @@ Future<void> checkAndNotifyOverspend(
 
   final monthStart = DateTime(date.year, date.month, 1);
   final monthEnd = DateTime(date.year, date.month + 1, 1);
-  final spentRows = await (db.select(db.transactions)
-        ..where((t) =>
-            t.archived.equals(false) &
-            t.categoryId.equals(categoryId) &
-            t.type.equals('expense') &
-            t.date.isBiggerOrEqualValue(monthStart) &
-            t.date.isSmallerThanValue(monthEnd)))
-      .get();
-  final spent = spentRows.fold<double>(0, (sum, t) => sum + t.amount);
+  final spent = await _spentForCategory(db, categoryId, monthStart, monthEnd);
   final ratio = spent / target.targetAmount;
 
   // Notification ids offset by 2000 so they never collide with the daily
