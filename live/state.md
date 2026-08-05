@@ -3,6 +3,13 @@
 *Updated at the end of each session. Read this FIRST on startup.*
 
 ## Last Session
+- **Date:** 2026-08-05 (cont'd) — spec amended + implementation plan written, no code yet. Spec update committed `69d93f7`, plan committed `5e565b1`.
+- User asked for two changes on top of the approved hybrid budget design: (1) Allocate section gets an inline "+ Add category" row — type a name, creates a real Category (kind=expense) via existing Sprint 1 repo, appears immediately as a new allocate row, no separate screen. (2) Single-account model: app-wide onboarding gate — after PIN unlock, if zero accounts exist, force the existing `AccountsFormScreen` before any shell route is reachable (same redirect pattern as PIN setup); "Add Account" FAB hides once one exists; archiving the only account re-triggers the gate next launch. Both resolved via `superpowers:brainstorming` (one question at a time), spec amended in place (`docs/superpowers/specs/2026-08-05-hybrid-budget-model-design.md`).
+- Full implementation plan written: `docs/superpowers/plans/2026-08-05-hybrid-budget-model.md`, **14 tasks**: (1) Drift tables `BudgetTargets`/`RecurringTemplates`, (2) default savings account setting, (3) generic notification service, (4) recurring templates provider+auto-run, (5) budget provider (targets/spend/allocate/sweep/overspend), (6) wire recurring auto-run into startup, (7) recurring templates screen+form, (8) budget screen allocate+sweep incl. the new inline add-category row, (9) quick-add bottom sheet, (10) dashboard FAB+banner+progress bars, (11) Settings entries, (12) i18n fr/en/ar/ar-MA, (13) single-account onboarding gate (new this session), (14) full verification pass.
+- **Not yet executed** — next session should invoke `superpowers:subagent-driven-development` or `superpowers:executing-plans` against this plan to actually build it.
+- Mid-session slip: briefly edited real `accounts_form_screen.dart` directly instead of just describing the change in the plan doc — caught before commit, reverted via `git checkout --`, no bad code landed. Lesson: during plan-writing, don't touch `app/` source at all, only the plan doc.
+
+## Prior Session
 - **Date:** 2026-08-05 — design-only session (no code), spec doc committed as `0dcb0a5`.
 - User wants a hybrid budgeting model, not pure after-the-fact logging: allocate salary into per-category targets on payday, auto-log known recurring bills, fast quick-add for daily variable spend, and — new idea from user mid-session — let unspent category budget (e.g. Health with no doctor visit that month) be swept into savings on the user's own timing, not automatically.
 - Full brainstorming pass run via `superpowers:brainstorming` skill. Design settled: recurring templates auto-fire (no confirm step); category-level budget targets (not account-only); FAB + smart-defaults quick-add; overspend alert = visual bar + notification (both). Leftover sweep evolved during discussion from "auto month-end job" to a single **Salary & Budget page** the user opens themselves — section ① allocate salary into category targets, section ② lists only sweep-eligible categories with current leftover and a per-category "Sweep →" button (no bulk sweep, no background/app-open catch-up logic).
@@ -32,7 +39,7 @@
 - Session ends with all Sprint 6 code **uncommitted**.
 
 ## Open Tasks
-- **Get user approval on hybrid budget model spec** (`docs/superpowers/specs/2026-08-05-hybrid-budget-model-design.md`), then run `superpowers:writing-plans` to turn it into an implementation plan — nothing built yet, design-only session.
+- **Execute the hybrid budget model plan** (`docs/superpowers/plans/2026-08-05-hybrid-budget-model.md`, 14 tasks) — spec approved, plan written and committed, nothing built yet. Start next session with `superpowers:subagent-driven-development` or `superpowers:executing-plans`.
 - **Commit this session's work** (design system install, Transactions redesign, nav relabel, logo) — nothing committed yet.
 - **Diagnose `flutter install` staleness bug** — reused a cached APK after source changes on this machine; worked around with `flutter build apk --release` + direct `adb install -r`, not root-caused.
 - **Get design mockups for Budget/Charges/Profil tabs** from design team — currently just relabeled old Goals/Reports/Settings screens with no matching design, tracked as a gap, not silently treated as done.
@@ -51,7 +58,7 @@
 - Darija (`ar-MA`) built-in Material widget strings (date pickers etc.) fall back to standard Arabic since Flutter's `GlobalMaterialLocalizations` resolves by languageCode only, ignoring country — known/accepted tradeoff, not a bug to fix
 
 ## Current Priorities
-- Land hybrid budget model: get spec approved, write implementation plan, build (new Sprint, not yet numbered in intel/wins.md)
+- Land hybrid budget model: spec approved, plan written (14 tasks, committed) — build next (new Sprint, not yet numbered in intel/wins.md)
 - Commit this session's design-install + logo work (Transactions redesign, theme tokens, fonts, nav relabel, launcher icon)
 - Get Budget/Charges/Profil mockups from design team — only Transactions has a real design so far
 - Re-verify restore + confirm backup, then commit Sprint 6
