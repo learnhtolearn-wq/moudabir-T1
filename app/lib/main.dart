@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/notifications/notification_provider.dart';
 import 'core/router/app_router.dart';
 import 'core/security/pin_store.dart';
+import 'features/recurring/providers/recurring_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,6 +73,9 @@ class _MoudabbirAppState extends ConsumerState<MoudabbirApp>
     // Side-effect only: reschedules reminders left enabled from a prior
     // session. Result is intentionally unused.
     ref.watch(notificationBootstrapProvider);
+    // Side-effect only: fires any recurring bills/income due this month
+    // that haven't already run. Result is intentionally unused.
+    ref.watch(runDueRecurringTemplatesProvider);
 
     return MaterialApp.router(
       // Forces the router (and every StatefulShellRoute branch it caches)
