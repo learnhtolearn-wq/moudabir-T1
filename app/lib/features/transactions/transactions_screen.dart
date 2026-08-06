@@ -254,7 +254,6 @@ class _TransactionCard extends StatelessWidget {
         ? '${row.account.name} → ${row.toAccount?.name ?? ''}'
         : (row.category?.name.tr() ?? row.account.name);
     final categoryLabel = row.category?.name.tr();
-    final subtitle = isTransfer ? row.category?.name.tr() ?? '' : row.account.name;
 
     return Material(
       color: AppColors.surface,
@@ -295,7 +294,8 @@ class _TransactionCard extends StatelessWidget {
                           child: CategoryBadge(label: categoryLabel),
                         ),
                       ),
-                    Text(subtitle, style: AppTextStyles.caption),
+                    if (isTransfer && categoryLabel != null)
+                      Text(categoryLabel, style: AppTextStyles.caption),
                   ],
                 ),
               ),
