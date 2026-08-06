@@ -199,7 +199,7 @@ class _BudgetScreenState extends ConsumerState<BudgetScreen> {
                           ),
                           Checkbox(
                             value: _sweepFlags[category.id] ?? false,
-                            activeColor: AppColors.vault,
+                            activeColor: AppColors.or,
                             onChanged: (v) =>
                                 setState(() => _sweepFlags[category.id] = v ?? false),
                           ),

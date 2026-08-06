@@ -123,7 +123,7 @@ class GoalsScreen extends ConsumerWidget {
                                   if (!goal.achieved)
                                     IconButton(
                                       icon: const Icon(Icons.add_circle_outline),
-                                      color: AppColors.vault,
+                                      color: AppColors.or,
                                       onPressed: () => _contribute(context, ref, goal),
                                     ),
                                 ],

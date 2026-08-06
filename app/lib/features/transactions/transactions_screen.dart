@@ -244,7 +244,7 @@ class _TransactionCard extends StatelessWidget {
     final isIncome = t.type == 'income';
     final isTransfer = t.type == 'transfer';
     final sign = isIncome ? '+ ' : (isTransfer ? '' : '− ');
-    final amountColor = isIncome ? AppColors.vault : AppColors.ink;
+    final amountColor = isIncome ? AppColors.or : AppColors.ink;
     final formatted = NumberFormat.currency(
       locale: context.locale.toString(),
       symbol: row.account.currency,
@@ -267,14 +267,14 @@ class _TransactionCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 20,
-                backgroundColor: AppColors.vaultTint,
+                backgroundColor: AppColors.orTint,
                 child: Icon(
                   isIncome
                       ? Icons.arrow_upward
                       : (isTransfer
                           ? Icons.swap_horiz
                           : Icons.arrow_downward),
-                  color: AppColors.vault,
+                  color: AppColors.or,
                   size: 18,
                 ),
               ),

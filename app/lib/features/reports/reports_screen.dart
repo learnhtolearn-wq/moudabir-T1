@@ -165,12 +165,12 @@ class _MonthlyTrendChart extends StatelessWidget {
                     barRods: [
                       BarChartRodData(
                         toY: months[i].income,
-                        color: const Color(0xFF1F6F5C),
+                        color: AppColors.or,
                         width: 8,
                       ),
                       BarChartRodData(
                         toY: months[i].expense,
-                        color: const Color(0xFFE07A5F),
+                        color: AppColors.corail,
                         width: 8,
                       ),
                     ],
@@ -215,9 +215,9 @@ class _MonthlyTrendChart extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _LegendDot(color: const Color(0xFF1F6F5C), label: 'reports.income'.tr()),
+            _LegendDot(color: AppColors.or, label: 'reports.income'.tr()),
             const SizedBox(width: 16),
-            _LegendDot(color: const Color(0xFFE07A5F), label: 'reports.expense'.tr()),
+            _LegendDot(color: AppColors.corail, label: 'reports.expense'.tr()),
           ],
         ),
       ],

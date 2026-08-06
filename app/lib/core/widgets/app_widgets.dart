@@ -27,7 +27,7 @@ class ScreenHeader extends StatelessWidget {
           onTap: onAvatarTap,
           child: CircleAvatar(
             radius: 18,
-            backgroundColor: AppColors.vaultTint,
+            backgroundColor: AppColors.orTint,
             child: ClipOval(
               child: Image.asset(
                 'assets/branding/icon_mark.png',
@@ -211,14 +211,14 @@ class AppOptionTile extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: selected ? AppColors.vault : Colors.transparent,
+                color: selected ? AppColors.or : Colors.transparent,
                 width: 1.5,
               ),
             ),
             child: Text(
               label,
               style: AppTextStyles.body.copyWith(
-                color: selected ? AppColors.vault : AppColors.ink,
+                color: selected ? AppColors.or : AppColors.ink,
               ),
             ),
           ),
@@ -279,7 +279,7 @@ Future<T?> showAppOptionSheet<T>({
 }
 
 /// Small rounded pill for a category name, matching Figma's
-/// "Badge catégorie" (vault-tint background, vault text).
+/// "Badge catégorie" (or-tint background, or text).
 class CategoryBadge extends StatelessWidget {
   const CategoryBadge({super.key, required this.label});
 
@@ -290,26 +290,27 @@ class CategoryBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.vaultTint,
+        color: AppColors.orTint,
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
         label,
-        style: AppTextStyles.caption.copyWith(color: AppColors.vault),
+        style: AppTextStyles.caption.copyWith(color: AppColors.or),
       ),
     );
   }
 }
 
-/// Rounded progress track with a vault-gradient fill, matching Figma's
-/// "Jauge de progression". Pass [trackColor]/[fillColors] to reuse the same
-/// shape for over-budget states (e.g. orange/red) elsewhere in the app.
+/// Rounded progress track with a green gradient fill, matching Figma's
+/// "Jauge de progression" — the design hardcodes this gradient rather than
+/// the gold accent. Pass [trackColor]/[fillColors] to reuse the same shape
+/// for over-budget states (e.g. orange/red) elsewhere in the app.
 class ProgressGauge extends StatelessWidget {
   const ProgressGauge({
     super.key,
     required this.value,
     this.trackColor = AppColors.surfaceSunken,
-    this.fillColors = const [AppColors.vaultDeep, AppColors.vault],
+    this.fillColors = const [AppColors.progressStart, AppColors.progressEnd],
   });
 
   final double value;
@@ -406,7 +407,7 @@ class AppListItem extends StatelessWidget {
   }
 }
 
-/// 32px circular icon avatar with the app's vault-tint treatment, matching
+/// 32px circular icon avatar with the app's or-tint treatment, matching
 /// the ellipse leading marker used in "Item de liste" / "Carte transaction".
 class AppIconAvatar extends StatelessWidget {
   const AppIconAvatar({super.key, required this.icon, this.radius = 16});
@@ -418,8 +419,8 @@ class AppIconAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: radius,
-      backgroundColor: AppColors.vaultTint,
-      child: Icon(icon, color: AppColors.vault, size: radius),
+      backgroundColor: AppColors.orTint,
+      child: Icon(icon, color: AppColors.or, size: radius),
     );
   }
 }

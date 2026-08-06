@@ -26,13 +26,13 @@ class DashboardScreen extends ConsumerWidget {
             _StatCard(
               label: 'dashboard.total_balance'.tr(),
               value: totalAsync,
-              color: AppColors.vault,
+              color: AppColors.or,
             ),
             const SizedBox(height: 12),
             _StatCard(
               label: 'dashboard.month_income'.tr(),
               value: monthlyAsync.whenData((s) => s.income),
-              color: AppColors.vault,
+              color: AppColors.or,
             ),
             const SizedBox(height: 12),
             _StatCard(

@@ -1,19 +1,38 @@
 import 'package:flutter/material.dart';
 
-/// Design tokens pulled from Figma (CfQ5K7ZLCEXglxOtqDg15L, "Design System" page).
-/// Source of truth for color + type — reuse these instead of ad-hoc values.
+/// Design tokens pulled from Figma (p28i2vn3pA1jCSuoHygHdd, "Design System"
+/// page, "Métal & Sable" palette). Source of truth for color + type — reuse
+/// these instead of ad-hoc values.
 class AppColors {
   const AppColors._();
 
-  static const bg = Color(0xFFF6F1E4);
+  static const bg = Color(0xFFF2E9DC);
   static const surface = Color(0xFFFFFFFF);
-  static const surfaceSunken = Color(0xFFEFE7D4);
-  static const ink = Color(0xFF0B2A4A);
-  static const inkSoft = Color(0x9E0B2A4A);
-  static const inkFaint = Color(0x610B2A4A);
-  static const vault = Color(0xFF12855C);
-  static const vaultDeep = Color(0xFF0B4F38);
-  static const vaultTint = Color(0x1F12855C);
+  static const surfaceSunken = Color(0xFFE7DAC6);
+  static const ink = Color(0xFF3A2C12);
+  static const inkSoft = Color(0xA83A2C12);
+  static const inkFaint = Color(0x6B3A2C12);
+  static const or = Color(0xFFC9A227);
+  static const orStrong = Color(0xFFBF8F2E);
+  static const orDeep = Color(0xFF7A5A12);
+  static const orTint = Color(0x29C9A227);
+  static const warning = Color(0xFFBD741D);
+  static const warningTint = Color(0x29BD741D);
+  static const corail = Color(0xFFE4603E);
+  static const critical = Color(0xFFB23B2E);
+  static const criticalTint = Color(0x24B23B2E);
+  static const bronze = Color(0xFF8A5A2B);
+  static const bronzeTint = Color(0x268A5A2B);
+  static const silver = Color(0xFF6F6A5C);
+  static const silverTint = Color(0x266F6A5C);
+  static const onAccent = Color(0xFF3A2C12);
+  static const onCritical = Color(0xFFFFF8F2);
+  static const scrim = Color(0x80201709);
+
+  /// "Jauge de progression" fill gradient — kept as the old green accent
+  /// per Figma, which hardcodes this gradient rather than using `or`.
+  static const progressStart = Color(0xFF0B4F38);
+  static const progressEnd = Color(0xFF12855C);
 }
 
 class AppTextStyles {
@@ -68,7 +87,7 @@ class AppTextStyles {
     fontFamily: _notoSans,
     fontWeight: FontWeight.w600,
     fontSize: 10,
-    color: AppColors.vault,
+    color: AppColors.or,
   );
 
   /// Money amounts — always Roboto Mono per design system typography spec.
@@ -91,8 +110,8 @@ class AppTheme {
       // AR/Darija text renders instead of showing tofu boxes.
       fontFamilyFallback: const ['Noto Sans Arabic'],
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.vault,
-        primary: AppColors.vault,
+        seedColor: AppColors.or,
+        primary: AppColors.or,
         surface: AppColors.surface,
         brightness: Brightness.light,
       ),
@@ -104,7 +123,7 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.vaultTint,
+        indicatorColor: AppColors.orTint,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           return states.contains(WidgetState.selected)
               ? AppTextStyles.navLabelSelected
@@ -113,8 +132,8 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.vault,
-          foregroundColor: Colors.white,
+          backgroundColor: AppColors.or,
+          foregroundColor: AppColors.onAccent,
           textStyle: const TextStyle(
             fontFamily: 'Noto Sans',
             fontWeight: FontWeight.w600,
@@ -128,8 +147,8 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.vault,
-          side: const BorderSide(color: AppColors.vault, width: 1.5),
+          foregroundColor: AppColors.or,
+          side: const BorderSide(color: AppColors.or, width: 1.5),
           textStyle: const TextStyle(
             fontFamily: 'Noto Sans',
             fontWeight: FontWeight.w600,

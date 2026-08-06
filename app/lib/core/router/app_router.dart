@@ -120,6 +120,7 @@ class _AppShell extends ConsumerWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: shell.currentIndex,
         onDestinationSelected: shell.goBranch,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: [
           NavigationDestination(
             icon: const Icon(Icons.dashboard_outlined),

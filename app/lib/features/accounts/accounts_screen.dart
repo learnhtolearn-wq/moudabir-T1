@@ -45,10 +45,10 @@ class AccountsScreen extends ConsumerWidget {
               return AppListItem(
                 leading: CircleAvatar(
                   radius: 16,
-                  backgroundColor: AppColors.vaultTint,
+                  backgroundColor: AppColors.orTint,
                   child: Text(
                     account.name[0].toUpperCase(),
-                    style: AppTextStyles.body.copyWith(color: AppColors.vault),
+                    style: AppTextStyles.body.copyWith(color: AppColors.or),
                   ),
                 ),
                 title: account.name,
