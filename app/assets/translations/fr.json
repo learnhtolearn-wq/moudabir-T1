@@ -1,5 +1,8 @@
 {
   "app_name": "Moudabir",
+  "splash": {
+    "tagline": "Dis à Moudabir où sont passés tes sous."
+  },
   "nav": {
     "dashboard": "Accueil",
     "transactions": "Transactions",
@@ -168,6 +171,7 @@
     "name": "Nom",
     "duplicate_name": "Une catégorie avec ce nom existe déjà. Choisissez un autre nom.",
     "kind_label": "Type",
+    "icon_label": "Icône",
     "system": "Intégrée",
     "archive_title": "Archiver la catégorie",
     "archive_confirm": "Cette catégorie sera masquée mais les transactions existantes sont conservées.",

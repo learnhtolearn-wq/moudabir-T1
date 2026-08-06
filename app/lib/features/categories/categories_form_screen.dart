@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,8 +6,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/database/database.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/app_widgets.dart';
+import '../../core/widgets/category_icons.dart';
 import 'categories_screen.dart' show categoryKinds;
 import 'providers/categories_provider.dart';
+
+const _categoryIconChoices = <String>[
+  'basket',
+  'car',
+  'home',
+  'shield',
+  'sparkle',
+  'briefcase',
+  'laptop',
+  'trend',
+];
 
 class CategoriesFormScreen extends ConsumerStatefulWidget {
   const CategoriesFormScreen({super.key, this.category});
@@ -22,6 +35,7 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late String _kind;
+  late String _iconName;
   String? _nameError;
 
   bool get _isEditing => widget.category != null;
@@ -31,6 +45,7 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
     super.initState();
     _nameController = TextEditingController(text: widget.category?.name ?? '');
     _kind = widget.category?.kind ?? categoryKinds.first;
+    _iconName = widget.category?.iconName ?? _categoryIconChoices.first;
   }
 
   @override
@@ -56,10 +71,10 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
 
     if (_isEditing) {
       await notifier.update(
-        widget.category!.copyWith(name: name, kind: _kind),
+        widget.category!.copyWith(name: name, kind: _kind, iconName: Value(_iconName)),
       );
     } else {
-      await notifier.add(name: name, kind: _kind);
+      await notifier.add(name: name, kind: _kind, iconName: _iconName);
     }
     if (mounted) Navigator.of(context).pop();
   }
@@ -159,11 +174,58 @@ class _CategoriesFormScreenState extends ConsumerState<CategoriesFormScreen> {
               },
             ),
             const SizedBox(height: 24),
+            Text('categories.icon_label'.tr(), style: AppTextStyles.caption),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                for (final icon in _categoryIconChoices)
+                  _IconChoice(
+                    iconName: icon,
+                    selected: icon == _iconName,
+                    onTap: () => setState(() => _iconName = icon),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _submit,
               child: Text('common.save'.tr()),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _IconChoice extends StatelessWidget {
+  const _IconChoice({
+    required this.iconName,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String iconName;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = categoryIconColor(iconName);
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 52,
+        height: 52,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color.withValues(alpha: 0.16),
+          border: selected ? Border.all(color: color, width: 2) : null,
+        ),
+        child: Center(
+          child: CategoryIconAvatar(iconName: iconName, radius: 20),
         ),
       ),
     );

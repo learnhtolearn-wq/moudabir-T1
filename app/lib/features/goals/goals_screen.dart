@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/database/database.dart';
 import '../../core/theme/app_theme.dart';
@@ -98,10 +99,20 @@ class GoalsScreen extends ConsumerWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  AppIconAvatar(
-                                    icon: goal.achieved
-                                        ? Icons.emoji_events
-                                        : Icons.savings_outlined,
+                                  CircleAvatar(
+                                    radius: 16,
+                                    backgroundColor: AppColors.orTint,
+                                    child: SvgPicture.asset(
+                                      goal.achieved
+                                          ? 'assets/icons/star.svg'
+                                          : 'assets/icons/trend.svg',
+                                      width: 16,
+                                      height: 16,
+                                      colorFilter: const ColorFilter.mode(
+                                        AppColors.or,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(width: 12),
                                   Expanded(

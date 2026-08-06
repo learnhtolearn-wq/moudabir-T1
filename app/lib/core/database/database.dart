@@ -27,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -48,6 +48,9 @@ class AppDatabase extends _$AppDatabase {
           if (from < 5) {
             await m.createTable(budgetTargets);
             await m.createTable(recurringTemplates);
+          }
+          if (from < 6) {
+            await _backfillSeedCategoryIcons(this);
           }
         },
       );
@@ -85,26 +88,45 @@ bool _hasCipher(Database database) {
 /// resolved via `.tr()` at every display site so system categories follow
 /// the active locale. User-created categories store free text instead;
 /// `.tr()` on a key it doesn't recognize just returns the text unchanged.
-const _seedCategoryDefaults = <(String, String)>[
-  ('categories.seed.food', 'expense'),
-  ('categories.seed.transport', 'expense'),
-  ('categories.seed.housing', 'expense'),
-  ('categories.seed.health', 'expense'),
-  ('categories.seed.leisure', 'expense'),
-  ('categories.seed.salary', 'income'),
-  ('categories.seed.freelance', 'income'),
-  ('categories.seed.other_income', 'income'),
+/// icon/color are the [Categories.iconName]/[Categories.colorHex] pair
+/// used by `CategoryIconAvatar` — sourced from the Figma "icon/*" set and
+/// the "Métal & Sable" palette (see `AppColors`).
+const _seedCategoryDefaults = <(String, String, String, String)>[
+  ('categories.seed.food', 'expense', 'basket', 'B23B2E'),
+  ('categories.seed.transport', 'expense', 'car', 'BD741D'),
+  ('categories.seed.housing', 'expense', 'home', '6F6A5C'),
+  ('categories.seed.health', 'expense', 'shield', '8A5A2B'),
+  ('categories.seed.leisure', 'expense', 'sparkle', 'E4603E'),
+  ('categories.seed.salary', 'income', 'briefcase', 'C9A227'),
+  ('categories.seed.freelance', 'income', 'laptop', 'BF8F2E'),
+  ('categories.seed.other_income', 'income', 'trend', '7A5A12'),
 ];
 
 Future<void> _seedDefaultCategories(AppDatabase db) async {
-  for (final (name, kind) in _seedCategoryDefaults) {
+  for (final (name, kind, icon, color) in _seedCategoryDefaults) {
     await db.into(db.categories).insert(
           CategoriesCompanion.insert(
             name: name,
             kind: kind,
             isSystem: const Value(true),
+            iconName: Value(icon),
+            colorHex: Value(color),
           ),
         );
+  }
+}
+
+/// Existing installs (schema v1-v5) seeded system categories before
+/// icon/color existed — backfill them by name so upgraded installs pick up
+/// the same icons new installs get from [_seedDefaultCategories].
+Future<void> _backfillSeedCategoryIcons(AppDatabase db) async {
+  for (final (name, _, icon, color) in _seedCategoryDefaults) {
+    await (db.update(db.categories)
+          ..where((c) => c.name.equals(name) & c.isSystem.equals(true)))
+        .write(CategoriesCompanion(
+      iconName: Value(icon),
+      colorHex: Value(color),
+    ));
   }
 }
 

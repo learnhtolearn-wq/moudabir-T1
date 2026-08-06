@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/accounts/accounts_form_screen.dart';
@@ -12,16 +13,39 @@ import '../../features/goals/goals_screen.dart';
 import '../../features/recurring/providers/recurring_provider.dart';
 import '../../features/reports/reports_screen.dart';
 import '../../features/settings/settings_screen.dart';
+import '../../features/splash/splash_screen.dart';
 import '../../features/transactions/transactions_screen.dart';
 import '../security/pin_store.dart';
+import '../theme/app_theme.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+/// Bottom nav tab, matching Figma's "Barre de navigation" — same 24px line
+/// icon for both states, recolored gold when selected instead of swapping
+/// to a filled glyph.
+NavigationDestination _navDestination(String asset, String label) {
+  Widget icon(Color color) => SvgPicture.asset(
+        asset,
+        width: 24,
+        height: 24,
+        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+      );
+  return NavigationDestination(
+    icon: icon(AppColors.inkFaint),
+    selectedIcon: icon(AppColors.or),
+    label: label,
+  );
+}
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/lock',
+    initialLocation: '/splash',
     redirect: (context, state) async {
+      // Splash owns its own timed transition to /lock — skip the auth
+      // redirect entirely while it's showing so it isn't preempted.
+      if (state.matchedLocation == '/splash') return null;
+
       final goingToAuth =
           state.matchedLocation == '/lock' || state.matchedLocation == '/setup-pin';
       final hasPin = await PinStore.hasPin();
@@ -54,6 +78,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/splash',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const SplashScreen(),
+      ),
       GoRoute(
         path: '/setup-pin',
         parentNavigatorKey: _rootNavigatorKey,
@@ -122,31 +151,11 @@ class _AppShell extends ConsumerWidget {
         onDestinationSelected: shell.goBranch,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.dashboard_outlined),
-            selectedIcon: const Icon(Icons.dashboard),
-            label: 'nav.dashboard'.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.receipt_long_outlined),
-            selectedIcon: const Icon(Icons.receipt_long),
-            label: 'nav.transactions'.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.savings_outlined),
-            selectedIcon: const Icon(Icons.savings),
-            label: 'nav.goals'.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.bar_chart_outlined),
-            selectedIcon: const Icon(Icons.bar_chart),
-            label: 'nav.reports'.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.settings_outlined),
-            selectedIcon: const Icon(Icons.settings),
-            label: 'nav.settings'.tr(),
-          ),
+          _navDestination('assets/icons/home.svg', 'nav.dashboard'.tr()),
+          _navDestination('assets/icons/list.svg', 'nav.transactions'.tr()),
+          _navDestination('assets/icons/trend.svg', 'nav.goals'.tr()),
+          _navDestination('assets/icons/pie.svg', 'nav.reports'.tr()),
+          _navDestination('assets/icons/user.svg', 'nav.settings'.tr()),
         ],
       ),
     );

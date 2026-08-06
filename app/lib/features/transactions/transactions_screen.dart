@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/database/database.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/app_widgets.dart';
+import '../../core/widgets/category_icons.dart';
 import 'providers/transaction_filter_provider.dart';
 import 'providers/transactions_provider.dart';
 import 'transaction_form_screen.dart';
@@ -265,19 +266,25 @@ class _TransactionCard extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: AppColors.orTint,
-                child: Icon(
-                  isIncome
-                      ? Icons.arrow_upward
-                      : (isTransfer
-                          ? Icons.swap_horiz
-                          : Icons.arrow_downward),
-                  color: AppColors.or,
-                  size: 18,
+              if (!isTransfer && row.category != null)
+                CategoryIconAvatar(
+                  iconName: row.category!.iconName,
+                  colorHex: row.category!.colorHex,
+                )
+              else
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: AppColors.orTint,
+                  child: Icon(
+                    isIncome
+                        ? Icons.arrow_upward
+                        : (isTransfer
+                            ? Icons.swap_horiz
+                            : Icons.arrow_downward),
+                    color: AppColors.or,
+                    size: 18,
+                  ),
                 ),
-              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(

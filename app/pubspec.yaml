@@ -45,6 +45,7 @@ dependencies:
   # Notification scheduling (local time zone aware)
   timezone: ^0.11.1
   flutter_timezone: ^5.1.0
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +59,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/branding/icon_mark_flat.png"
-  adaptive_icon_background: "#F6F1E4"
+  adaptive_icon_background: "#DC9624"
   adaptive_icon_foreground: "assets/branding/icon_mark.png"
   min_sdk_android: 21
 
@@ -75,6 +76,7 @@ flutter:
   assets:
     - assets/translations/
     - assets/branding/
+    - assets/icons/
   fonts:
     - family: Noto Sans
       fonts:

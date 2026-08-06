@@ -1,5 +1,8 @@
 {
   "app_name": "Moudabir",
+  "splash": {
+    "tagline": "Tell Moudabir where your money went."
+  },
   "nav": {
     "dashboard": "Home",
     "transactions": "Transactions",
@@ -168,6 +171,7 @@
     "name": "Name",
     "duplicate_name": "A category with this name already exists. Choose a different name.",
     "kind_label": "Kind",
+    "icon_label": "Icon",
     "system": "Built-in",
     "archive_title": "Archive category",
     "archive_confirm": "This category will be hidden but existing transactions are kept.",

@@ -60,7 +60,7 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/branding/icon_mark.png', height: 88),
+              Image.asset('assets/branding/icon_mark_flat.png', height: 88),
               const SizedBox(height: 16),
               Text('auth.setup_pin_title'.tr(),
                   style: Theme.of(context).textTheme.headlineSmall),
