@@ -2,7 +2,7 @@ import 'package:local_auth/local_auth.dart';
 
 /// Wraps device biometrics (fingerprint/face) as the second local factor,
 /// alongside the app PIN. No server round-trip — this is what "2FA"
-/// means in Moudabbir: two local factors, zero cloud dependency.
+/// means in Moudabir: two local factors, zero cloud dependency.
 class BiometricAuthService {
   BiometricAuthService(this._auth);
 

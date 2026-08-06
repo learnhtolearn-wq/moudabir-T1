@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Move Moudabbir from pure after-the-fact logging to a hybrid budget model — salary allocation into per-category targets, auto-logged recurring bills, a fast quick-add flow, and a manual per-category leftover sweep into savings.
+**Goal:** Move Moudabir from pure after-the-fact logging to a hybrid budget model — salary allocation into per-category targets, auto-logged recurring bills, a fast quick-add flow, and a manual per-category leftover sweep into savings.
 
 **Architecture:** Two new Drift tables (`BudgetTargets`, `RecurringTemplates`) alongside Sprint 0's schema. Two new feature folders (`features/budget`, `features/recurring`) follow the existing provider/screen/form-screen pattern used by `features/goals`. Recurring auto-log runs once per app start via a `FutureProvider`, mirroring how `notificationBootstrapProvider` already runs at startup in `main.dart`. New screens (`BudgetScreen`, `RecurringTemplatesScreen`) are reached via `Navigator.of(context).push(MaterialPageRoute(...))` from Settings/Dashboard — **not** new `go_router` routes — matching how `AccountsScreen`, `CategoriesScreen`, and `ChangePinScreen` are already reached from Settings. (The spec's "New routes added to the go_router shell" section is superseded by this: the codebase has no precedent for pushing feature screens as router routes, and introducing one here would be an inconsistent one-off.)
 
@@ -131,7 +131,7 @@ class SettingsPrefs {
 
   static const _storage = FlutterSecureStorage();
   static const _defaultSavingsAccountIdKey =
-      'moudabbir_default_savings_account_id';
+      'moudabir_default_savings_account_id';
 
   static Future<int?> getDefaultSavingsAccountId() async {
     final raw = await _storage.read(key: _defaultSavingsAccountIdKey);
@@ -593,7 +593,7 @@ In `app/lib/main.dart`, add the import:
 import 'features/recurring/providers/recurring_provider.dart';
 ```
 
-In `_MoudabbirAppState.build`, next to the existing bootstrap watch:
+In `_MoudabirAppState.build`, next to the existing bootstrap watch:
 
 ```dart
     final router = ref.watch(appRouterProvider);
@@ -2070,7 +2070,7 @@ Then install per the machine's known-good path (see `live/state.md`): `adb insta
 
 - [ ] **Step 4: Update project docs**
 
-Update `live/state.md` and `intel/focus.md` per `moudabbir-progress` conventions once manual verification passes.
+Update `live/state.md` and `intel/focus.md` per `moudabir-progress` conventions once manual verification passes.
 
 - [ ] **Step 5: Final commit (docs only, if not already covered by prior task commits)**
 

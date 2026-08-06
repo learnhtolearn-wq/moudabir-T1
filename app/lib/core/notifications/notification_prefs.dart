@@ -7,9 +7,9 @@ class NotificationPrefs {
   NotificationPrefs._();
 
   static const _storage = FlutterSecureStorage();
-  static const _enabledKey = 'moudabbir_notif_enabled';
-  static const _hourKey = 'moudabbir_notif_hour';
-  static const _minuteKey = 'moudabbir_notif_minute';
+  static const _enabledKey = 'moudabir_notif_enabled';
+  static const _hourKey = 'moudabir_notif_hour';
+  static const _minuteKey = 'moudabir_notif_minute';
 
   static const defaultHour = 20;
   static const defaultMinute = 0;

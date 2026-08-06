@@ -8,7 +8,7 @@ class SettingsPrefs {
 
   static const _storage = FlutterSecureStorage();
   static const _defaultSavingsAccountIdKey =
-      'moudabbir_default_savings_account_id';
+      'moudabir_default_savings_account_id';
 
   static Future<int?> getDefaultSavingsAccountId() async {
     final raw = await _storage.read(key: _defaultSavingsAccountIdKey);

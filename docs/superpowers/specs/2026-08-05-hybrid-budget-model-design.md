@@ -5,7 +5,7 @@
 
 ## Goal
 
-Move Moudabbir from pure after-the-fact transaction logging toward a hybrid budgeting model: allocate salary into category targets on payday, auto-log known recurring bills, log variable spend fast (<10s) as it happens, and let the user sweep unused category budget into savings whenever they choose (not automatically). Covers new ground beyond Sprint 0–3's schema (Accounts, Categories, Transactions, Goals) — no existing sprint covers budgeting/recurring/sweep.
+Move Moudabir from pure after-the-fact transaction logging toward a hybrid budgeting model: allocate salary into category targets on payday, auto-log known recurring bills, log variable spend fast (<10s) as it happens, and let the user sweep unused category budget into savings whenever they choose (not automatically). Covers new ground beyond Sprint 0–3's schema (Accounts, Categories, Transactions, Goals) — no existing sprint covers budgeting/recurring/sweep.
 
 Out of scope for this spec: notification permission plumbing (assumed available from Sprint 6 security/notifications work), multi-currency budgets (matches existing single-currency precedent).
 

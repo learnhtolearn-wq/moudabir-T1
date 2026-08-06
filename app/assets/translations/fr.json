@@ -1,5 +1,5 @@
 {
-  "app_name": "Moudabbir",
+  "app_name": "Moudabir",
   "nav": {
     "dashboard": "Accueil",
     "transactions": "Transactions",
@@ -93,7 +93,7 @@
     "backup_success": "Sauvegarde prête à enregistrer",
     "backup_error": "Échec de la sauvegarde",
     "restore_success": "Sauvegarde restaurée",
-    "restore_error": "Échec de la restauration — le fichier n'est peut-être pas une sauvegarde Moudabbir valide",
+    "restore_error": "Échec de la restauration — le fichier n'est peut-être pas une sauvegarde Moudabir valide",
     "restore_wrong_password": "Mot de passe de sauvegarde incorrect",
     "restore_cancelled": "Restauration annulée",
     "backup_password_title": "Choisissez un mot de passe de sauvegarde",
@@ -220,7 +220,7 @@
   },
   "auth": {
     "setup_pin_title": "Créer votre code PIN",
-    "unlock_title": "Déverrouiller Moudabbir",
+    "unlock_title": "Déverrouiller Moudabir",
     "pin": "Code PIN",
     "confirm_pin": "Confirmer le code PIN",
     "save_pin": "Enregistrer",
@@ -230,7 +230,7 @@
     "pin_mismatch": "Les codes PIN ne correspondent pas",
     "wrong_pin": "Code PIN incorrect",
     "locked_out": "Trop de tentatives — réessayez dans {seconds}s",
-    "biometric_reason": "Authentifiez-vous pour accéder à Moudabbir",
+    "biometric_reason": "Authentifiez-vous pour accéder à Moudabir",
     "forgot_pin": "Code PIN oublié ?",
     "forgot_pin_title": "Récupérer l'accès",
     "forgot_pin_body": "Entrez le code de récupération enregistré lors de la création de votre code PIN.",

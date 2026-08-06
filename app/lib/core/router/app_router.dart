@@ -105,11 +105,11 @@ class _AppShell extends ConsumerWidget {
     // Side-effect only: fires any recurring bills/income due this month
     // that haven't already run yet. Result is intentionally unused.
     //
-    // Deliberately watched here rather than in MoudabbirApp.build: this
+    // Deliberately watched here rather than in MoudabirApp.build: this
     // shell is only reached once the router's redirect logic has confirmed
     // the user has a PIN, has passed /lock (or biometric unlock), and has
     // at least one account — i.e. strictly post-authentication. Watching it
-    // in MoudabbirApp.build would run it on every cold start regardless of
+    // in MoudabirApp.build would run it on every cold start regardless of
     // lock state, silently inserting a real transaction (and potentially
     // firing an overspend notification exposing a category name) before the
     // user has unlocked.

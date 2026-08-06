@@ -19,7 +19,7 @@ class AppDatabase extends _$AppDatabase {
 
   /// Filename of the encrypted DB file on disk — shared with [BackupService]
   /// so backup/restore and the live connection never disagree on the path.
-  static const fileName = 'moudabbir.sqlite';
+  static const fileName = 'moudabir.sqlite';
 
   static Future<File> resolveFile() async {
     final dbFolder = await getApplicationSupportDirectory();

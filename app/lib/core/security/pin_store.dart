@@ -16,12 +16,12 @@ class PinStore {
 
   static const _storage = FlutterSecureStorage();
 
-  static const _pinHashKey = 'moudabbir_pin_hash';
-  static const _pinSaltKey = 'moudabbir_pin_salt';
-  static const _failedAttemptsKey = 'moudabbir_pin_failed_attempts';
-  static const _lockedUntilKey = 'moudabbir_pin_locked_until';
-  static const _recoveryHashKey = 'moudabbir_recovery_hash';
-  static const _recoverySaltKey = 'moudabbir_recovery_salt';
+  static const _pinHashKey = 'moudabir_pin_hash';
+  static const _pinSaltKey = 'moudabir_pin_salt';
+  static const _failedAttemptsKey = 'moudabir_pin_failed_attempts';
+  static const _lockedUntilKey = 'moudabir_pin_locked_until';
+  static const _recoveryHashKey = 'moudabir_recovery_hash';
+  static const _recoverySaltKey = 'moudabir_recovery_salt';
 
   /// After this many consecutive failures, the PIN field locks out.
   static const maxAttempts = 5;
@@ -144,6 +144,6 @@ class PinStore {
 
   static String _randomSalt() {
     final now = DateTime.now().microsecondsSinceEpoch;
-    return sha256.convert(utf8.encode('$now-moudabbir')).toString();
+    return sha256.convert(utf8.encode('$now-moudabir')).toString();
   }
 }

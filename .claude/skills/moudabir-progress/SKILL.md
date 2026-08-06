@@ -1,19 +1,19 @@
 ---
-name: moudabbir-progress
-description: Use when tracking work on the Moudabbir Flutter finance app — logging what was built this session, updating live/state.md, intel/focus.md, or decisions/ledger.md, or producing a detailed progress/work report for this project. Trigger phrases: "/moudabbir-progress", "track my work", "log this work", "update work log", "what did I build", "session summary", "log progress" (Moudabbir context).
+name: moudabir-progress
+description: Use when tracking work on the Moudabir Flutter finance app — logging what was built this session, updating live/state.md, intel/focus.md, or decisions/ledger.md, or producing a detailed progress/work report for this project. Trigger phrases: "/moudabir-progress", "track my work", "log this work", "update work log", "what did I build", "session summary", "log progress" (Moudabir context).
 ---
 
-# Moudabbir Progress Tracker
+# Moudabir Progress Tracker
 
 ## Overview
-Work-tracking skill for the Moudabbir project (see project CLAUDE.md). Two jobs: (1) **log** — record what got built this session into the project's own tracking files, (2) **report** — read those files plus live repo state and produce a detailed status report. Not a generic-progress skill (that's zerostop-progress, a different project) — this one is scoped to Moudabbir's file map.
+Work-tracking skill for the Moudabir project (see project CLAUDE.md). Two jobs: (1) **log** — record what got built this session into the project's own tracking files, (2) **report** — read those files plus live repo state and produce a detailed status report. Not a generic-progress skill (that's zerostop-progress, a different project) — this one is scoped to Moudabir's file map.
 
 ## When to Use
 - End of a work session (or when told to) → **log** mode
 - User asks "progress", "where are we", "what's done", "give me details" → **report** mode
 - Do NOT use for creating Blueprints or Equipment — those follow permissions.md (ask first)
 
-## File Map (Moudabbir-specific)
+## File Map (Moudabir-specific)
 | File | Holds |
 |---|---|
 | `live/state.md` | Last session summary, open tasks, current priorities |
@@ -37,7 +37,7 @@ Work-tracking skill for the Moudabbir project (see project CLAUDE.md). Two jobs:
 4. **Output inline as an ASCII text block in the chat response — never an Artifact link, never a table.** User standing preference: always see the chart directly in the context window. Use this exact template, filled with live data (bar = 27 chars, `█` filled / `░` empty, proportional to %; status icons ✅ shipped / 🔵 next up / ⬜ pending / 🟠 blocked):
 
 ```
-MOUDABBIR — BUILD DASHBOARD
+MOUDABIR — BUILD DASHBOARD
 <subtitle: what the app is, sprint count>
 
 OVERALL PROGRESS: NN%  [bar]  X/Y shipped

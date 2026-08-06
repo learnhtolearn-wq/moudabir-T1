@@ -1,4 +1,4 @@
-package com.moudabbir.moudabbir
+package com.moudabir.moudabir
 
 import android.os.Bundle
 import android.view.WindowManager

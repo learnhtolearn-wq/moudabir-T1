@@ -1,5 +1,5 @@
 {
-  "app_name": "Moudabbir",
+  "app_name": "Moudabir",
   "nav": {
     "dashboard": "Home",
     "transactions": "Transactions",
@@ -93,7 +93,7 @@
     "backup_success": "Backup ready to save",
     "backup_error": "Backup failed",
     "restore_success": "Backup restored",
-    "restore_error": "Restore failed — file may not be a valid Moudabbir backup",
+    "restore_error": "Restore failed — file may not be a valid Moudabir backup",
     "restore_wrong_password": "Wrong backup password",
     "restore_cancelled": "Restore cancelled",
     "backup_password_title": "Set a backup password",
@@ -220,7 +220,7 @@
   },
   "auth": {
     "setup_pin_title": "Create your PIN",
-    "unlock_title": "Unlock Moudabbir",
+    "unlock_title": "Unlock Moudabir",
     "pin": "PIN",
     "confirm_pin": "Confirm PIN",
     "save_pin": "Save",
@@ -230,7 +230,7 @@
     "pin_mismatch": "PINs do not match",
     "wrong_pin": "Incorrect PIN",
     "locked_out": "Too many attempts — try again in {seconds}s",
-    "biometric_reason": "Authenticate to access Moudabbir",
+    "biometric_reason": "Authenticate to access Moudabir",
     "forgot_pin": "Forgot PIN?",
     "forgot_pin_title": "Recover access",
     "forgot_pin_body": "Enter the recovery code you saved when you first set up your PIN.",

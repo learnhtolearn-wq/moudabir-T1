@@ -22,19 +22,19 @@ void main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('fr'),
       startLocale: const Locale('fr'),
-      child: const ProviderScope(child: MoudabbirApp()),
+      child: const ProviderScope(child: MoudabirApp()),
     ),
   );
 }
 
-class MoudabbirApp extends ConsumerStatefulWidget {
-  const MoudabbirApp({super.key});
+class MoudabirApp extends ConsumerStatefulWidget {
+  const MoudabirApp({super.key});
 
   @override
-  ConsumerState<MoudabbirApp> createState() => _MoudabbirAppState();
+  ConsumerState<MoudabirApp> createState() => _MoudabirAppState();
 }
 
-class _MoudabbirAppState extends ConsumerState<MoudabbirApp>
+class _MoudabirAppState extends ConsumerState<MoudabirApp>
     with WidgetsBindingObserver {
   // Only re-lock after a real backgrounding (paused), not a brief
   // `inactive` blip from a share sheet, permission dialog, or app switcher.

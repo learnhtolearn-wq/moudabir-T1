@@ -10,7 +10,7 @@ class DbKeyStore {
 
   static const _storage = FlutterSecureStorage();
 
-  static const _dbKeyName = 'moudabbir_db_passphrase';
+  static const _dbKeyName = 'moudabir_db_passphrase';
 
   static Future<String> getOrCreateKey() async {
     final existing = await _storage.read(key: _dbKeyName);

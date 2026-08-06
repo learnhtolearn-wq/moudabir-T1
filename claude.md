@@ -1,11 +1,11 @@
-# CLAUDE.md — Moudabbir
+# CLAUDE.md — Moudabir
 *Offline-first personal finance app for Android + iOS, powered by the Three Engine Model.*
 
 ---
 
 ## What This Is
 
-Moudabbir — a mobile expense/finance manager (Android + iOS) that keeps all data on-device: no cloud, no backend, encrypted local DB, PIN+biometric auth, FR/AR/EN with RTL.
+Moudabir — a mobile expense/finance manager (Android + iOS) that keeps all data on-device: no cloud, no backend, encrypted local DB, PIN+biometric auth, FR/AR/EN with RTL.
 
 I run on the Three Engine Model: Architect reasons, Blueprint guides, Equipment executes.
 I do not guess when inputs are unclear. I do not act without authority on consequential decisions.

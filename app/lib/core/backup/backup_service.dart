@@ -21,7 +21,7 @@ import 'backup_crypto.dart';
 class BackupService {
   BackupService._();
 
-  static const _dbEntryName = 'moudabbir.sqlite';
+  static const _dbEntryName = 'moudabir.sqlite';
   static const _keyEntryName = 'key.json';
 
   /// Zip local-file-header signature — used to tell a portable bundle
@@ -55,13 +55,13 @@ class BackupService {
           RegExp('[:.]'),
           '-',
         );
-    final backupPath = p.join(tempDir.path, 'moudabbir_backup_$stamp.mbkp');
+    final backupPath = p.join(tempDir.path, 'moudabir_backup_$stamp.mbkp');
     final backupFile = await File(backupPath).writeAsBytes(zipBytes);
 
     await SharePlus.instance.share(
       ShareParams(
         files: [XFile(backupFile.path)],
-        subject: 'Moudabbir backup',
+        subject: 'Moudabir backup',
       ),
     );
   }
@@ -100,7 +100,7 @@ class BackupService {
     final dbEntry = archive.findFile(_dbEntryName);
     final keyEntry = archive.findFile(_keyEntryName);
     if (dbEntry == null || keyEntry == null) {
-      throw const FormatException('Not a Moudabbir backup file.');
+      throw const FormatException('Not a Moudabir backup file.');
     }
 
     final wrappedKey = utf8.decode(keyEntry.content as List<int>);

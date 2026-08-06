@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.moudabbir.moudabbir"
+    namespace = "com.moudabir.moudabir"
     // Overrides Flutter's default (34) — file_picker's transitive
     // flutter_plugin_android_lifecycle dependency requires compileSdk 36+.
     compileSdk = 36
@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.moudabbir.moudabbir"
+        applicationId = "com.moudabir.moudabir"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // local_auth requires SDK 24+ for biometric prompt support.
