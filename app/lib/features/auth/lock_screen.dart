@@ -85,7 +85,7 @@ class _LockScreenState extends State<LockScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/branding/icon_mark_flat.png', height: 88),
+              Image.asset('assets/branding/icon_mark_flat.png', height: 126),
               const SizedBox(height: 16),
               Text('auth.unlock_title'.tr(),
                   style: Theme.of(context).textTheme.headlineSmall),

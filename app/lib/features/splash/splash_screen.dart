@@ -46,8 +46,8 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Image.asset(
               'assets/branding/icon_mark_flat.png',
-              width: 136,
-              height: 136,
+              width: 195,
+              height: 195,
             ),
             const SizedBox(height: 16),
             Text(
